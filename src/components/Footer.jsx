@@ -38,23 +38,23 @@ const Footer = () => {
               <ul className="footer-social p-0">
                 <li className="ftco-animate">
                   <a href="#" data-toggle="tooltip" data-placement="top" title="Twitter">
-                                <span>
-                                    <i className="fa fa-twitter" aria-hidden="true"></i>
-                                </span>
+                    <span>
+                        <i className="fa fa-twitter" aria-hidden="true"></i>
+                    </span>
                   </a>
                 </li>
                 <li className="ftco-animate">
                   <a href="#" data-toggle="tooltip" data-placement="top" title="Facebook">
-                                <span>
-                                    <i className="fa fa-facebook-square" aria-hidden="true"></i>
-                                </span>
+                    <span>
+                      <i className="fa fa-facebook-square" aria-hidden="true"></i>
+                    </span>
                   </a>
                 </li>
                 <li className="ftco-animate">
                   <a href="#" data-toggle="tooltip" data-placement="top"itle="Instagram">
-                                <span
-                                ><i className="fa fa-instagram" aria-hidden="true"></i>
-                                </span>
+                    <span>
+                      <i className="fa fa-instagram" aria-hidden="true"></i>
+                    </span>
                   </a>
                 </li>
               </ul>

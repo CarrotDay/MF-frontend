@@ -3,6 +3,7 @@ import SignUp from "~/pages/SignUp";
 import Home from "~/pages/Home";
 import SideProduct from "~/pages/SideProduct";
 import Announce from "~/pages/Announce";
+import Product from "~/pages/Product";
 
 
 const routes = [
@@ -25,6 +26,10 @@ const routes = [
   {
     path: "/announce",
     Component: Announce,
+  },
+  {
+    path: "/product",
+    Component: Product,
   },
 ];
 
