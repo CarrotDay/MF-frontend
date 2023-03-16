@@ -2,16 +2,28 @@ import React, {useState} from 'react';
 import MangaItem from "~/components/MangaItem";
 import {Link} from "react-router-dom";
 import FigureItem from "~/components/FigureItem";
-const ProductGrid = ({isHome, type, data}) => {
+const ProductGrid = ({isHome, type, data, category}) => {
   const getData = () => {
     return data;
   };
 
+  const getTitle = () => {
+    let title = "";
+    if (isHome) {
+      title = type?"Manga":"Figure";
+    } else {
+        title = category?category:"Tất cả"
+    }
+    console.log("title", title)
+    return title;
+  }
   return (
     <section className='manga my-3 container'>
-      <div className="row container">
+      <div className="row">
         <div className="col text-left title-list d-flex justify-content-between">
-          <h1 className="font-weight-bold">Manga</h1>
+          <h1 className="font-weight-bold">
+            {getTitle()}
+          </h1>
           {isHome?
               <Link to={"/"} className={"more d-flex justify-content-center align-items-center"}>
                   <span className="font-weight-bold">Xem thêm
@@ -29,9 +41,9 @@ const ProductGrid = ({isHome, type, data}) => {
                 return (
                   <div className="item col-6 col-md-4 col-lg-3 mb-3">
                     {type?
-                      <MangaItem meta={data.meta} srcImg={data.srcImg} name={data.name} price={data.price} />
+                      <MangaItem key={index} meta={data.meta} srcImg={data.srcImg} name={data.name} price={data.price} />
                       :
-                      <FigureItem meta={""} srcImg={"./Uploads/figure/1.png"} price={20000} />
+                      <FigureItem key={index} meta={""} srcImg={"./Uploads/figure/1.png"} price={20000} />
                     }
                   </div>
                 )
