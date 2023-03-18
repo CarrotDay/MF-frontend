@@ -4,9 +4,9 @@ const Category = () => {
   return (
     <section className='category my-3 container'>
       <div className="col text-left title-list">
-        <h5 className="font-weight-bold">Danh mục thể loại</h5>
+        <h2 className="font-weight-bold">Thể loại</h2>
       </div>
-      <ul className="category-content">
+      <ul className="category-content text-left px-3">
         <li className="item-category">
           <a href="#"> Học đường </a>
         </li>

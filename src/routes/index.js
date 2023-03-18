@@ -8,6 +8,10 @@ import ManageCustomer from '~/pages/ManageCustomer';
 import ManageTransaction from "~/pages/ManageTransaction";
 import ManageSite from '~/pages/ManageSite';
 import Test from '~/pages/Test';
+import Announce from "~/pages/Announce";
+import Product from "~/pages/Product";
+import CartView from "~/pages/Cart";
+
 
 const routes = [
   {
@@ -49,7 +53,19 @@ const routes = [
   {
     path: '/test',
     Component: Test
-  }
+  },
+  {
+    path: "/announce",
+    Component: Announce,
+  },
+  {
+    path: "/product",
+    Component: Product,
+  },
+  {
+    path: "/cart",
+    Component: CartView,
+  },
 ];
 
 export default routes;
