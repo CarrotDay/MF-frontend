@@ -12,6 +12,8 @@ import Announce from "~/pages/Announce";
 import Product from "~/pages/Product";
 import CartView from "~/pages/Cart";
 import AnnounceDetail from "~/pages/AnnounceDetail";
+import ForgotPassword from "~/pages/ForgotPassword";
+import Otp from "~/pages/ForgotPassword/Otp";
 
 
 const routes = [
@@ -70,6 +72,14 @@ const routes = [
   {
     path: "/announce",
     Component: AnnounceDetail,
+  },
+  {
+    path: "/forgot-password",
+    Component: ForgotPassword,
+  },
+  {
+    path: "/otp",
+    Component: Otp,
   },
 ];
 
