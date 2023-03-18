@@ -7,7 +7,7 @@ function SignIn() {
       <div className="container py-5 h-100">
         <div className="row form" style={{backgroundColor: "#fff"}}>
           <div className="img-form d-none d-lg-block col-lg-6 p-0">
-            <img src="/Uploads/announce/1.png"/>
+            <img src="/Uploads/announce/1.png" className={"h-100"}/>
           </div>
           <form className={"p-5 col-12 col-lg-6 form-body"} >
             <div className="logo">
