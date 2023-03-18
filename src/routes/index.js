@@ -11,6 +11,9 @@ import Test from '~/pages/Test';
 import Announce from "~/pages/Announce";
 import Product from "~/pages/Product";
 import CartView from "~/pages/Cart";
+import AnnounceDetail from "~/pages/AnnounceDetail";
+import ForgotPassword from "~/pages/ForgotPassword";
+import Otp from "~/pages/ForgotPassword/Otp";
 
 
 const routes = [
@@ -65,7 +68,35 @@ const routes = [
   {
     path: '/test',
     Component: Test
+<<<<<<< HEAD
   }
+=======
+  },
+  {
+    path: "/announce-list",
+    Component: Announce,
+  },
+  {
+    path: "/product",
+    Component: Product,
+  },
+  {
+    path: "/cart",
+    Component: CartView,
+  },
+  {
+    path: "/announce",
+    Component: AnnounceDetail,
+  },
+  {
+    path: "/forgot-password",
+    Component: ForgotPassword,
+  },
+  {
+    path: "/otp",
+    Component: Otp,
+  },
+>>>>>>> 442111d196fff0ed10074ee7e99448d051b00a2f
 ];
 
 export default routes;

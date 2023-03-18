@@ -10024,4 +10024,39 @@ table, th, td {
   max-width: 100px;
 }
 
+.thumbnail-announce {
+  overflow: inherit;
+}
+.thumbnail-announce img {
+  object-fit: contain;
+  height: auto;
+  max-width: 100%;
+}
+
+.title-announce-item-list {
+  color: #000;
+}
+.title-announce-item-list:hover > * {
+  color: rgb(255, 145, 77) !important;
+}
+
+.announce-item {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+.announce-item:hover {
+  border: 0;
+  box-shadow: 2px 2px 2px rgba(255, 145, 77, 0.3);
+}
+
+.contain-otp > * {
+  box-sizing: border-box;
+}
+.contain-otp .square > * {
+  box-sizing: border-box;
+}
+.contain-otp .square input {
+  width: 50px;
+  height: 50px;
+}
+
 /*# sourceMappingURL=style.css.map */

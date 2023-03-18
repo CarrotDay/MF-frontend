@@ -1126,3 +1126,43 @@ table, th, td {
 	}
 }
 
+.thumbnail-announce {
+	overflow: inherit;
+	img {
+		object-fit: contain;
+		height: auto;
+		max-width: 100%;
+	}
+}
+
+.title-announce-item-list {
+	color: $black;
+	&:hover > * {
+		color: $primary !important;
+	}
+}
+
+.announce-item {
+	border-bottom: 1px solid rgb(0,0,0,0.3);
+	&:hover {
+		border: 0;
+		box-shadow: 2px 2px 2px rgb(255,145,77,0.3);
+	}
+}
+
+.contain-otp {
+	> * {
+		box-sizing: border-box;
+	}
+	.square {
+		> * {
+			box-sizing: border-box;
+		}
+		input {
+			width: 50px;
+			height: 50px;
+		}
+	}
+}
+
+
