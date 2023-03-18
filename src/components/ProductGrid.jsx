@@ -27,7 +27,7 @@ const ProductGrid = ({isHome, type, data}) => {
             {
               getData().map((data, index) => {
                 return (
-                  <div className="item col-6 col-md-4 col-lg-3 mb-3">
+                  <div className="item col-6 col-md-4 col-lg-3 mb-3" key={index}>
                     {type?
                       <MangaItem meta={data.meta} srcImg={data.srcImg} name={data.name} price={data.price} />
                       :
