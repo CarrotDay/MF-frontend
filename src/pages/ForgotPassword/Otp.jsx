@@ -12,22 +12,22 @@ const Otp = () => {
           <h5>Mã OTP đã được gửi đến số điện thoại 093xxxxx02</h5>
           <div className="contain-otp d-flex flex-wrap justify-content-center pb-5 pt-4">
             <div className="square mx-2">
-              <input type={"text"} ></input>
+              <input type={"text"} className={"text-center"}></input>
             </div>
             <div className="square mx-2">
-              <input type={"text"} ></input>
+              <input type={"text"} className={"text-center"}></input>
             </div>
             <div className="square mx-2">
-              <input type={"text"} ></input>
+              <input type={"text"} className={"text-center"}></input>
             </div>
             <div className="square mx-2">
-              <input type={"text"} ></input>
+              <input type={"text"} className={"text-center"}></input>
             </div>
             <div className="square mx-2">
-              <input type={"text"} ></input>
+              <input type={"text"} className={"text-center"}></input>
             </div>
             <div className="square mx-2">
-              <input type={"text"} ></input>
+              <input type={"text"} className={"text-center"}></input>
             </div>
           </div>
         </div>
