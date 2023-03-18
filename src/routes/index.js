@@ -5,6 +5,7 @@ import SideProduct from "~/pages/SideProduct";
 import Announce from "~/pages/Announce";
 import Product from "~/pages/Product";
 import CartView from "~/pages/Cart";
+import AnnounceDetail from "~/pages/AnnounceDetail";
 
 
 const routes = [
@@ -25,7 +26,7 @@ const routes = [
     Component: SideProduct,
   },
   {
-    path: "/announce",
+    path: "/announce-list",
     Component: Announce,
   },
   {
@@ -35,6 +36,10 @@ const routes = [
   {
     path: "/cart",
     Component: CartView,
+  },
+  {
+    path: "/announce",
+    Component: AnnounceDetail,
   },
 ];
 

@@ -1,15 +1,5 @@
 import React from 'react'
-import * as PropTypes from "prop-types";
 import {Button} from "@mui/material";
-
-function BootstrapInput(props) {
-  return null;
-}
-
-BootstrapInput.propTypes = {
-  defaultValue: PropTypes.string,
-  id: PropTypes.string
-};
 
 function SignIn() {
   return (
