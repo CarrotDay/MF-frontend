@@ -4,6 +4,7 @@ import Home from "~/pages/Home";
 import SideProduct from "~/pages/SideProduct";
 import Announce from "~/pages/Announce";
 import Product from "~/pages/Product";
+import CartView from "~/pages/Cart";
 
 
 const routes = [
@@ -30,6 +31,10 @@ const routes = [
   {
     path: "/product",
     Component: Product,
+  },
+  {
+    path: "/cart",
+    Component: CartView,
   },
 ];
 

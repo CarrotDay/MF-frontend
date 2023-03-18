@@ -9985,4 +9985,43 @@ button.switch-month:hover {
   border: 0;
 }
 
+.plus-btn:focus, .minus-btn:focus, .btn-check-out:focus {
+  outline: 0;
+}
+
+.item-product {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+table, th, td {
+  text-align: center;
+}
+
+.table {
+  padding: 10px;
+}
+
+.img-form {
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
+  overflow: hidden;
+}
+.img-form img {
+  object-fit: cover;
+  height: auto;
+  max-width: 100%;
+}
+
+.form {
+  border-radius: 10px;
+}
+.form-body .logo {
+  overflow: inherit;
+}
+.form-body .logo img {
+  object-fit: contain;
+  height: auto;
+  max-width: 100px;
+}
+
 /*# sourceMappingURL=style.css.map */
