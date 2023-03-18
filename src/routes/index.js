@@ -31,6 +31,18 @@ const routes = [
     Component: Home,
   },
   {
+    path: "/announce",
+    Component: Announce,
+  },
+  {
+    path: "/product",
+    Component: Product,
+  },
+  {
+    path: "/cart",
+    Component: CartView,
+  },
+  {
     path: '/manage/product',
     Component: ManageProduct
   },
@@ -53,19 +65,7 @@ const routes = [
   {
     path: '/test',
     Component: Test
-  },
-  {
-    path: "/announce",
-    Component: Announce,
-  },
-  {
-    path: "/product",
-    Component: Product,
-  },
-  {
-    path: "/cart",
-    Component: CartView,
-  },
+  }
 ];
 
 export default routes;

@@ -9,24 +9,24 @@ const Home = () => {
   const [figure, setFigure] = useState([]);
 
   async function getProductsHandler() {
-    const data = await getProductAPI();
+    // const data = await getProductAPI();
 
-    setManga(data.filter(e => !e.type).map(e => ({ ...e, srcImg: e.image })));
-    setFigure(data.filter(e => e.type).map(e => ({ ...e, srcImg: e.image })));
+    // setManga(data.filter(e => !e.type).map(e => ({ ...e, srcImg: e.image })));
+    // setFigure(data.filter(e => e.type).map(e => ({ ...e, srcImg: e.image })));
     
-    //
-    // setManga(Array(12).fill({
-    //   "meta": "",
-    //   "name": "Boku girl",
-    //   "srcImg": "./Uploads/manga/1.png",
-    //   "price": 20000
-    // }));
+    
+    setManga(Array(12).fill({
+      "meta": "",
+      "name": "Boku girl",
+      "srcImg": "./Uploads/manga/1.png",
+      "price": 20000
+    }));
 
-    // setFigure(Array(12).fill({
-    //   "meta": "",
-    //   "srcImg": "/Uploads/figure/1.png",
-    //   "price": 20000
-    // }));
+    setFigure(Array(12).fill({
+      "meta": "",
+      "srcImg": "/Uploads/figure/1.png",
+      "price": 20000
+    }));
   }
 
   useEffect(() => {
