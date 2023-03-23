@@ -68,9 +68,6 @@ const routes = [
   {
     path: '/test',
     Component: Test
-<<<<<<< HEAD
-  }
-=======
   },
   {
     path: "/announce-list",
@@ -96,7 +93,6 @@ const routes = [
     path: "/otp",
     Component: Otp,
   },
->>>>>>> 442111d196fff0ed10074ee7e99448d051b00a2f
 ];
 
 export default routes;
