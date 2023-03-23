@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import MyPagination from './MyPagination';
 
@@ -6,8 +6,6 @@ function MyTable({ head, body }) {
   const [bodyCurr, setBodyCurr] = useState(body);
   const [page, setPage] = useState({ curr: 0, length: Math.floor(bodyCurr.length / 10) + 1 });
   const [search, setSearch] = useState('');
-
-  console.log('body:', body, 'bodyCur:', bodyCurr);
 
   useEffect(() => {
     setPage({ curr: 0, length: Math.floor(bodyCurr.length / 10) + 1 });

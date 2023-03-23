@@ -13,3 +13,9 @@ export const getProductWithBody = async (body) => {
 
   return data['$values'];
 };
+
+export const getHeaderWithBody = async (body) => {
+  const { data } = await axios.post(SERVER + 'api/site/header', body);
+
+  return data['$values'];  
+}
