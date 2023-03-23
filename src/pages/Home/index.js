@@ -9,7 +9,7 @@ const Home = () => {
   const [figure, setFigure] = useState([]);
 
   async function getProductsHandler() {
-    // const data = await getProductAPI();
+    const data = await getProductAPI();
 
     // setManga(
     //   data.filter((e) => !e.type).map((e) => ({ ...e, srcImg: e.image }))
@@ -47,7 +47,7 @@ const Home = () => {
 
   useEffect(() => {
     getProductsHandler();
-  });
+  }, []);
 
   return (
     <div>

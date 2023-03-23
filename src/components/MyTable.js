@@ -7,13 +7,21 @@ function MyTable({ head, body }) {
   const [page, setPage] = useState({ curr: 0, length: Math.floor(bodyCurr.length / 10) + 1 });
   const [search, setSearch] = useState('');
 
+  console.log('body:', body, 'bodyCur:', bodyCurr);
+
   useEffect(() => {
     setPage({ curr: 0, length: Math.floor(bodyCurr.length / 10) + 1 });
   }, [bodyCurr]);
 
+  useEffect(() => {
+    setBodyCurr(body);
+  }, [body]);
+
   const searchHandle = () => {
-    setBodyCurr(body.filter(e => Object.values(e).findIndex(e => String(e).includes(search)) !== -1));
-    setPage({ curr: 0, length: Math.floor(bodyCurr.length / 10) + 1 });
+    if (search) {
+      setBodyCurr(body.filter(e => Object.values(e).findIndex(e => String(e).includes(search)) !== -1));
+      setPage({ curr: 0, length: Math.floor(bodyCurr.length / 10) + 1 });
+    }
   };
 
   return (
