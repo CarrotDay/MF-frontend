@@ -13,8 +13,7 @@ const Home = () => {
 
     setManga(data.filter(e => !e.type).map(e => ({ ...e, srcImg: e.image })));
     setFigure(data.filter(e => e.type).map(e => ({ ...e, srcImg: e.image })));
-    
-    //
+
     // setManga(Array(12).fill({
     //   "meta": "",
     //   "name": "Boku girl",

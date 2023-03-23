@@ -6,9 +6,7 @@ import 'react-calendar/dist/Calendar.css';
 const Announce = () => {
   return (
     <div>
-      <Header />
       <AnnounceList />
-      <Footer />
     </div>
   );
 };
