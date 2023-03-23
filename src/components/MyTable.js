@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import MyPagination from './MyPagination';
 
 function MyTable({ head, body }) {
   const [bodyCurr, setBodyCurr] = useState(body);
-  const [page, setPage] = useState({ curr: 0, length: Math.floor(body.length / 10) + 1 });
+  const [page, setPage] = useState({ curr: 0, length: Math.floor(bodyCurr.length / 10) + 1 });
   const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    setPage({ curr: 0, length: Math.floor(bodyCurr.length / 10) + 1 });
+  }, [bodyCurr]);
 
   const searchHandle = () => {
     setBodyCurr(body.filter(e => Object.values(e).findIndex(e => String(e).includes(search)) !== -1));
     setPage({ curr: 0, length: Math.floor(bodyCurr.length / 10) + 1 });
-  }
+  };
 
   return (
     <div className="w-100 container my-5">

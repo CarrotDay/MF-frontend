@@ -52,3 +52,9 @@
 .MyBtn-danger {
   background-color: #dc3545;
 }
+
+.my-input {
+  padding: 4px 8px;
+  border-style: none none solid none;
+  border-radius: 4px;
+}
