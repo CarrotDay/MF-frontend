@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 
 import Slide from "~/components/Slide";
 import ProductGrid from "~/components/ProductGrid";
+<<<<<<< HEAD
 import { getProductWithBody } from '~/api/product.api';
+=======
+import { getProductAPI } from "~/api/product.api";
+>>>>>>> 8b46248cb2a54af80160016dc58759539bb384df
 
 const Home = () => {
   const [manga, setManga] = useState([]);
