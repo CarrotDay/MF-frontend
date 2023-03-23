@@ -86,7 +86,6 @@ const SideProduct = () => {
   ]
   return (
     <div>
-      <Header />
       <Slide />
       <div className="container">
         <div className="row">
@@ -98,7 +97,6 @@ const SideProduct = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

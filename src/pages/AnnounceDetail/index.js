@@ -6,9 +6,7 @@ import Announce from "~/components/Announce";
 const AnnounceDetail = () => {
   return (
     <div>
-      <Header />
       <Announce />
-      <Footer />
     </div>
   );
 };
