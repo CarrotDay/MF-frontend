@@ -11,6 +11,17 @@ const Home = () => {
   async function getProductsHandler() {
     // const data = await getProductAPI();
 
+<<<<<<< HEAD
+    setManga(data.filter(e => !e.type).map(e => ({ ...e, srcImg: e.image })));
+    setFigure(data.filter(e => e.type).map(e => ({ ...e, srcImg: e.image })));
+
+    // setManga(Array(12).fill({
+    //   "meta": "",
+    //   "name": "Boku girl",
+    //   "srcImg": "./Uploads/manga/1.png",
+    //   "price": 20000
+    // }));
+=======
     // setManga(data.filter(e => !e.type).map(e => ({ ...e, srcImg: e.image })));
     // setFigure(data.filter(e => e.type).map(e => ({ ...e, srcImg: e.image })));
     
@@ -21,6 +32,7 @@ const Home = () => {
       "srcImg": "./Uploads/manga/1.png",
       "price": 20000
     }));
+>>>>>>> 05c65cf66dd0507d56f4c0872af5fc1e62af553b
 
     setFigure(Array(12).fill({
       "meta": "",

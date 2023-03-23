@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import {Link} from "react-router-dom";
 
 const Slide = () => {
   return (
@@ -8,65 +9,65 @@ const Slide = () => {
         className="carousel slide"
         data-ride="carousel"
       >
-          <ol className="carousel-indicators">
+        <ol className="carousel-indicators">
           <li
-              data-target="#carouselExampleIndicators"
-              data-slide-to="0"
-              className="active"
+            data-target="#carouselExampleIndicators"
+            data-slide-to="0"
+            className="active"
           ></li>
           <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
           <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-          </ol>
-          <div className="carousel-inner">
+        </ol>
+        <div className="carousel-inner">
           <div className="carousel-item active">
-              <a href="#" className="w-100">
+              <Link to="#" className="w-100">
               <img
-                  className="d-block w-100"
-                  src="./Uploads/slide/1.png"
-                  alt="First slide"
+                className="d-block w-100"
+                src="./Uploads/slide/1.png"
+                alt="First slide"
               />
-              </a>
+              </Link>
           </div>
           <div className="carousel-item">
-              <a href="#" className="w-100">
+              <Link to="#" className="w-100">
               <img
-                  className="d-block w-100"
-                  src="./Uploads/slide/2.png"
-                  alt="Second slide"
+                className="d-block w-100"
+                src="./Uploads/slide/2.png"
+                alt="Second slide"
               />
-              </a>
+              </Link>
           </div>
           <div className="carousel-item">
-              <a href="#" className="w-100">
+              <Link to="#" className="w-100">
               <img
-                  className="d-block w-100"
-                  src="./Uploads/slide/3.png"
-                  alt="Third slide"
+                className="d-block w-100"
+                src="./Uploads/slide/3.png"
+                alt="Third slide"
               />
-              </a>
+              </Link>
           </div>
-          </div>
-          <a
+        </div>
+        <Link
           className="carousel-control-prev"
           href="#carouselExampleIndicators"
           role="button"
           data-slide="prev"
-          >
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span className="sr-only">Previous</span>
-          </a>
-          <a
+        >
+        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span className="sr-only">Previous</span>
+        </Link>
+        <Link
           className="carousel-control-next"
           href="#carouselExampleIndicators"
           role="button"
           data-slide="next"
-          >
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
-          <span className="sr-only">Next</span>
-          </a>
+        >
+        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+        <span className="sr-only">Next</span>
+        </Link>
       </div>
     </section>
   )
 }
 
-export default Slide
+export default Slide;

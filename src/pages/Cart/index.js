@@ -6,9 +6,7 @@ import Footer from "~/components/Footer";
 const CartView = () => {
   return (
     <div>
-      <Header />
       <Cart />
-      <Footer />
     </div>
   );
 };
