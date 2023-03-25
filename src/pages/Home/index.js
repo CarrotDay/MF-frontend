@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Slide from "~/components/Slide";
 import ProductGrid from "~/components/ProductGrid";
-import { getProductWithBody } from '~/api/product.api';
+import { getProductsWithBody } from '~/api/product.api';
 
 const Home = () => {
   const [manga, setManga] = useState([]);
@@ -10,7 +10,7 @@ const Home = () => {
 
   async function getProductsHandler() {
     try {
-      const [mangaData, figureData] = await Promise.all([getProductWithBody({ Type: false, Take: 12 }), getProductWithBody({ Type: true, Take: 12 })])
+      const [mangaData, figureData] = await Promise.all([getProductsWithBody({ Type: false, Take: 12 }), getProductsWithBody({ Type: true, Take: 12 })])
   
       setManga(mangaData);
       setFigure(figureData);

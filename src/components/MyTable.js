@@ -51,7 +51,7 @@ function MyTable({ head, body }) {
           {bodyCurr.filter((e, index) => index >= (10*page.curr) && index < (10*page.curr) + 10).map((e, index) => (
             <tr key={index}>
               {head.map((_e, _index) => (
-                <td key={`${index}_${_index}`}>{e[_e.key]}</td>
+                <td key={`${index}_${_index}`}>{_e.format !== undefined ? _e.format(e[_e.key]) : e[_e.key]}</td>
               ))}
               <td>
                 <button type="button" className="MyBtn MyBtn-primary">Edit</button>

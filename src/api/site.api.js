@@ -18,4 +18,10 @@ export const getHeaderWithBody = async (body) => {
   const { data } = await axios.post(SERVER + 'api/site/header', body);
 
   return data['$values'];  
-}
+};
+
+export const addHeader = async (body) => {
+  const { data } = await axios.post(SERVER + 'api/site/header/create', body);
+
+  return data['$values'];  
+};

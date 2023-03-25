@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { MyTable } from '~/components';
 import { getCatalogAPI, getHeaderWithBody } from '~/api/site.api';
 
-import { catalogData } from './data';
+import { catalogData, addHeader } from './data';
 
 function ManageSite() {
+  const headerDesRef = useRef();
+
   const [catalog, setCatalog] = useState({ head: catalogData.head, body: catalogData.body.map(e => ({...e, active: e.active ? 1 : 0 })) });
   const [header, setHeader] = useState();
 
@@ -19,7 +21,13 @@ function ManageSite() {
     const data = await getHeaderWithBody({ Newest: true });
 
     setHeader(data?.[0]);
-  }
+  };
+
+  const addHeaderHandle = async () => {
+    const headerDes = headerDesRef.current.value;
+
+    console.log(headerDes);
+  };
 
   useEffect(() => {
     getCatalogHandle();
@@ -34,7 +42,7 @@ function ManageSite() {
         <div className="container d-flex my-3 ">
           <div>
             <div>
-              <img src={header?.logo} style={{ width: '200px' }} />
+              <img src={header?.logo} style={{ width: '200px' }} alt="logo header" />
             </div>
 
             <button type="button" className="MyBtn MyBtn-primary">Change</button>
@@ -44,12 +52,12 @@ function ManageSite() {
             <label htmlFor="twitter">Description: </label>
             
             <div className="h-100">
-              <textarea style={{ border: 'none', resize: 'none' }} value={header?.description} className="w-100 h-100"></textarea>
+              <textarea ref={headerDesRef} style={{ border: 'none', resize: 'none' }} value={header?.description} className="w-100 h-100"></textarea>
             </div>
           </div>
         </div>
 
-        <button className="MyBtn MyBtn-primary">Update</button>
+        <button onClick={addHeaderHandle} className="MyBtn MyBtn-primary">Update</button>
       </div>
 
       <div className="my-5">

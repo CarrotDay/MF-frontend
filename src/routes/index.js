@@ -3,6 +3,7 @@ import SignUp from "~/pages/SignUp";
 import Home from "~/pages/Home";
 import SideProduct from "~/pages/SideProduct";
 import ManageProduct from '~/pages/ManageProduct';
+import ManageProductDetail from '~/pages/ManageProductDetail';
 import ManageEmployee from '~/pages/ManageEmployee';
 import ManageCustomer from '~/pages/ManageCustomer';
 import ManageTransaction from "~/pages/ManageTransaction";
@@ -16,15 +17,7 @@ import ForgotPassword from "~/pages/ForgotPassword";
 import Otp from "~/pages/ForgotPassword/Otp";
 
 
-const routes = [
-  {
-    path: "/sign-in",
-    Component: SignIn,
-  },
-  {
-    path: "/sign-up",
-    Component: SignUp,
-  },
+export const routesWithLayout = [
   {
     path: "/side-product",
     Component: SideProduct,
@@ -48,6 +41,14 @@ const routes = [
   {
     path: '/manage/product',
     Component: ManageProduct
+  },
+  {
+    path: '/manage/product/update/:meta',
+    Component: ManageProductDetail
+  },
+  {
+    path: '/manage/product/create',
+    Component: ManageProductDetail
   },
   {
     path: '/manage/employee',
@@ -85,6 +86,17 @@ const routes = [
     path: "/announce",
     Component: AnnounceDetail,
   },
+];
+
+export const routesWithoutLayout = [
+  {
+    path: "/sign-in",
+    Component: SignIn,
+  },
+  {
+    path: "/sign-up",
+    Component: SignUp,
+  },
   {
     path: "/forgot-password",
     Component: ForgotPassword,
@@ -95,4 +107,4 @@ const routes = [
   },
 ];
 
-export default routes;
+export default { routesWithLayout, routesWithoutLayout};
