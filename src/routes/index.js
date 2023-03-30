@@ -39,7 +39,7 @@ export const routesWithLayout = [
     Component: CartView,
   },
   {
-    path: '/manage/product',
+    path: '/manage/products/:page',
     Component: ManageProduct
   },
   {

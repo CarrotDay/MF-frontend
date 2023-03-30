@@ -1,25 +1,27 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 
-function MyPagination({ page, setPage }) {
+function MyPagination({ page, pages }) {
   return (
     <nav aria-label="Page navigation example">
       <ul className="pagination">
-        <li className={"page-item" + (page.curr === 0 ? ' disabled' : '')} onClick={(page.curr === 0 ? () => {} : () => setPage({...page, curr: page.curr - 1}))}>
-          <a className="page-link" href="#" aria-label="Previous">
+        <li className={'page-item' + (Number(page) === 1 ? ' disabled' : '')}>
+          <Link className={'page-link' + (Number(page) === 1 ? ' text-white' : ' text-dark')} to={`/manage/products/${page - 1}`} aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
-          </a>
+          </Link>
         </li>
 
-        {[...Array(page.length).keys()].map(e => (
-          <li className={"page-item" + (page.curr === e ? ' active' : '')} style={{ cursor: 'pointer' }} onClick={() => setPage({...page, curr: e})} key={e}>
-            <a className="page-link">{e + 1}</a>
+        {[...Array(pages).keys()].map((_, i) => (
+          <li className={"page-item" + (Number(page) === i + 1 ? ' active' : '')} key={i}>
+            <Link className={'page-link' + ((Number(page) === i + 1 ? ' active' : '') ? ' text-white' : ' text-dark')} to={`/manage/products/${i + 1}`}>
+              {i + 1}
+            </Link>
           </li>
         ))}
 
-        <li className={"page-item" + (page.curr === (page.length - 1) ? ' disabled' : '')} onClick={(page.curr === (page.length - 1) ? () => {} : () => setPage({...page, curr: page.curr + 1}))}>
-          <a className="page-link" href="#" aria-label="Next">
+        <li className={'page-item' + (Number(page) === pages ? ' disabled' : '')}>
+          <Link className={'page-link' + (Number(page) === pages ? ' text-white' : ' text-dark')} to={`/manage/products/${page + 1}`} aria-label="Previous">
             <span aria-hidden="true">&raquo;</span>
-          </a>
+          </Link>
         </li>
       </ul>
     </nav>
