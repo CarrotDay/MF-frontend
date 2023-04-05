@@ -10,7 +10,7 @@ function MyPagination({ page, pages }) {
           </Link>
         </li>
 
-        {[...Array(pages).keys()].map((_, i) => (
+        {[...Array(pages).keys()].filter((_, i) => (Number(page) - 3 < i) && (Number(page) + 3 > i)).map(i => (
           <li className={"page-item" + (Number(page) === i + 1 ? ' active' : '')} key={i}>
             <Link className={'page-link' + ((Number(page) === i + 1 ? ' active' : '') ? ' text-white' : ' text-dark')} to={`/manage/products/${i + 1}`}>
               {i + 1}
