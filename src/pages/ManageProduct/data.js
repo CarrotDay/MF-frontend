@@ -1,4 +1,8 @@
 import { Link } from "react-router-dom";
+import SearchIcon from '@mui/icons-material/Search';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { IconButton } from '@mui/material';
 
 export const productHead = [
   {
@@ -43,15 +47,21 @@ export const productHead = [
     title: '',
     format: value => (
       <>
-        <button type="button" className="MyBtn MyBtn-primary">
-          <Link className="text-white" to={`/manage/product/${value}`}>Detail</Link>
-        </button>
-        <button type="button" className="MyBtn MyBtn-primary">
-          <Link className="text-white" to={`/manage/product/edit/${value}`}>Edit</Link>
-        </button>
-        <button type="button" className="MyBtn MyBtn-danger">
-          <Link className="text-white" to={`/manage/product/${value}`}>X</Link>
-        </button>
+        <Link to={`/manage/product/${value}`}>
+          <IconButton color="primary">
+            <SearchIcon />
+          </IconButton>
+        </Link>
+        <Link to={`/manage/product/update/${value}`}>
+          <IconButton color="primary">
+            <EditIcon />
+          </IconButton>
+        </Link>
+        <Link to={`/manage/product/${value}`}>
+          <IconButton color="error">
+            <DeleteOutlineIcon />
+          </IconButton>
+        </Link>
       </>
     )
   }

@@ -16,7 +16,6 @@ import AnnounceDetail from "~/pages/AnnounceDetail";
 import ForgotPassword from "~/pages/ForgotPassword";
 import Otp from "~/pages/ForgotPassword/Otp";
 
-
 export const routesWithLayout = [
   {
     path: "/side-product",
@@ -38,6 +37,25 @@ export const routesWithLayout = [
     path: "/cart",
     Component: CartView,
   },
+  {
+    path: "/announce-list",
+    Component: Announce,
+  },
+  {
+    path: "/product",
+    Component: Product,
+  },
+  {
+    path: "/cart",
+    Component: CartView,
+  },
+  {
+    path: "/announce",
+    Component: AnnounceDetail,
+  },
+];
+
+export const routesAdmin = [
   {
     path: '/manage/products/:page',
     Component: ManageProduct
@@ -67,25 +85,9 @@ export const routesWithLayout = [
     Component: ManageSite
   },
   {
-    path: '/test',
+    path: '/manage/test',
     Component: Test
-  },
-  {
-    path: "/announce-list",
-    Component: Announce,
-  },
-  {
-    path: "/product",
-    Component: Product,
-  },
-  {
-    path: "/cart",
-    Component: CartView,
-  },
-  {
-    path: "/announce",
-    Component: AnnounceDetail,
-  },
+  }
 ];
 
 export const routesWithoutLayout = [
