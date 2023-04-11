@@ -10,7 +10,6 @@ function MyInput(props, ref) {
       placeholder={props.placeholder}
       value={value} 
       onChange={props.onChange ? props.onChange : e => setValue(e.target.value)}
-      checked={props.checked}
       id={props.id}
       ref={ref} />
   );

@@ -1,32 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { Table } from 'antd';
 
-import { MyTable } from '~/components';
-
-const head = [
-  {
-    key: 'id',
-    title: 'ID'
-  },
-  {
-    key: 'name',
-    title: 'Name'
-  },
-  {
-    key: 'age',
-    title: 'Age'
-  }
-];
-
-const body = [...Array(32).keys()].map(id => ({
-  id: id + 1,
-  name: 'Name',
-  age: 12
-}));
+import { getTransactions } from '~/api/transaction.api';
+import { columns } from './data';
 
 function ManageTransaction() {
+  const [transactions, setTransactions] = useState([]);
+
+  const { isLoading } = useQuery({
+    queryKey: ['transactions'],
+    queryFn: getTransactions,
+    onSuccess: data => setTransactions(data.data['$values'].map(e => ({
+      ...e,
+      key: e.id,
+      customer: e.customerName,
+      employee: e.employeeName,
+      status: e.statusName
+    })))
+  });
+
   return (
-    <div>
-      <MyTable head={head} body={body} />
+    <div className="w-100 container my-5">
+      {!isLoading && (<> 
+        <Table
+          columns={columns}
+          dataSource={transactions}
+        />
+      </>)}
     </div>
   );
 }

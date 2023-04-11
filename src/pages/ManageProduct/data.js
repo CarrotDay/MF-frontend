@@ -1,68 +1,61 @@
-import { Link } from "react-router-dom";
-import SearchIcon from '@mui/icons-material/Search';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { IconButton } from '@mui/material';
+import { TableControl } from '~/components';
 
-export const productHead = [
+export const columns = [
   {
-    key: 'id',
-    title: 'ID'
-  },
-  {
+    title: 'Name',
+    dataIndex: 'name',
     key: 'name',
-    title: 'Name'
+    sorter: (a, b) => a.name > b.name ? 1 : -1,
   },
   {
-    key: 'srcImg',
     title: 'Thumbnail',
-    format: value => (
-      <img width="100px" height="100px" src={value} alt="thumbnail" />
-    )
+    dataIndex: 'thumbnail',
+    key: 'thumbnail',
+    sorter: (a, b) => a.thumbnail > b.thumbnail ? 1 : -1,
+    render: value => <img width="100px" height="100px" src={value} alt="thumbnail" />
   },
   {
+    title: 'Price',
+    dataIndex: 'price',
     key: 'price',
-    title: 'Price'
+    sorter: (a, b) => a.price - b.price,
   },
   {
+    title: 'Amount',
+    dataIndex: 'amount',
     key: 'amount',
-    title: 'Amount'
+    sorter: (a, b) => a.amount - b.amount,
   },
   {
+    title: 'Sale',
+    dataIndex: 'sale',
     key: 'sale',
-    title: 'Sale'
+    sorter: (a, b) => a.sale - b.sale,
   },
   {
-    key: 'type',
     title: 'Type',
-    format: value => value ? 'Figure' : 'Anime'
+    dataIndex: 'type',
+    key: 'type',
+    sorter: (a, b) => a.type > b.type ? 1 : -1,
+    render: value => value ? 'Figure' : 'Anime'
   },
   {
-    key: 'createAt',
     title: 'Create At',
-    format: value => value.substring(0, 10)
+    dataIndex: 'createAt',
+    key: 'createAt',
+    sorter: (a, b) => a.createAt > b.createAt ? 1 : -1,
+    render: value => value.substring(0, 10)
   },
   {
-    key: 'meta',
     title: '',
-    format: value => (
-      <>
-        <Link to={`/manage/product/${value}`}>
-          <IconButton color="primary">
-            <SearchIcon />
-          </IconButton>
-        </Link>
-        <Link to={`/manage/product/update/${value}`}>
-          <IconButton color="primary">
-            <EditIcon />
-          </IconButton>
-        </Link>
-        <Link to={`/manage/product/${value}`}>
-          <IconButton color="error">
-            <DeleteOutlineIcon />
-          </IconButton>
-        </Link>
-      </>
-    )
+    key: 'meta',
+    dataIndex: 'meta',
+    fixed: 'right',
+    width: 160,
+    render: value => <TableControl 
+      detailLink={`/manage/product/${value}`} 
+      editLink={`/manage/product/update/${value}`}
+      delLink={`/manage/product/${value}`}
+    />
   }
 ];

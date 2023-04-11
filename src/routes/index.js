@@ -2,6 +2,7 @@ import SignIn from "~/pages/SignIn";
 import SignUp from "~/pages/SignUp";
 import Home from "~/pages/Home";
 import SideProduct from "~/pages/SideProduct";
+import Dashboard from "~/pages/Dashboard";
 import ManageProduct from '~/pages/ManageProduct';
 import ManageProductDetail from '~/pages/ManageProductDetail';
 import ManageEmployee from '~/pages/ManageEmployee';
@@ -18,93 +19,97 @@ import Otp from "~/pages/ForgotPassword/Otp";
 
 export const routesWithLayout = [
   {
-    path: "/side-product",
-    Component: SideProduct,
-  },
-  {
-    path: "/",
+    path: "",
     Component: Home,
   },
   {
-    path: "/announce",
+    path: "side-product",
+    Component: SideProduct,
+  },
+  {
+    path: "announce",
     Component: Announce,
   },
   {
-    path: "/product",
+    path: "product",
     Component: Product,
   },
   {
-    path: "/cart",
+    path: "cart",
     Component: CartView,
   },
   {
-    path: "/announce-list",
+    path: "announce-list",
     Component: Announce,
   },
   {
-    path: "/product",
+    path: "product",
     Component: Product,
   },
   {
-    path: "/cart",
+    path: "cart",
     Component: CartView,
   },
   {
-    path: "/announce",
+    path: "announce",
     Component: AnnounceDetail,
   },
 ];
 
 export const routesAdmin = [
   {
-    path: '/manage/products/:page',
+    path: 'dashboard',
+    Componnet: Dashboard
+  },
+  {
+    path: 'product',
     Component: ManageProduct
   },
   {
-    path: '/manage/product/update/:meta',
+    path: 'product/update/:meta',
     Component: ManageProductDetail
   },
   {
-    path: '/manage/product/create',
+    path: 'product/create',
     Component: ManageProductDetail
   },
   {
-    path: '/manage/employee',
+    path: 'employee',
     Component: ManageEmployee
   },
   {
-    path: '/manage/customer',
+    path: 'customer',
     Component: ManageCustomer
   },
   {
-    path: '/manage/transaction',
+    path: 'transaction',
     Component: ManageTransaction
   },
   {
-    path: '/manage/site',
+    path: 'site',
     Component: ManageSite
   },
   {
-    path: '/manage/test',
+    path: 'test',
     Component: Test
   }
 ];
 
 export const routesWithoutLayout = [
   {
-    path: "/sign-in",
+    path: "sign-in",
     Component: SignIn,
   },
   {
-    path: "/sign-up",
+    path: "sign-up",
     Component: SignUp,
   },
   {
-    path: "/forgot-password",
+    path: "forgot-password",
     Component: ForgotPassword,
   },
   {
-    path: "/otp",
+    path: "otp",
     Component: Otp,
   },
 ];
