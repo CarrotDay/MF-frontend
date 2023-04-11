@@ -1,17 +1,19 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import {Card} from "react-bootstrap";
 const MangaItem = ({meta, srcImg, name, price}) => {
   return (
     <Link to={meta}
-      className="card h-100 d-flex flex-column"
+          className="h-100 d-flex flex-column"
+          style={{textDecoration: "none"}}
     >
-      <div className="img-manga h-100">
-        <img className="card-img-top" src={srcImg} alt=""/>
-      </div>
-      <div className="card-body item-content">
-        <h5 className="card-text title-manga mt-2">{name}</h5>
-        <p className="price">{price}</p>
-      </div>
+      <Card className="h-100">
+        <Card.Img variant="top" src={srcImg} className={"img-manga"}/>
+        <Card.Body className={"item-content"}>
+          <Card.Title className={"title-manga"}>{name}</Card.Title>
+          <Card.Text className={"price"}>{price}</Card.Text>
+        </Card.Body>
+      </Card>
     </Link>
   );
 };
