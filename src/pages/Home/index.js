@@ -1,39 +1,26 @@
 import React, { useState, useEffect } from "react";
+import { useQuery } from '@tanstack/react-query';
 
 import Slide from "~/components/Slide";
 import ProductGrid from "~/components/ProductGrid";
-import { getProductsWithBody } from '~/api/product.api';
+import { getProducts } from '~/api/product.api';
 
 const Home = () => {
   const [manga, setManga] = useState([]);
   const [figure, setFigure] = useState([]);
 
-  async function getProductsHandler() {
-    try {
-      const [mangaData, figureData] = await Promise.all([getProductsWithBody({ Type: false, Take: 12 }), getProductsWithBody({ Type: true, Take: 12 })])
+
+  const isLoadingManga = useQuery({
+    queryKey: ['manga'],
+    queryFn: () => getProducts({ Type: false, Take: 12 }),
+    onSuccess: data => setManga(data.data['$values'])
+  }).isLoading;
   
-      setManga(mangaData);
-      setFigure(figureData);
-    }
-    catch {
-      setManga(Array(12).fill({
-        "meta": "",
-        "name": "Boku girl",
-        "srcImg": "./Uploads/manga/1.png",
-        "price": 20000
-      }));
-
-      setFigure(Array(12).fill({
-        "meta": "",
-        "srcImg": "/Uploads/figure/1.png",
-        "price": 20000
-      }));
-    }
-  }
-
-  useEffect(() => {
-    getProductsHandler();
-  }, []);
+  const isLoadingFigure = useQuery({
+    queryKey: ['figure'],
+    queryFn: () => getProducts({ Type: true, Take: 12 }),
+    onSuccess: data => setFigure(data.data['$values'])
+  }).isLoading;
 
   return (
     <div>

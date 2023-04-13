@@ -36,6 +36,17 @@ export const columns = [
     title: 'Type',
     dataIndex: 'type',
     key: 'type',
+    filters: [
+      {
+        text: 'Anime',
+        value: false
+      },
+      {
+        text: 'Figure',
+        value: true
+      }
+    ],
+    onFilter: (v, e) => e.type === v,
     sorter: (a, b) => a.type > b.type ? 1 : -1,
     render: value => value ? 'Figure' : 'Anime'
   },

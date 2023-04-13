@@ -8,7 +8,7 @@ const { Header, Sider } = Layout;
 const items = [
   {
     key: '1',
-    label: <Link to="/manage/products/1" style={{ textDecoration: 'none' }}>Products</Link>
+    label: <Link to="/manage/product" style={{ textDecoration: 'none' }}>Products</Link>
   },
   {
     key: '2',
@@ -26,9 +26,7 @@ const items = [
 
 function AdminLayout() {
   const [collapsed, setCollapsed] = useState(false);
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+
   return (
     <Layout
       style={{

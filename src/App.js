@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom
 
 import { AdminLayout, UserLayout } from './layout';
 import { routesWithoutLayout, routesWithLayout, routesAdmin } from '~/routes';
+import { LoginRoute } from './utils';
 
 import './App.css';
 
@@ -19,7 +20,9 @@ function App() {
           </Route>
 
           <Route path="/manage" element={<AdminLayout />}>
-            {routesAdmin.map(({ path, Component }, index) => <Route path={path} element={<Component />} key={index} />)}
+            {/* <Route element={<LoginRoute />}> */}
+              {routesAdmin.map(({ path, Component }, index) => <Route path={path} element={<Component />} key={index} />)}
+            {/* </Route> */}
           </Route>
         </Routes>
       </div>
