@@ -1,8 +1,9 @@
 import React from 'react';
+import DashboardDetail from "~/components/DashboardDetail";
 
 function Dashboard() {
   return (
-    <div>Dashboard</div>
+    <DashboardDetail />
   );
 }
 
