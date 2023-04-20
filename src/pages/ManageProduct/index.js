@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
 
 import { getProducts } from '~/api/product.api';
 import { columns } from './data';
 
 function ManageProduct() {
+  const navigate = useNavigate();
+
   const [products, setProducts] = useState([]);
 
   const { isLoading } = useQuery({
@@ -19,7 +22,11 @@ function ManageProduct() {
   });
 
   return (
-    <div className="w-100 container my-5">
+    <div className="w-100 container my-5 text-left">
+      <div className="my-3">
+        <Button type="primary" onClick={() => navigate('/manage/product/create')}>CREATE</Button>
+      </div>
+
       {!isLoading && (<> 
         <Table
           columns={columns}

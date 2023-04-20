@@ -56,7 +56,7 @@ export const routesWithLayout = [
 export const routesAdmin = [
   {
     path: 'dashboard',
-    Componnet: Dashboard
+    Component: Dashboard
   },
   {
     path: 'product',

@@ -13,7 +13,7 @@ function TableControl(props) {
         </IconButton>
       </Link>
       <Link to={props.editLink}>
-        <IconButton color="primary">
+        <IconButton color="success">
           <EditIcon />
         </IconButton>
       </Link>

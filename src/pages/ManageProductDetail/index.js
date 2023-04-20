@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
-import { Button, Form, Input, Radio } from 'antd';
+import { Button, Form, Input, Radio, Select } from 'antd';
 
 import { MyInput, MyTextarea, MyCheckbox } from '~/components';
 import { getProductWithMeta } from '~/api/product.api';
@@ -38,123 +38,102 @@ function ManageProductDetail() {
 
   return (
     <div className="container text-left">
-      {/* <Form
+      <Form
+        className="mb-3"
         layout="vertical"
       >
+        <div className="mb-3 text-center">
+          Thumbnail
+
+          <div className="mb-3">
+            <img ref={thumbnailReviewRef} className="img-thumbnail" width="200px" src={product?.srcImg || 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Solid_white.svg/2048px-Solid_white.svg.png'} alt="thumbnail..." />
+          </div>
+
+          <MyInput ref={thumbnailRef} onChange={changeThumbnailHandle} id="image" type="file" className="form-control-file invisible" />
+          
+          <button onClick={clickThumbnail} className="MyBtn MyBtn-primary">{product?.srcImg ? 'CHANGE' : 'UPLOAD THUMBNAIL'}</button>
+        </div>
+
         <Form.Item label="Name">
-          <Input placeholder="Name..." />
+          <Input 
+            value={product?.name} 
+            onChange={e => setProduct({ ...product, 'name': e.target.value })} 
+            placeholder="Name..." 
+          />
         </Form.Item>
 
         <Form.Item label="Description">
-          
+          <Input 
+            value={product?.description} 
+            onChange={e => setProduct({ ...product, 'description': e.target.value })} 
+            placeholder="Description..." 
+          />
         </Form.Item>
 
-        <Form.Item label="Image">
+        {/* <Form.Item label="Image">
           
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item label="Type">
-          
+          <Select
+            defaultValue={product?.type || 0}
+            onChange={v => setProduct({ ...product, 'type': v})}
+            options={[
+              { value: 0, label: 'Figure' },
+              { value: 1, label: 'Manga' }
+            ]}
+          />
         </Form.Item>
 
         <Form.Item label="Price">
-          <Input placeholder="Price..." />
+          <Input 
+            type="number"
+            value={product?.price} 
+            onChange={e => setProduct({ ...product, 'price': e.target.value })} 
+            placeholder="Price..." 
+          />
         </Form.Item>
 
         <Form.Item label="Discount">
-          <Input placeholder="Discount..." />
+          <Input 
+            type="number"
+            value={product?.discount} 
+            onChange={e => setProduct({ ...product, 'discount': e.target.value })} 
+            placeholder="Discount..." 
+          />
         </Form.Item>
 
         <Form.Item label="Amount">
-          <Input placeholder="Amount..." />
+          <Input 
+            type="number"
+            value={product?.amount} 
+            onChange={e => setProduct({ ...product, 'amount': e.target.value })} 
+            placeholder="Amount..." 
+          />
         </Form.Item>
 
         <Form.Item label="Sale">
-          <Input placeholder="Sale..." />
+          <Input 
+            type="number"
+            value={product?.sale} 
+            onChange={e => setProduct({ ...product, 'sale': e.target.value })} 
+            placeholder="Sale..." 
+          />
         </Form.Item>
 
         <Form.Item label="Active">
-          
+          <Select
+            defaultValue={product?.active || 0}
+            onChange={v => setProduct({ ...product, 'active': v})}
+            options={[
+              { value: 0, label: 'False' },
+              { value: 1, label: 'True' }
+            ]}
+          />
         </Form.Item>
 
-        <Form.Item label="Order">
-          
-        </Form.Item>
-
-      </Form> */}
-      
-      <div className="mb-3 text-center">
-        Thumbnail
-        {product?.srcImg && (
-          <div className="mb-3">
-            <img ref={thumbnailReviewRef} className="img-thumbnail" width="200px" src={product?.srcImg} alt="thumbnail..." />
-          </div>
-        )}
-        <MyInput ref={thumbnailRef} onChange={changeThumbnailHandle} id="image" type="file" className="form-control-file invisible" />
-        <button onClick={clickThumbnail} className="MyBtn MyBtn-primary">{product?.srcImg ? 'CHANGE' : 'UPLOAD THUMBNAIL'}</button>
-      </div>
-
-      <div className="mb-3">
-        <label htmlFor="name" className="form-label">Name</label>
-        <MyInput id="name" value={product?.name} className="form-control" placeholder="Name..." />
-      </div>
-      
-      <div className="mb-3">
-        <label htmlFor="description" className="form-label">Description</label>
-        <MyTextarea id="description" value={product?.discription} style={{ resize: 'none' }} className="form-control" placeholder="Description..." />
-      </div>
-      
-      <div className="mb-3">
-        <label htmlFor="image" className="form-label">Image</label>
-        <MyInput id="image" type="file" className="form-control-file" />
-      </div>
-      
-      <div className="mb-3">
-        <label htmlFor="type">Type</label>
-        <select defaultValue={product?.type ? '1' : '0'} className="custom-select" id="type">
-          <option value="0">Anime</option>
-          <option value="1">Figure</option>
-        </select>
-      </div>
-      
-      <div className="mb-3">
-        <label htmlFor="price" className="form-label">Price</label>
-        <MyInput id="price" value={product?.price} type="number" className="form-control" placeholder="Price..." />
-      </div>
-      
-      <div className="mb-3">
-        <label htmlFor="discount" className="form-label">Discount</label>
-        <MyInput id="discount" value={product?.discount} type="number" className="form-control" placeholder="Discount..." />
-      </div>
-      
-      <div className="mb-3">
-        <label htmlFor="amount" className="form-label">Amount</label>
-        <MyInput id="amount" value={product?.amount} type="number" className="form-control" placeholder="Amount..." />
-      </div>
-      
-      <div className="mb-3">
-        <label htmlFor="sale" className="form-label">Sale</label>
-        <MyInput id="sale" value={product?.sale} type="number" className="form-control" placeholder="Sale..." />
-      </div>
-      
-      <div className="mb-3">
-        <label htmlFor="meta" className="form-label">Meta</label>
-        <MyInput id="meta" value={product?.meta} className="form-control" placeholder="Meta..." />
-      </div>
-      
-      <div className="mb-3 form-check">
-        <MyCheckbox id="active" className="form-check-input" checked={product?.active} /> 
-        <label htmlFor="active" className="form-label">Active</label>
-      </div>
-      
-      <div className="mb-3">
-        <label htmlFor="order" className="form-label">Order</label>
-        <select defaultValue={product?.order || '0'} className="custom-select" id="order">
-          <option value="0">null</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-        </select>
-      </div>
+        <Button>DONE</Button>
+      </Form>
     </div>
   );
 }
