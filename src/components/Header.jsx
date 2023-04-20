@@ -15,6 +15,10 @@ const Header = () => {
   //   email: '52000720@student.tdtu.edu.vn'
   // };
 
+  const dataUser = {
+    username: 'Thuy Nguyen',
+    phone: '0356625002'
+  };
   return (
     <section className="header-section">
       <div className="container">

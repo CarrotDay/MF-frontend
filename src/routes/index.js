@@ -20,6 +20,7 @@ import CartView from "~/pages/Cart";
 import AnnounceDetail from "~/pages/AnnounceDetail";
 import ForgotPassword from "~/pages/ForgotPassword";
 import Otp from "~/pages/ForgotPassword/Otp";
+import AccountInfo from "~/pages/AcountInfo";
 
 export const routesWithLayout = [
   {
@@ -53,6 +54,10 @@ export const routesWithLayout = [
   {
     path: "cart",
     Component: CartView,
+  },
+  {
+    path: "account-information",
+    Component: AccountInfo,
   },
 ];
 

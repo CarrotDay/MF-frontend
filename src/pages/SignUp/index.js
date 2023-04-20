@@ -15,7 +15,7 @@ function SignUp() {
           <h1 className={"title font-weight-bold"}>Đăng ký</h1>
           <div className="form-group text-left">
             <label htmlFor="name" className={"font-weight-bold"}>Họ & Tên</label>
-            <input type="text" className={"form-control"} id={"name"}/>
+            <input type="text" className={"form-control"} id={"name"}  />
           </div>
           <div className="form-group text-left">
             <label htmlFor="account" className={"font-weight-bold"}>Tên tài khoản</label>

@@ -6,7 +6,7 @@ const MENU_OPTIONS_FOR_USER = [
   {
     label: 'Tài khoản của bạn',
     icon: 'fa-user-circle-o',
-    url: ''
+    url: '/account-ìnormation'
   },
   {
     label: 'Đơn hàng của bạn',
@@ -16,7 +16,7 @@ const MENU_OPTIONS_FOR_USER = [
   {
     label: 'Đăng xuất',
     icon: 'fa fa-sign-out',
-    url: 'sign-in'
+    url: '/sign-in'
   },
 ];
 
@@ -78,7 +78,7 @@ const AccountPopover = ({isLogin,data}) => {
                 {data.username}
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-                {data.email}
+                {data.phone}
               </Typography>
             </Box>
             <Divider sx={{ borderStyle: 'dashed' }} />

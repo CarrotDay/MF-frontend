@@ -17,7 +17,7 @@ const ProductGrid = ({isHome, type, data, category}) => {
     return title;
   }
   return (
-    <section className='product my-3 container center'>
+    <section className='product my-3 container'>
       <div className="row">
         <div className="col text-left title-list d-flex justify-content-between">
           <h1 className="font-weight-bold">
