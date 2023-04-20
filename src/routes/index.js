@@ -27,7 +27,7 @@ export const routesWithLayout = [
     Component: SideProduct,
   },
   {
-    path: "announce",
+    path: "announce-list",
     Component: Announce,
   },
   {
@@ -37,10 +37,6 @@ export const routesWithLayout = [
   {
     path: "cart",
     Component: CartView,
-  },
-  {
-    path: "announce-list",
-    Component: Announce,
   },
   {
     path: "product",

@@ -18,7 +18,7 @@ const ProductGrid = ({isHome, type, data, category}) => {
     return title;
   }
   return (
-    <section className='manga my-3 container'>
+    <section className='product my-3 container center'>
       <div className="row">
         <div className="col text-left title-list d-flex justify-content-between">
           <h1 className="font-weight-bold">
@@ -35,7 +35,6 @@ const ProductGrid = ({isHome, type, data, category}) => {
         </div>
         <div className="col-12 container list ">
           <div className="row py-3 col-12">
-
             {
               getData().map((data, index) => {
                 return (
@@ -45,6 +44,7 @@ const ProductGrid = ({isHome, type, data, category}) => {
                       :
                       <FigureItem key={index} meta={""} srcImg={"./Uploads/figure/1.png"} price={20000} />
                     }
+
                   </div>
                 )
               })

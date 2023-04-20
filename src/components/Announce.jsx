@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 const Announce = () => {
   return (
-    <section className={"container"}>
+    <section className={"container center"}>
       <div className="row  my-3">
         <div className="announce-detail col-12 col-lg-8 text-left mb-3">
           <div className="title-list px-3">
@@ -33,7 +33,7 @@ const Announce = () => {
           <div className="title-list px-3">
             <h1 className={"font-weight-bold"}>Khác</h1>
           </div>
-          <div className="announce-list my-3" style={{backgroundColor: "#fff"}}>
+          <div className="announce-list" style={{backgroundColor: "#fff"}}>
             <div className="announce-item container py-3">
               <Link to={"/"}>
                 <div className="title-announce-item-list">

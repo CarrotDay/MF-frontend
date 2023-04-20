@@ -3,7 +3,7 @@ import ProductCart from "~/components/ProductCart";
 import {Button} from "@mui/material";
 export default function Cart() {
   return (
-    <section className="cart container">
+    <section className="cart container center">
       <div className="row my-3">
         <div className="content-list col-12 col-lg-8 text-left ">
           <div className="title-list px-3">
@@ -52,7 +52,7 @@ export default function Cart() {
                 borderColor: "rgb(255,145,77)"
               }
             }} className={"btn-check-out"}  variant="contained" >
-              Thanh toán
+              Đặt hàng
             </Button>
           </div>
         </div>

@@ -8,7 +8,7 @@ body{
 	font-size: 16px;
 	line-height: 1.8;
 	font-weight: normal;
-	background: #f5f5f5;
+	background-color: #f5f5f5 !important;
 	color: lighten($black,50%);
 }
 a {
@@ -242,6 +242,11 @@ h1, h2, h3, h4, h5,
 	margin: 0 auto;
 	padding: 0;
 }
+.center {
+	display: flex;
+	justify-content: center;
+	align-content: center;
+}
 
 .header-action {
 	display: flex;
@@ -470,6 +475,7 @@ h1, h2, h3, h4, h5,
 }
 .tagcloud {
 	a {
+		text-decoration: none;
 		text-transform: uppercase;
 		display: inline-block;
 		padding: 4px 10px;
@@ -583,7 +589,7 @@ footer{
 
 // Announce
 .content {
-	margin: 30px 0;
+	//margin: 30px 0;
 }
 .new-announces {
 	background-color: $white;
@@ -605,6 +611,7 @@ footer{
 		margin-bottom: 10px;
 	}
 	.item-announce {
+		text-decoration: none;
 		background-color: $white;
 		box-shadow: 1px 1px 3px rgb(0,0,0, 0.1) ;
 		color: $black;
@@ -623,6 +630,9 @@ footer{
 }
 // Calendar
 .calendar-announce {
+	.title-list {
+		justify-content: center;
+	}
 }
 .calendar, .calendar_weekdays, .calendar_content {
 	max-width: 450px;
@@ -730,13 +740,15 @@ button.switch-month:hover {
 }
 
 .title-list {
+	display: flex;
 	margin-bottom: 10px;
 	background-color: black;
 	> * {
 		color: $primary;
 	}
 }
-.manga, .figure {
+.product {
+	background-color: #f5f5f5 !important;
 	.row {
 		.list {
 			background-color: $white;
@@ -805,19 +817,21 @@ button.switch-month:hover {
 }
 
 .category {
-	background-color: $white;
 	padding: 0;
-
-	ul {
+	ul.category-content {
 		padding: 0;
 		list-style-type: none;
-	}
-	.category-content {
+		background-color: $white;
 		.item-category {
 			a {
+				padding: 3px;
+				text-decoration: none;
 				color: $black;
-				&:hover {
-					color: $primary;
+				* {
+					&:hover {
+						color: $primary !important;
+						background-color: rgb(255,145,77,0.1);
+					}
 				}
 			}
 		}
@@ -927,6 +941,9 @@ table, th, td {
 	&:hover {
 		border: 0;
 		box-shadow: 2px 2px 2px rgb(255,145,77,0.3);
+	}
+	a {
+		text-decoration: none;
 	}
 }
 

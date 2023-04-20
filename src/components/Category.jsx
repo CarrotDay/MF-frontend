@@ -4,17 +4,17 @@ const Category = () => {
   return (
     <section className='category my-3 container'>
       <div className="col text-left title-list">
-        <h2 className="font-weight-bold">Thể loại</h2>
+        <h1 className="font-weight-bold">Thể loại</h1>
       </div>
-      <ul className="category-content text-left px-3">
+      <ul className="category-content text-left">
         <li className="item-category">
-          <a href="#"> Học đường </a>
+          <a href="#" > <h5>Học đường</h5> </a>
         </li>
         <li className="item-category">
-          <a href="#"> Học đường </a>
+          <a href="#"> <h5>Học đường</h5> </a>
         </li>
         <li className="item-category">
-          <a href="#"> Học đường </a>
+          <a href="#"> <h5>Học đường</h5> </a>
         </li>
       </ul>
     </section>

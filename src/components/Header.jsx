@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 import {Link} from "react-router-dom";
 import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
+import AccountPopover from "~/components/AccountPopover";
 
 const Header = () => {
-  const [isLogin, setIsLogin] = useState(false);
-  
+  const [isLogin, setIsLogin] = useState(true);
+  const dataUser = {
+    username: 'Thuy',
+    email: '52000720@student.tdtu.edu.vn'
+  };
   return (
     <section className="header-section">
       <div className="container">
@@ -33,45 +37,22 @@ const Header = () => {
             </form>
           </div>
           <div className="col-4 header-action">
-            {isLogin ?
-             <div className="action-account-login">
-                <Link to="/">
-                  <span>
-                      <i className="fa fa-user-circle-o"></i>
-                  </span>
-                  <span className="title-icon">User</span>
-                </Link>
-              </div>
-            :
-            <div className="action-account d-flex">
-              <Link to="/">
-              <span>
-                  <i className="fa fa-user-circle-o" aria-hidden="true"></i>
-              </span>
-              </Link>
-              <span className="d-flex flex-column">
-                <Link to="/" className="title-icon">
-                    {" "}
-                    Đăng nhập{" "}
-                </Link>
-                <Link to="/" className="title-icon">
-                    {" "}
-                    Đăng ký{" "}
-                </Link>
-              </span>
-            </div>
-            }
-
-
+            <AccountPopover isLogin={isLogin} data={dataUser} />
             <div className="action-cart">
-              <span>
-                  <i className="fa fa-shopping-cart"></i>
-              </span>
-              <Link to="/">
-                <span className="title-icon ">Giỏ hàng</span>
-              </Link>
+              {isLogin?
+                <Link to="/cart">
+                  <span>
+                      <i className="fa fa-shopping-cart"></i>
+                  </span>
+                </Link>:
+                <Link to="/sign-in">
+                  <span>
+                      <i className="fa fa-shopping-cart"></i>
+                  </span>
+                </Link>
+              }
             </div>
-            </div>
+          </div>
         </div>
       </div>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className={"p-0 m-0"}>
@@ -86,29 +67,22 @@ const Header = () => {
           </Navbar.Brand>
           <div className="menu-action d-flex">
             <div className="action-account">
-              <Link to="/">
-                <span>
-                    <i className="fa fa-user-circle-o" aria-hidden="true"></i>
-                </span>
-              </Link>
-              <span className="d-flex flex-column">
-                <Link to="/" className="title-icon">
-                    {" "}
-                  Đăng nhập{" "}
-                </Link>
-                <Link to="/" className="title-icon">
-                    {" "}
-                  Đăng ký{" "}
-                </Link>
-                </span>
+              <AccountPopover isLogin={isLogin} data={dataUser} />
             </div>
             <div className="action-cart">
-              <Link to="/">
-                <span>
-                    <i className="fa fa-shopping-cart"></i>
-                </span>
-                <span className="title-icon">Giỏ hàng</span>
-              </Link>
+              {isLogin?
+                <Link to="/cart">
+                  <span>
+                      <i className="fa fa-shopping-cart"></i>
+                  </span>
+                </Link>:
+                <Link to="/sign-in">
+                  <span>
+                      <i className="fa fa-shopping-cart"></i>
+                  </span>
+                </Link>
+              }
+
             </div>
           </div>
           <Navbar.Collapse id="responsive-navbar-nav">
