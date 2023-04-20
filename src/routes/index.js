@@ -6,9 +6,12 @@ import Dashboard from "~/pages/Dashboard";
 import ManageProduct from '~/pages/ManageProduct';
 import ManageProductDetail from '~/pages/ManageProductDetail';
 import ManageEmployee from '~/pages/ManageEmployee';
+import ManageEmployeeDetail from '~/pages/ManageEmployeeDetail';
 import ManageCustomer from '~/pages/ManageCustomer';
 import ManageTransaction from "~/pages/ManageTransaction";
+import ManageTransactionDetail from "~/pages/ManageTransactionDetail";
 import ManageAnnounce from '~/pages/ManageAnnounce';
+import ManageAnnounceDetail from '~/pages/ManageAnnounceDetail';
 import ManageSite from '~/pages/ManageSite';
 import Test from '~/pages/Test';
 import Announce from "~/pages/Announce";
@@ -28,7 +31,7 @@ export const routesWithLayout = [
     Component: SideProduct,
   },
   {
-    path: "product",
+    path: "product/:meta",
     Component: Product,
   },
   {
@@ -63,6 +66,10 @@ export const routesAdmin = [
     Component: ManageProduct
   },
   {
+    path: "product/:meta",
+    Component: Product,
+  },
+  {
     path: 'product/update/:meta',
     Component: ManageProductDetail
   },
@@ -75,7 +82,19 @@ export const routesAdmin = [
     Component: ManageEmployee
   },
   {
+    path: 'employee/create',
+    Component: ManageEmployeeDetail
+  },
+  {
+    path: 'customer/create',
+    Component: ManageCustomer
+  },
+  {
     path: 'customer',
+    Component: ManageCustomer
+  },
+  {
+    path: 'customer/:meta',
     Component: ManageCustomer
   },
   {
@@ -83,8 +102,16 @@ export const routesAdmin = [
     Component: ManageTransaction
   },
   {
+    path: 'transaction/create',
+    Component: ManageTransactionDetail
+  },
+  {
     path: 'announce',
     Component: ManageAnnounce
+  },
+  {
+    path: 'announce/create',
+    Component: ManageAnnounceDetail
   },
   {
     path: 'site',

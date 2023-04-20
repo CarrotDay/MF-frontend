@@ -85,9 +85,9 @@ export const columns = [
     fixed: 'right',
     width: 160,
     render: value => <TableControl 
-      detailLink={`/manage/customer/${value}`} 
-      editLink={`/manage/customer/update/${value}`}
-      delLink={`/manage/customer/${value}`}
+      detailLink={`/manage/transaction/${value}`} 
+      editLink={`/manage/transaction/update/${value}`}
+      delLink={`/manage/transaction/${value}`}
     />
   }
 ];

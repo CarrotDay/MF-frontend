@@ -56,11 +56,10 @@ export const columns = [
     key: 'meta',
     dataIndex: 'meta',
     fixed: 'right',
-    width: 160,
+    width: 50,
     render: value => <TableControl 
+      hide={[2, 3]}
       detailLink={`/manage/customer/${value}`} 
-      editLink={`/manage/customer/update/${value}`}
-      delLink={`/manage/customer/${value}`}
     />
   }
 ];

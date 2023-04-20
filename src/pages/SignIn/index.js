@@ -17,9 +17,14 @@ function SignIn() {
 
       window.localStorage.setItem('token', data);
 
-      const role = jwtDecode(data).Role;
+      const role = jwtDecode(data).role;
+
+      console.log(role);
   
-      if (role === '0') {
+      if (role === "0") {
+        navigate('/manage/dashboard');
+      }
+      else if (role === "1") {
         navigate('/manage/product');
       }
       else {

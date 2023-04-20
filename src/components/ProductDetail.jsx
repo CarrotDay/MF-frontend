@@ -15,7 +15,7 @@ const ProductDetail = ({ product }) => {
               </div>
               <div className="product-info col-12 col-md-8">
                 <div className="title-product">
-                  <h1 className="font-weight-bold">{product.name}</h1>
+                  <h1 className="font-weight-bold">{product?.name}</h1>
                 </div>
                 <div className="rate-product">
                   <span className={"pr-2"}><i className="fa fa-star" style={{color:"#fec20c"}} aria-hidden="true"></i></span>
@@ -25,21 +25,23 @@ const ProductDetail = ({ product }) => {
                   <span className={"pr-2"}><i className="fa fa-star" style={{color:"#fec20c"}} aria-hidden="true"></i></span>
                 </div>
                 <div className="amount">
-                  Số lượng: {product.amount}
+                  Số lượng: {product?.amount}
                 </div>
                 <div className="price-product">
-                  Giá tiền: {product.price}
+                  Giá tiền: {product?.price}
                 </div>
                 <div className="catalog">
                   <div className="tagcloud">
                     <Link to={"/"} className={"tag-cloud-link"}>
+                      {/* {product?.catalog} */}
                       Học đường
                     </Link>
                   </div>
                 </div>
                 <div className="description">
                   <p>
-                    Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum
+                    {product?.description || 'Chưa có mô tả'}
+                    {/* Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum */}
                   </p>
                 </div>
                 <div className="btn-group">

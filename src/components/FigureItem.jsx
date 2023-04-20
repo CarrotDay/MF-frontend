@@ -4,7 +4,7 @@ import {Card} from "react-bootstrap";
 
 const FigureItem = ({meta, srcImg, price}) => {
   return (
-      <Link to={meta}
+      <Link to={'/product/' + meta}
             className={"d-flex flex-column h-100"}
             style={{textDecoration: "none"}}
       >

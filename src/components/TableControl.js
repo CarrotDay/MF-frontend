@@ -12,16 +12,16 @@ function TableControl(props) {
           <SearchIcon />
         </IconButton>
       </Link>
-      <Link to={props.editLink}>
+      {props.hide?.includes(2) || <Link to={props.editLink}>
         <IconButton color="success">
           <EditIcon />
         </IconButton>
-      </Link>
-      <Link to={props.delLink}>
+      </Link>}
+      {props.hide?.includes(3) || <Link to={props.delLink}>
         <IconButton color="error">
           <DeleteOutlineIcon />
         </IconButton>
-      </Link>
+      </Link>}
     </>
   );
 }

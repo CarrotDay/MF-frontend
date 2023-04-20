@@ -12,22 +12,26 @@ const items = [
   },
   {
     key: '2',
-    label: <Link to="/manage/product" style={{ textDecoration: 'none' }}>Products</Link>
+    label: <Link to="/manage/site" style={{ textDecoration: 'none' }}>Site</Link>
   },
   {
     key: '3',
-    label: <Link to="/manage/customer" style={{ textDecoration: 'none' }}>Customer</Link>
+    label: <Link to="/manage/product" style={{ textDecoration: 'none' }}>Product</Link>
   },
   {
     key: '4',
+    label: <Link to="/manage/customer" style={{ textDecoration: 'none' }}>Customer</Link>
+  },
+  {
+    key: '5',
     label: <Link to="/manage/employee" style={{ textDecoration: 'none' }}>Employee</Link>
   },
   {
-    key: '5',
+    key: '6',
     label: <Link to="/manage/transaction" style={{ textDecoration: 'none' }}>Transaction</Link>
   },
   {
-    key: '5',
+    key: '7',
     label: <Link to="/manage/announce" style={{ textDecoration: 'none' }}>Announce</Link>
   }
 ];

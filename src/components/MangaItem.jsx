@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import {Card} from "react-bootstrap";
 const MangaItem = ({meta, srcImg, name, price}) => {
   return (
-    <Link to={meta}
+    <Link to={'/product/' + meta}
           className="h-100 d-flex flex-column"
           style={{textDecoration: "none"}}
     >
