@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import Slide from "~/components/Slide";
 import ProductGrid from "~/components/ProductGrid";
+import FigureGrid from '~/components/FigureGrid';
 import { getProducts } from '~/api/product.api';
 
 const Home = () => {
@@ -21,6 +22,8 @@ const Home = () => {
     queryFn: () => getProducts({ Type: true, Take: 12 }),
     onSuccess: data => setFigure(data.data['$values'])
   }).isLoading;
+
+  console.log(figure);
 
   return (
     <div>

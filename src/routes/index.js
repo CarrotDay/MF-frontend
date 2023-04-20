@@ -8,6 +8,7 @@ import ManageProductDetail from '~/pages/ManageProductDetail';
 import ManageEmployee from '~/pages/ManageEmployee';
 import ManageCustomer from '~/pages/ManageCustomer';
 import ManageTransaction from "~/pages/ManageTransaction";
+import ManageAnnounce from '~/pages/ManageAnnounce';
 import ManageSite from '~/pages/ManageSite';
 import Test from '~/pages/Test';
 import Announce from "~/pages/Announce";
@@ -27,10 +28,6 @@ export const routesWithLayout = [
     Component: SideProduct,
   },
   {
-    path: "announce",
-    Component: Announce,
-  },
-  {
     path: "product",
     Component: Product,
   },
@@ -43,16 +40,16 @@ export const routesWithLayout = [
     Component: Announce,
   },
   {
+    path: "announce",
+    Component: AnnounceDetail,
+  },
+  {
     path: "product",
     Component: Product,
   },
   {
     path: "cart",
     Component: CartView,
-  },
-  {
-    path: "announce",
-    Component: AnnounceDetail,
   },
 ];
 
@@ -84,6 +81,10 @@ export const routesAdmin = [
   {
     path: 'transaction',
     Component: ManageTransaction
+  },
+  {
+    path: 'announce',
+    Component: ManageAnnounce
   },
   {
     path: 'site',

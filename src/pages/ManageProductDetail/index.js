@@ -15,10 +15,10 @@ function ManageProductDetail() {
 
   useQuery({
     queryKey: ['product', meta],
-    queryFn: () => getProductWithMeta,
+    queryFn: () => getProductWithMeta(meta),
     onSuccess: data => {
-      console.log(data.data)
-      setProduct(data.data)
+      console.log(data.data);
+      setProduct(data.data);
     }
   });
 

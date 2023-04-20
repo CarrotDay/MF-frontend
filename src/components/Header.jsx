@@ -50,11 +50,11 @@ const Header = () => {
               </span>
               </Link>
               <span className="d-flex flex-column">
-                <Link to="/" className="title-icon">
+                <Link to="/sign-in" className="title-icon">
                     {" "}
                     Đăng nhập{" "}
                 </Link>
-                <Link to="/" className="title-icon">
+                <Link to="/sign-up" className="title-icon">
                     {" "}
                     Đăng ký{" "}
                 </Link>

@@ -21,6 +21,10 @@ const items = [
   {
     key: '4',
     label: <Link to="/manage/transaction" style={{ textDecoration: 'none' }}>Transaction</Link>
+  },
+  {
+    key: '5',
+    label: <Link to="/manage/announce" style={{ textDecoration: 'none' }}>Announce</Link>
   }
 ];
 
