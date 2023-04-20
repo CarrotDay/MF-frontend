@@ -85,9 +85,9 @@ const SideProduct = () => {
   return (
     <div>
       <Slide />
-      <div className="container">
+      <div className="container center">
         <div className="row">
-          <div className="col-12 col-md-8 col-lg-10">
+          <div className="col-12 col-md-8">
             <ProductGrid
               isHome={false}
               type={!type}
@@ -95,7 +95,7 @@ const SideProduct = () => {
               category={""}
             />
           </div>
-          <div className="col-12 col-md-4 col-lg-2 p-0">
+          <div className="col-12 col-md-4 p-0">
             <Category />
           </div>
         </div>

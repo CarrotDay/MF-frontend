@@ -27,7 +27,7 @@ const Home = () => {
 
   return (
     <div>
-      <Slide />
+      {/*<Slide />*/}
       <ProductGrid isHome={true} type={true} data={manga} />
       <ProductGrid isHome={true} type={false} data={figure} />
     </div>

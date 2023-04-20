@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 const ProductDetail = ({ product }) => {
   return (
-      <div className="container">
+      <div className="container center">
         <div className="row container my-3" >
           <div className="title-list col-12 p-0 text-md-left px-3 text-sm-center">
             <h1 className={"font-weight-bold"}>Chi tiết sản phẩm</h1>

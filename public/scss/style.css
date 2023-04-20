@@ -8932,7 +8932,7 @@ body {
   font-size: 16px;
   line-height: 1.8;
   font-weight: normal;
-  background: #f5f5f5;
+  background-color: #f5f5f5 !important;
   color: gray;
 }
 
@@ -9170,6 +9170,12 @@ h1, h2, h3, h4, h5,
   padding: 0;
 }
 
+.center {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
 .header-action {
   display: flex;
   align-items: center;
@@ -9386,6 +9392,7 @@ h1, h2, h3, h4, h5,
 }
 
 .tagcloud a {
+  text-decoration: none;
   text-transform: uppercase;
   display: inline-block;
   padding: 4px 10px;
@@ -9481,10 +9488,6 @@ footer {
   margin-bottom: 10px;
 }
 
-.content {
-  margin: 30px 0;
-}
-
 .new-announces {
   background-color: #fff;
 }
@@ -9505,6 +9508,7 @@ footer {
   margin-bottom: 10px;
 }
 .new-announces .item-announce {
+  text-decoration: none;
   background-color: #fff;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
   color: #000;
@@ -9518,6 +9522,10 @@ footer {
 }
 .new-announces .item-announce:focus * {
   color: rgb(255, 145, 77) !important;
+}
+
+.calendar-announce .title-list {
+  justify-content: center;
 }
 
 .calendar, .calendar_weekdays, .calendar_content {
@@ -9641,6 +9649,7 @@ button.switch-month:hover {
 }
 
 .title-list {
+  display: flex;
   margin-bottom: 10px;
   background-color: black;
 }
@@ -9648,19 +9657,22 @@ button.switch-month:hover {
   color: rgb(255, 145, 77);
 }
 
-.manga .row .list, .figure .row .list {
+.product {
+  background-color: #f5f5f5 !important;
+}
+.product .row .list {
   background-color: #fff;
 }
-.manga .row .list .item, .figure .row .list .item {
+.product .row .list .item {
   border-radius: 0;
   border: 0;
 }
-.manga .row .list .item .card, .figure .row .list .item .card {
+.product .row .list .item .card {
   border-radius: 0;
   border: 0;
   box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
 }
-.manga .row .list .item .card .img-manga, .figure .row .list .item .card .img-manga {
+.product .row .list .item .card .img-manga {
   border-radius: 0;
   overflow: hidden;
   width: 100%;
@@ -9668,14 +9680,14 @@ button.switch-month:hover {
   object-fit: cover;
   transition: all 0.3s ease;
 }
-.manga .row .list .item .card .img-manga:hover, .figure .row .list .item .card .img-manga:hover {
+.product .row .list .item .card .img-manga:hover {
   border-radius: 0;
   opacity: 0.7;
 }
-.manga .row .list .item .card .img-figure, .figure .row .list .item .card .img-figure {
+.product .row .list .item .card .img-figure {
   overflow: hidden;
 }
-.manga .row .list .item .card .img-figure img, .figure .row .list .item .card .img-figure img {
+.product .row .list .item .card .img-figure img {
   border-radius: 0;
   width: 100%;
   height: 100%;
@@ -9684,45 +9696,48 @@ button.switch-month:hover {
   transform-origin: 50% 25%;
   transition: transform 1s, filter 0.5s ease-out;
 }
-.manga .row .list .item .card .img-figure img:hover, .figure .row .list .item .card .img-figure img:hover {
+.product .row .list .item .card .img-figure img:hover {
   border-radius: 0;
   transform: scale(1.2);
 }
-.manga .row .list .item .card .title-item, .figure .row .list .item .card .title-item {
+.product .row .list .item .card .title-item {
   font-weight: bold;
   margin-bottom: 10px;
 }
-.manga .row .list .item .card:focus *, .figure .row .list .item .card:focus * {
+.product .row .list .item .card:focus * {
   color: rgb(255, 145, 77) !important;
 }
-.manga .row .list .item .card .item-content .title-manga, .figure .row .list .item .card .item-content .title-manga {
+.product .row .list .item .card .item-content .title-manga {
   text-decoration: none;
   color: #000;
 }
-.manga .row .list .item .card .item-content .title-manga:hover, .figure .row .list .item .card .item-content .title-manga:hover {
+.product .row .list .item .card .item-content .title-manga:hover {
   color: rgb(255, 145, 77);
 }
-.manga .row .list .item .card .item-content .price, .figure .row .list .item .card .item-content .price {
+.product .row .list .item .card .item-content .price {
   color: #000;
   text-decoration: none;
 }
-.manga .row .list .item .card .item-content .price:hover, .figure .row .list .item .card .item-content .price:hover {
+.product .row .list .item .card .item-content .price:hover {
   color: rgb(255, 145, 77);
 }
 
 .category {
-  background-color: #fff;
   padding: 0;
 }
-.category ul {
+.category ul.category-content {
   padding: 0;
   list-style-type: none;
+  background-color: #fff;
 }
-.category .category-content .item-category a {
+.category ul.category-content .item-category a {
+  padding: 3px;
+  text-decoration: none;
   color: #000;
 }
-.category .category-content .item-category a:hover {
-  color: rgb(255, 145, 77);
+.category ul.category-content .item-category a *:hover {
+  color: rgb(255, 145, 77) !important;
+  background-color: rgba(255, 145, 77, 0.1);
 }
 
 .img-product-container .img-product {
@@ -9818,6 +9833,9 @@ table, th, td {
 .announce-item:hover {
   border: 0;
   box-shadow: 2px 2px 2px rgba(255, 145, 77, 0.3);
+}
+.announce-item a {
+  text-decoration: none;
 }
 
 .contain-otp > * {

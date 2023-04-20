@@ -8,18 +8,22 @@ const { Header, Sider } = Layout;
 const items = [
   {
     key: '1',
-    label: <Link to="/manage/product" style={{ textDecoration: 'none' }}>Products</Link>
+    label: <Link to="/manage/dashboard" style={{ textDecoration: 'none' }}>Dashboard</Link>
   },
   {
     key: '2',
-    label: <Link to="/manage/customer" style={{ textDecoration: 'none' }}>Customer</Link>
+    label: <Link to="/manage/product" style={{ textDecoration: 'none' }}>Products</Link>
   },
   {
     key: '3',
-    label: <Link to="/manage/employee" style={{ textDecoration: 'none' }}>Employee</Link>
+    label: <Link to="/manage/customer" style={{ textDecoration: 'none' }}>Customer</Link>
   },
   {
     key: '4',
+    label: <Link to="/manage/employee" style={{ textDecoration: 'none' }}>Employee</Link>
+  },
+  {
+    key: '5',
     label: <Link to="/manage/transaction" style={{ textDecoration: 'none' }}>Transaction</Link>
   },
   {
