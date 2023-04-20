@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover } from '@mui/material';
-import {Link} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const MENU_OPTIONS_FOR_USER = [
   {
@@ -40,7 +40,11 @@ const AccountPopover = ({isLogin,data}) => {
     setOpen(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = (label) => {
+    if (label === 'Đăng xuất') {
+      window.localStorage.removeItem('token');
+    }
+
     setOpen(null);
   };
   return (
@@ -81,7 +85,7 @@ const AccountPopover = ({isLogin,data}) => {
 
             <Stack sx={{ p: 1 }}>
               {MENU_OPTIONS_FOR_USER.map((option) => (
-                <MenuItem key={option.label} onClick={handleClose}>
+                <MenuItem key={option.label} onClick={() => handleClose(option.label)}>
                   <Link to={option.url} style={{textDecoration: 'none', color: 'black'}} >
                     {option.label}
                   </Link>
@@ -95,7 +99,9 @@ const AccountPopover = ({isLogin,data}) => {
             <Stack sx={{ p: 1 }}>
               {MENU_OPTIONS_FOR_ANONYMOUS.map((option) => (
                 <MenuItem key={option.label} onClick={handleClose}>
-                  {option.label}
+                  <Link to={option.url} style={{textDecoration: 'none', color: 'black'}} >
+                    {option.label}
+                  </Link>
                 </MenuItem>
               ))}
             </Stack>

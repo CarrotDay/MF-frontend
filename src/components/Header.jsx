@@ -1,14 +1,20 @@
 import React, { useState } from 'react'
-import {Link} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import AccountPopover from "~/components/AccountPopover";
+import jwtDecode from 'jwt-decode';
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const dataUser = {
-    username: 'Thuy',
-    email: '52000720@student.tdtu.edu.vn'
-  };
+
+  const token = window.localStorage.getItem('token');
+  const data = token ? jwtDecode(window.localStorage.getItem('token')) : '';
+
+  // const dataUser = {
+  //   username: 'Thuy',
+  //   email: '52000720@student.tdtu.edu.vn'
+  // };
+
   return (
     <section className="header-section">
       <div className="container">
@@ -37,9 +43,9 @@ const Header = () => {
             </form>
           </div>
           <div className="col-4 header-action">
-            <AccountPopover isLogin={isLogin} data={dataUser} />
+            <AccountPopover isLogin={Boolean(data)} data={data} />
             <div className="action-cart">
-              {isLogin?
+              {Boolean(data) ?
                 <Link to="/cart">
                   <span>
                       <i className="fa fa-shopping-cart"></i>
@@ -67,7 +73,8 @@ const Header = () => {
           </Navbar.Brand>
           <div className="menu-action d-flex">
             <div className="action-account">
-              <AccountPopover isLogin={isLogin} data={dataUser} />
+              <AccountPopover isLogin={Boolean(data)} data={data} />
+              {/* <AccountPopover isLogin={isLogin} data={dataUser} /> */}
             </div>
             <div className="action-cart">
               {isLogin?

@@ -10,7 +10,6 @@ const Home = () => {
   const [manga, setManga] = useState([]);
   const [figure, setFigure] = useState([]);
 
-
   const isLoadingManga = useQuery({
     queryKey: ['manga'],
     queryFn: () => getProducts({ Type: false, Take: 12 }),

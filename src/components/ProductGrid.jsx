@@ -14,7 +14,6 @@ const ProductGrid = ({isHome, type, data, category}) => {
     } else {
         title = category?category:"Tất cả"
     }
-    console.log("title", title)
     return title;
   }
   return (
