@@ -1,7 +1,39 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {Button} from "@mui/material";
+import axios from 'axios';
+import Select from 'react-select'
+import each from 'lodash/each';
+import map from 'lodash/map';
 
 function SignUp() {
+  const [optionsPro, setOptionsPro] = useState([]);
+
+  useEffect(() => {
+      axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Token': '0c09627a-c105-11ed-ab31-3eeb4194879e'
+        }
+      })
+        .then(response => {
+          const provinces = response.data.data;
+          const opt = [];
+          provinces.forEach((province) => {
+            opt.push({
+              value: province.ProvinceID,
+              label: province.ProvinceName,
+            })
+          });
+          setOptionsPro(opt);
+        })
+        .catch(error => {
+          // Xử lý lỗi
+        });
+    }
+  , []);
+
+  console.log('option', optionsPro)
+
   return (
     <section className="container py-5 h-100">
       <div className="row form" style={{backgroundColor: "#fff"}}>
@@ -27,7 +59,8 @@ function SignUp() {
           </div>
           <div className="form-group text-left">
             <label htmlFor="address" className={"font-weight-bold"}>Địa chỉ</label>
-            <input type="text" className={"form-control"} id={"address"}/>
+            <Select options={optionsPro} required />
+            {/*<input type="text" className={"form-control"} id={"address"}/>*/}
           </div>
           <div className="form-group text-left">
             <label htmlFor="email" className={"font-weight-bold"}>Email</label>

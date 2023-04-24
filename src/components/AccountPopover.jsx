@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover } from '@mui/material';
 import { Link, useNavigate } from "react-router-dom";
 
-const MENU_OPTIONS_FOR_USER = [
+const MENU_OPTIONS_FOR_CUSTOMER = [
   {
     label: 'Tài khoản của bạn',
     icon: 'fa-user-circle-o',
@@ -12,6 +12,19 @@ const MENU_OPTIONS_FOR_USER = [
     label: 'Đơn hàng của bạn',
     icon: 'fa fa-table',
     url: ''
+  },
+  {
+    label: 'Đăng xuất',
+    icon: 'fa fa-sign-out',
+    url: '/sign-in'
+  },
+];
+
+const MENU_OPTIONS_FOR_ADMIN = [
+  {
+    label: 'Quản lý',
+    icon: 'fa fa-tasks',
+    url: '/manage/dashboard'
   },
   {
     label: 'Đăng xuất',
@@ -84,7 +97,7 @@ const AccountPopover = ({isLogin,data}) => {
             <Divider sx={{ borderStyle: 'dashed' }} />
 
             <Stack sx={{ p: 1 }}>
-              {MENU_OPTIONS_FOR_USER.map((option) => (
+              {MENU_OPTIONS_FOR_CUSTOMER.map((option) => (
                 <MenuItem key={option.label} onClick={() => handleClose(option.label)}>
                   <Link to={option.url} style={{textDecoration: 'none', color: 'black'}} >
                     {option.label}
