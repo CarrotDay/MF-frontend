@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
 import ProductDetail from "~/components/ProductDetail";

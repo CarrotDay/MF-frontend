@@ -41,7 +41,7 @@ const ProductGrid = ({isHome, type, data, category}) => {
                     {type?
                       <MangaItem key={index} meta={data.meta} srcImg={data.srcImg} name={data.name} price={data.price} />
                       :
-                      <FigureItem key={index} meta={data.meta} srcImg={data.srcImg} price={data.price} />
+                      <FigureItem key={index} meta={data.meta} srcImg={data.srcImg} name={data.name} price={data.price} />
                     }
 
                   </div>

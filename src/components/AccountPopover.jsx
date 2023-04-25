@@ -8,7 +8,7 @@ const MENU_OPTIONS_FOR_CUSTOMER = [
     id: 4,
     label: 'Tài khoản của bạn',
     icon: 'fa-user-circle-o',
-    url: '/account-ìnormation'
+    url: '/account-information'
   },
   {
     id: 5,
@@ -89,7 +89,7 @@ const AccountPopover = ({isLogin,data}) => {
           <Stack sx={{ p: 1 }}>
             {MENU_OPTIONS_FOR_CUSTOMER.map((option) => (
               <Link to={option.url} style={{textDecoration: 'none', color: 'black'}} >
-                <MenuItem key={option.label} onClick={() => handleClose(option.id)}>
+                <MenuItem key={option.id} onClick={() => handleClose(option.id)}>
                   {option.label}
                 </MenuItem>
               </Link>
@@ -104,7 +104,7 @@ const AccountPopover = ({isLogin,data}) => {
         <Stack sx={{ p: 1 }}>
           {MENU_OPTIONS_FOR_ADMIN_EMPLOYEE.map((option) => (
             <Link to={option.url} style={{textDecoration: 'none', color: 'black'}} >
-              <MenuItem key={option.label} onClick={() => handleClose(option.id)}>
+              <MenuItem key={option.id} onClick={() => handleClose(option.id)}>
                 {option.label}
               </MenuItem>
             </Link>
@@ -116,7 +116,7 @@ const AccountPopover = ({isLogin,data}) => {
         <Stack sx={{ p: 1 }}>
           {MENU_OPTIONS_FOR_ANONYMOUS.map((option) => (
             <Link to={option.url} style={{textDecoration: 'none', color: 'black'}} >
-              <MenuItem key={option.label} onClick={() => handleClose(option.id)}>
+              <MenuItem key={option.id} onClick={() => handleClose(option.id)}>
                 {option.label}
               </MenuItem>
             </Link>

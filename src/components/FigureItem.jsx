@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import {Card} from "react-bootstrap";
 
-const FigureItem = ({meta, srcImg, price}) => {
+const FigureItem = ({meta, srcImg, name, price}) => {
   return (
       <Link to={'/product/' + meta}
             className={"d-flex flex-column h-100"}
@@ -13,6 +13,7 @@ const FigureItem = ({meta, srcImg, price}) => {
             <Card.Img variant="top" src={srcImg}/>
           </div>
           <Card.Body className={"item-content"}>
+            <Card.Title className={"title-figure"}>{name}</Card.Title>
             <Card.Text className={"price"}>{price}</Card.Text>
           </Card.Body>
         </Card>

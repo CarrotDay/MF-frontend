@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Button, Form, Input, Radio, Select } from 'antd';
 
