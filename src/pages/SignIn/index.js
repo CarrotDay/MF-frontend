@@ -4,7 +4,7 @@ import jwtDecode from 'jwt-decode';
 import {Button} from "@mui/material";
 
 import { signInAPI } from '~/api/account.api';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
   const navigate = useNavigate();

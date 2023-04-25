@@ -823,8 +823,8 @@ button.switch-month:hover {
 		list-style-type: none;
 		background-color: $white;
 		.item-category {
+			padding: 3px 10px;
 			a {
-				padding: 3px;
 				text-decoration: none;
 				color: $black;
 				* {

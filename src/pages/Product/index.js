@@ -23,7 +23,7 @@ const Product = () => {
 
   return (
     <div>
-      <ProductDetail product={product} />
+      <ProductDetail product={product} isLogin={false} />
     </div>
   );
 };

@@ -1,11 +1,21 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import AccountPopover from "~/components/AccountPopover";
 import jwtDecode from 'jwt-decode';
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState(true);
+
+  const [list, setList] = useState([
+    {path: '', text: 'TRANG CHỦ', isActive: true},
+    {path: '', text: 'MANGA', isActive: false},
+    {path: '', text: 'FIGURE', isActive: false},
+    {path: '', text: 'LIÊN HỆ', isActive: false},
+    {path: '', text: 'THÔNG BÁO', isActive: false},
+  ]);
+
+
 
   const token = window.localStorage.getItem('token');
   const data = token ? jwtDecode(window.localStorage.getItem('token')) : '';
@@ -72,7 +82,7 @@ const Header = () => {
           >
             <span className="fa fa-bars"></span> Menu
           </Navbar.Toggle>
-          <Navbar.Brand href="#" className={"navbar-brand-mobile"}>
+          <Navbar.Brand href="/" className={"navbar-brand-mobile"}>
             <img src="/Uploads/img/logo/2.png" alt="" />
           </Navbar.Brand>
           <div className="menu-action d-flex">
@@ -97,21 +107,21 @@ const Header = () => {
             </div>
           </div>
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="me-auto text-left pl-md-3 pl-lg-0" defaultActiveKey="#index" as="ul">
+            <Nav className="me-auto text-left pl-md-3 pl-lg-0"  as="ul">
               <Nav.Item as="li">
-                <Nav.Link href="#index">TRANG CHỦ</Nav.Link>
+                <Nav.Link href="/">TRANG CHỦ</Nav.Link>
               </Nav.Item>
               <Nav.Item as="li">
-                <Nav.Link href="#manga">MANGA</Nav.Link>
+                <Nav.Link href="/side-product">MANGA</Nav.Link>
               </Nav.Item>
               <Nav.Item as="li">
-                <Nav.Link href="#figure">FIGURE</Nav.Link>
+                <Nav.Link href="/side-product">FIGURE</Nav.Link>
               </Nav.Item>
               <Nav.Item as="li">
                 <Nav.Link href="#contact">LIÊN HỆ</Nav.Link>
               </Nav.Item>
               <Nav.Item as="li">
-                <Nav.Link href="#announce">THÔNG BÁO</Nav.Link>
+                <Nav.Link href="/announce-list">THÔNG BÁO</Nav.Link>
               </Nav.Item>
             </Nav>
           </Navbar.Collapse>

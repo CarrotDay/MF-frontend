@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
-const ProductDetail = ({ product }) => {
+const ProductDetail = ({ product, isLogin }) => {
   return (
       <div className="container center">
         <div className="row container my-3" >
@@ -33,7 +33,7 @@ const ProductDetail = ({ product }) => {
                 <div className="catalog">
                   <div className="tagcloud">
                     <Link to={"/"} className={"tag-cloud-link"}>
-                      {/* {product?.catalog} */}
+                       {product?.catalog}
                       Học đường
                     </Link>
                   </div>
@@ -45,9 +45,11 @@ const ProductDetail = ({ product }) => {
                   </p>
                 </div>
                 <div className="btn-group">
-                  <button className="add-product">
-                    <span>Thêm sản phẩm</span>
-                  </button>
+                  <Link to={isLogin?'#':'/sign-in'}>
+                    <button className="add-product">
+                      <span>Thêm sản phẩm</span>
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

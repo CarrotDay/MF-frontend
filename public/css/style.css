@@ -9730,8 +9730,10 @@ button.switch-month:hover {
   list-style-type: none;
   background-color: #fff;
 }
+.category ul.category-content .item-category {
+  padding: 3px 10px;
+}
 .category ul.category-content .item-category a {
-  padding: 3px;
   text-decoration: none;
   color: #000;
 }
