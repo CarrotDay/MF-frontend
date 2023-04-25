@@ -1,7 +1,11 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import jwtDecode from "jwt-decode";
+import Money from "~/components/Money";
+const ProductDetail = ({ product, catalog }) => {
+  const token = window.localStorage.getItem("token");
+  const role = token?jwtDecode(token).role:null;
 
-const ProductDetail = ({ product, isLogin }) => {
   return (
       <div className="container center">
         <div className="row container my-3" >
@@ -28,13 +32,12 @@ const ProductDetail = ({ product, isLogin }) => {
                   Số lượng: {product?.amount}
                 </div>
                 <div className="price-product">
-                  Giá tiền: {product?.price}
+                  Giá tiền: <Money money={product?.price} />
                 </div>
                 <div className="catalog">
                   <div className="tagcloud">
                     <Link to={"/"} className={"tag-cloud-link"}>
-                       {product?.catalog}
-                      Học đường
+                      {catalog}
                     </Link>
                   </div>
                 </div>
@@ -45,10 +48,16 @@ const ProductDetail = ({ product, isLogin }) => {
                   </p>
                 </div>
                 <div className="btn-group">
-                  <Link to={isLogin?'#':'/sign-in'}>
-                    <button className="add-product">
-                      <span>Thêm sản phẩm</span>
-                    </button>
+                  <Link to={role?'#':'/sign-in'}>
+                    {(role>1)?
+                      <button className="add-product">
+                        <span>Thêm sản phẩm</span>
+                      </button>
+                      :
+                      <button className="add-product" disabled>
+                        <span>Thêm sản phẩm</span>
+                      </button>
+                    }
                   </Link>
                 </div>
               </div>
