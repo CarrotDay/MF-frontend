@@ -1,15 +1,17 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import { Layout } from 'antd';
+import { Layout, Form, Input, Button } from 'antd';
 
 import { MyInput } from '~/components';
 
 const { Content } = Layout;
 
-function ManageAnnounceDetail({ announce }) {
+function ManageAnnounceDetail() {
   const thumbnailRef = useRef();
   const thumbnailReviewRef = useRef();
+
+  const [announce, setAnnounce] = useState(null);
 
   function changeThumbnailHandle() {
     if (thumbnailRef.current.files && thumbnailRef.current.files[0]) {
@@ -39,6 +41,14 @@ function ManageAnnounceDetail({ announce }) {
           
           <button onClick={clickThumbnail} className="MyBtn MyBtn-primary">{announce?.srcImg ? 'CHANGE' : 'UPLOAD THUMBNAIL'}</button>
         </div>
+
+        <Form.Item label="Title">
+          <Input 
+            value={announce?.title} 
+            onChange={e => setAnnounce({ ...announce, 'title': e.target.value })} 
+            placeholder="Title..." 
+          />
+        </Form.Item>
         
         <CKEditor
             editor={ Editor }
@@ -59,6 +69,10 @@ function ManageAnnounceDetail({ announce }) {
             }}
         />
       </Content>
+
+      <div className="my-3">
+        <Button type="primary">DONE</Button>
+      </div>
     </div>
   );
 }

@@ -33,6 +33,9 @@ function ManageProduct() {
           dataSource={products}
         />
       </>)}
+      <div className="my-3">
+        <Button type="primary">DONE</Button>
+      </div>
     </div>
   );
 }
