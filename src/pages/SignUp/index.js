@@ -65,7 +65,7 @@ function SignUp() {
         }
       })
         .then(response => {
-          const districts = response.data.data;
+          const districts = response.data.data.reverse();
           const opt = [];
           districts.forEach((district) => {
             opt.push({
@@ -107,18 +107,22 @@ function SignUp() {
     }
     , [district]);
   const onFinish = (values) => {
+    console.log('values',values);
   };
 
   const handleSelectPro = (value) => {
     setProvince(value);
+    return value;
   }
 
   const handleSelectDistrict = (value) => {
     setDistrict(value);
+    return value;
   }
 
   const handleSelectWard = (value) => {
     setWard(value);
+    return value;
   }
 
   return (
@@ -198,9 +202,9 @@ function SignUp() {
             label="Tỉnh/Thành"
             rules={[{ required: true }]}>
             <Select placeholder='Chọn tỉnh/thành' onSelect={handleSelectPro}>
-              {optionsPro && _.map(optionsPro, (o) => {
+              {optionsPro?_.map(optionsPro, (o) => {
                 return (<Option value={o.value}>{o.label}</Option>);
-              })}
+              }):null}
             </Select>
           </Form.Item>
           <Form.Item
@@ -208,20 +212,31 @@ function SignUp() {
             label="Quận/Huyện"
             rules={[{ required: true }]}>
             <Select placeholder='Chọn quận/huyện' onSelect={handleSelectDistrict}>
-              {optionsDistrict && _.map(optionsDistrict, (o) => {
+              {optionsDistrict?_.map(optionsDistrict, (o) => {
                 return (<Option value={o.value}>{o.label}</Option>);
-              })}
+              }):null}
             </Select>
           </Form.Item>
           <Form.Item
-            name="district"
+            name="ward"
             label="Phường/Xã/Thị trấn"
             rules={[{ required: true }]}>
             <Select placeholder='Chọn phường/xã/thị trấn' onSelect={handleSelectWard}>
-              {optionsWard && _.map(optionsWard, (o) => {
+              {optionsWard?_.map(optionsWard, (o) => {
                 return (<Option value={o.value}>{o.label}</Option>);
-              })}
+              }):null}
             </Select>
+          </Form.Item>
+          <Form.Item
+            name="road"
+            label="Số nhà/Đường"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Input />
           </Form.Item>
           <div className="btn-group d-flex flex-column mt-3">
             <Button className={"btn-submit"} htmlType="submit" >
