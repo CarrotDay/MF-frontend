@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import AccountPopover from "~/components/AccountPopover";
 import jwtDecode from 'jwt-decode';
@@ -112,10 +112,10 @@ const Header = () => {
                 <Nav.Link href="/">TRANG CHỦ</Nav.Link>
               </Nav.Item>
               <Nav.Item as="li">
-                <Nav.Link href="#manga">MANGA</Nav.Link>
+                <Nav.Link href="/side-product">MANGA</Nav.Link>
               </Nav.Item>
               <Nav.Item as="li">
-                <Nav.Link href="#figure">FIGURE</Nav.Link>
+                <Nav.Link href="/side-product">FIGURE</Nav.Link>
               </Nav.Item>
               <Nav.Item as="li">
                 <Nav.Link href="#contact">LIÊN HỆ</Nav.Link>
