@@ -92,7 +92,7 @@ function SignUp() {
           const opt = [];
           wards.forEach((ward) => {
             opt.push({
-              value: ward.WardID,
+              value: ward.WardCode,
               label: ward.WardName,
             })
           });
@@ -113,6 +113,7 @@ function SignUp() {
   }
 
   const handleSelectDistrict = (value) => {
+    console.log('value', value)
     setDistrict(value);
     return value;
   }

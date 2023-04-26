@@ -1,9 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {IconButton, TextField} from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 
-const ProductCart = () => {
+const ProductCart = ({link, name, description, number}) => {
+  const [amount, setAmount] = useState(number);
+
+  // dùng api cập nhật lại giỏ hàng
+
+  const removeAmount = () => {
+    setAmount(amount-1);
+  };
+
+  const addAmount = () => {
+    setAmount(amount+1);
+  };
+
   return (
     <div className="item-product row py-3 mb-3">
       <div className="img-product-container col-4">
@@ -20,10 +32,10 @@ const ProductCart = () => {
           <IconButton sx={{
             width: 20,
             height: 40,
-          }} color="error" className="plus-btn">
+          }} color="error" className="plus-btn" onClick={removeAmount}>
             <RemoveIcon aria-hidden="minus"></RemoveIcon>
           </IconButton>
-          <TextField value={"2"} sx={{
+          <TextField value={amount} sx={{
             padding: 0,
             width: 50,
             "& .MuiInputBase-root": {
@@ -33,7 +45,7 @@ const ProductCart = () => {
           <IconButton sx={{
             width: 20,
             height: 40,
-          }} color="primary" className="plus-btn">
+          }} color="primary" className="plus-btn" onClick={addAmount}>
             <AddIcon aria-hidden="add" />
           </IconButton>
         </div>
