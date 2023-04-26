@@ -13,9 +13,14 @@ const items = [
     icon: <DashboardOutlined />,
   },
   {
-    name: '/manage/dashboard',
+    name: '/manage/site',
     label: <Link to="/manage/site" style={{ textDecoration: 'none' }}>Site</Link>,
     icon: <ContactsOutlined />,
+  },
+  {
+    name: '/manage/catalog',
+    label: <Link to="/manage/catalog" style={{ textDecoration: 'none' }}>Catalog</Link>,
+    icon: <AlignRightOutlined />,
   },
   {
     name: '/manage/product',

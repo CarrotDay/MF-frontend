@@ -13,6 +13,7 @@ import ManageTransactionDetail from "~/pages/ManageTransactionDetail";
 import ManageAnnounce from '~/pages/ManageAnnounce';
 import ManageAnnounceDetail from '~/pages/ManageAnnounceDetail';
 import ManageSite from '~/pages/ManageSite';
+import ManageCatalog from '~/pages/ManageCatalog';
 import Test from '~/pages/Test';
 import Announce from "~/pages/Announce";
 import Product from "~/pages/Product";
@@ -154,6 +155,10 @@ export const routesAdmin = [
   {
     path: '/manage/site',
     Component: ManageSite
+  },
+  {
+    path: '/manage/catalog',
+    Component: ManageCatalog
   }
 ];
 
