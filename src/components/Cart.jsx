@@ -52,17 +52,6 @@ export default function Cart() {
 
 
   useEffect(() => {
-    // (async () => {
-    //   const province = await axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', {
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Token': '0c09627a-c105-11ed-ab31-3eeb4194879e'
-    //     }
-    //   });
-
-    //   console.log(province);
-    // })();
-
     axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', {
       headers: {
         'Content-Type': 'application/json',

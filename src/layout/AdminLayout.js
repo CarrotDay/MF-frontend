@@ -75,7 +75,7 @@ function AdminLayout() {
             />
           </Link>
         </div>
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
+        <Menu theme="dark" defaultSelectedKeys={['0']} mode="inline" items={items} />
       </Sider>
       <Layout className="site-layout">
         <Header>

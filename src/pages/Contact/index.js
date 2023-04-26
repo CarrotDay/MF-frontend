@@ -28,7 +28,15 @@ const Contact = () => {
             <h1 className={"font-weight-bold"}>Chi tiết liên hệ</h1>
           </div>
           <div className="container pt-3 pb-5" style={{backgroundColor: "#fff"}}>
+            <h3>Giới thiệu</h3>
+            <p>
+              Manga&Figure thành lập vào tháng 04 năm 2020. Ngày 01/08/2020, website của Manga&Figure chính thức vận hành và phục vụ cộng đồng fan khắp cả nước.
+            </p>
+            <p>
+              Chúng tôi đã có 100.000+ đơn hàng, phục vụ 5000+ lượt khách trên lãnh thổ Việt Nam và trở thành đơn vị uy tín nhất trong cộng đồng wibu.
+            </p>
             <div className="row">
+              <h3 className={'mb-3 mt-4'}>Phương thức liên lạc:</h3>
               <div className="col-12 col-md-6">
                 <div className="d-flex mb-2">
                   <span className={'contact-icon'}>

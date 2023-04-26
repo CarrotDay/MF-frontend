@@ -60,6 +60,7 @@ function SignUp() {
   , []);
 
   useEffect(() => {
+    if (province) {
       axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district', {
         headers: {
           'Content-Type': 'application/json',
@@ -84,9 +85,10 @@ function SignUp() {
           // Xử lý lỗi
         });
     }
-    , [province]);
+  }, [province]);
 
   useEffect(() => {
+    if (district) {
       axios.post('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id',{
         "district_id": district
       }, {
@@ -110,7 +112,7 @@ function SignUp() {
           // Xử lý lỗi
         });
     }
-    , [district]);
+  }, [district]);
   const onFinish = (values) => {
     console.log('values',values);
   };
@@ -153,7 +155,7 @@ function SignUp() {
       navigate('/sign-in');
     }
     catch (err) {
-      alert('Đăng nhập thất bại!');
+      alert('Đăng ký thất bại!');
       console.log(err);
     }
   }
