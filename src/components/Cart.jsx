@@ -47,42 +47,52 @@ export default function Cart() {
     setWard({...ward  , 'name': wardName});
     setDistrict({...district  , 'name': districtName});
     setProvince({...province  , 'name': provinceName});
-    }
-  , [address]);
+  }, [address]);
 
 
   useEffect(() => {
-      axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', {
-        headers: {
-          'Content-Type': 'application/json',
-          'Token': '0c09627a-c105-11ed-ab31-3eeb4194879e'
-        }
-      })
-        .then(response => {
-          const provinces = response.data.data;
-          const opt = [];
-          provinces.forEach((province) => {
-            opt.push({
-              value: province.ProvinceID,
-              label: province.ProvinceName,
-            })
-          });
-          setOptionsPro(opt);
-        })
-        .catch(error => {
-          // Xử lý lỗi
+    // (async () => {
+    //   const province = await axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', {
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'Token': '0c09627a-c105-11ed-ab31-3eeb4194879e'
+    //     }
+    //   });
+
+    //   console.log(province);
+    // })();
+
+    axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Token': '0c09627a-c105-11ed-ab31-3eeb4194879e'
+      }
+    })
+      .then(response => {
+        const provinces = response.data.data;
+        const opt = [];
+        provinces.forEach((province) => {
+          opt.push({
+            value: province.ProvinceID,
+            label: province.ProvinceName,
+          })
         });
-    }
-    , []);
+        setOptionsPro(opt);
+      })
+      .catch(error => {
+        // Xử lý lỗi
+      });
+  }, []);
 
   useEffect(() => {
+    if (province.id) {
       axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district', {
         headers: {
           'Content-Type': 'application/json',
           'Token': '0c09627a-c105-11ed-ab31-3eeb4194879e'
         },
         params: {
-          "province_id": province
+          "province_id": province.id
         }
       })
         .then(response => {
@@ -100,11 +110,12 @@ export default function Cart() {
           // Xử lý lỗi
         });
     }
-    , [province]);
+  }, [province]);
 
   useEffect(() => {
+    if (district.id) {
       axios.post('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id',{
-        "district_id": district
+        "district_id": district.id
       }, {
         headers: {
           'Content-Type': 'application/json',
@@ -116,7 +127,7 @@ export default function Cart() {
           const opt = [];
           wards.forEach((ward) => {
             opt.push({
-              value: ward.WardID,
+              value: ward.WardCode,
               label: ward.WardName,
             })
           });
@@ -126,22 +137,20 @@ export default function Cart() {
           // Xử lý lỗi
         });
     }
-    , [district]);
-
-
+  }, [district]);
 
   const handleSelectPro = (value) => {
-    setProvince(value);
+    setProvince({ ...province, id: value});
     return value;
   }
 
   const handleSelectDistrict = (value) => {
-    setDistrict(value);
+    setDistrict({ ...district, id: value });
     return value;
   }
 
   const handleSelectWard = (value) => {
-    setWard(value);
+    setWard({ ...ward, id: value});
     return value;
   }
 
@@ -167,6 +176,7 @@ export default function Cart() {
             <div className="money mb-2"style={{backgroundColor: "#fff"}}>
               <Form
                 {...layout}
+                form={form}
                 name="control-hooks"
                 validateMessages={validateMessages}
                 className={"p-2 form-body-ant"}

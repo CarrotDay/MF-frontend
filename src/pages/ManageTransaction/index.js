@@ -14,13 +14,16 @@ function ManageTransaction() {
   const { isLoading } = useQuery({
     queryKey: ['transactions'],
     queryFn: getTransactions,
-    onSuccess: data => setTransactions(data.data['$values'].map(e => ({
-      ...e,
-      key: e.id,
-      customer: e.customerName,
-      employee: e.employeeName,
-      status: e.statusName
-    })))
+    onSuccess: data => {
+      console.log(data.data['$values']);
+      setTransactions(data.data['$values'].map(e => ({
+        ...e,
+        key: e.id,
+        customer: e.customerName,
+        employee: e.employeeName,
+        status: e.statusName
+      })))
+    }
   });
 
   return (

@@ -80,8 +80,8 @@ export const columns = [
   },
   {
     title: '',
-    key: 'meta',
-    dataIndex: 'meta',
+    key: 'id',
+    dataIndex: 'id',
     fixed: 'right',
     width: 160,
     render: value => <TableControl 

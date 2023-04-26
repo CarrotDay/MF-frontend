@@ -111,7 +111,7 @@ export const routesEmployee = [
     Component: ManageTransaction
   },
   {
-    path: '/manage/transaction/create',
+    path: '/manage/transaction/:meta',
     Component: ManageTransactionDetail
   },
   {
