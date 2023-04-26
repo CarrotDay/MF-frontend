@@ -58,7 +58,6 @@ const AccountPopover = ({isLogin,data}) => {
   const [open, setOpen] = useState(null);
   const token = window.localStorage.getItem("token");
   const role = token?jwtDecode(token).role:null;
-
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
   };

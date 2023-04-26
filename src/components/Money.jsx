@@ -22,8 +22,6 @@ const Money = ({money}) => {
     return money + " VNĐ";
   }
 
-  console.log('money', getMoney(money));
-
   return (
     <>
       {getMoney(money)}

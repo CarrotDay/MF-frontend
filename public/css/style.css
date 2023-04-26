@@ -9801,32 +9801,36 @@ table, th, td {
   max-width: 100%;
 }
 
-.form {
+.form-ant {
   border-radius: 10px;
 }
-.form-body .ant-form-item {
+.form-body-ant .ant-form-item {
   text-align: left;
   margin-bottom: 20px;
 }
-.form-body .ant-form-item .ant-form-item-label {
+.form-body-ant .ant-form-item .ant-form-item-label {
   padding: 0;
 }
-.form-body .ant-form-item .ant-picker {
+.form-body-ant .ant-form-item .ant-picker {
   width: 100%;
 }
-.form-body .ant-form-item .ant-form-item-explain-error {
+.form-body-ant .ant-form-item .ant-form-item-explain-error {
   text-align: left;
   font-size: 12px;
 }
-.form-body .logo {
+.form-body-ant .ant-form-item .ant-form-item-feedback-icon {
+  display: flex;
+  justify-content: center;
+}
+.form-body-ant .logo {
   overflow: inherit;
 }
-.form-body .logo img {
+.form-body-ant .logo img {
   object-fit: contain;
   height: auto;
   max-width: 100px;
 }
-.form-body .btn-submit {
+.form-body-ant .btn-submit {
   font-size: 18px;
   height: 35px;
   color: #fff;
@@ -9834,7 +9838,7 @@ table, th, td {
   background-color: rgb(255, 145, 77);
   border: 1px solid rgb(255, 145, 77);
 }
-.form-body .btn-submit:hover {
+.form-body-ant .btn-submit:hover {
   background-color: transparent;
   color: rgb(255, 145, 77);
   border-width: 1px;
@@ -9908,6 +9912,11 @@ a .contact-icon:hover i {
 }
 .contact-content a:hover {
   text-decoration: underline !important;
+}
+
+input[type=password]::-ms-reveal,
+input[type=password]::-ms-clear {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */

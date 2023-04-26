@@ -902,14 +902,14 @@ table, th, td {
 		max-width: 100%;
 	}
 }
-.form {
+.form-ant {
 	.title {
 		//color:$primary;
 	}
 	border-radius: 10px;
 }
 
-.form-body {
+.form-body-ant {
 	.ant-form-item {
 		text-align: left;
 		margin-bottom: 20px;
@@ -922,6 +922,10 @@ table, th, td {
 		.ant-form-item-explain-error {
 			text-align: left;
 			font-size: 12px;
+		}
+		.ant-form-item-feedback-icon {
+			display: flex;
+			justify-content: center;
 		}
 	}
 	.logo {
@@ -1025,6 +1029,12 @@ a {
 			text-decoration: underline !important;
 		}
 	}
+}
+
+input[type=password]::-ms-reveal,
+input[type=password]::-ms-clear
+{
+	display: none;
 }
 
 

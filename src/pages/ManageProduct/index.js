@@ -5,6 +5,7 @@ import { Table, Button } from 'antd';
 
 import { getProducts } from '~/api/product.api';
 import { columns } from './data';
+import Money from "~/components/Money";
 
 function ManageProduct() {
   const navigate = useNavigate();
@@ -17,7 +18,8 @@ function ManageProduct() {
     onSuccess: data => setProducts(data.data['$values'].map(e => ({
       ...e,
       key: e.id,
-      thumbnail: e.srcImg
+      thumbnail: e.srcImg,
+      price: <Money money={e.price} />
     })))
   });
 

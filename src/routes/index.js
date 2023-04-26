@@ -112,7 +112,7 @@ export const routesAdmin = [
     Component: ManageTransaction
   },
   {
-    path: 'transaction/create',
+    path: 'transaction/update/:meta',
     Component: ManageTransactionDetail
   },
   {
