@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {Button, Form, Input, Select, DatePicker, Divider} from 'antd';
 import _ from "lodash";
+
+import { signUpApi } from '~/api/site.api';
 
 const layout = {
   labelCol: { span: 24 },
@@ -18,7 +20,14 @@ const validateMessages = {
 
 const { Option } = Select;
 
+const init = {
+  
+}
+
 function SignUp() {
+  const [form] = Form.useForm();
+  const navigate = useNavigate();
+
   const [optionsPro, setOptionsPro] = useState([]);
   const [province, setProvince] = useState();
   const [optionsDistrict, setOptionsDistrict] = useState([]);
@@ -26,7 +35,6 @@ function SignUp() {
   const [optionsWard, setOptionsWard] = useState([]);
   const [ward, setWard] = useState();
 
-  const [form] = Form.useForm();
   useEffect(() => {
       axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', {
         headers: {
@@ -123,6 +131,33 @@ function SignUp() {
     return value;
   }
 
+  const submitForm = async () => {
+    try {
+      const formData = form.getFieldsValue();
+      const body = { 
+        ...formData, 
+        username: formData.account,
+        birthday: new Date(formData?.birthday?.['$d']), 
+        address: [
+          formData.road, 
+          optionsWard.find(e => e.value == formData.ward)?.label,
+          optionsDistrict.find(e => e.value == formData.district)?.label,
+          optionsPro.find(e => e.value == formData.province)?.label
+        ].join(', ')
+      };
+
+      console.log(body);
+  
+      const res = await signUpApi(body);
+      alert('Đăng ký thành công!');
+      navigate('/sign-in');
+    }
+    catch (err) {
+      alert('Đăng nhập thất bại!');
+      console.log(err);
+    }
+  }
+
   return (
     <section className="container py-5 h-100">
       <div className="row form-ant" style={{backgroundColor: "#fff"}}>
@@ -131,6 +166,7 @@ function SignUp() {
         </div>
         <Form
           {...layout}
+          form={form}
           name="control-hooks"
           onFinish={onFinish}
           validateMessages={validateMessages}
@@ -249,7 +285,7 @@ function SignUp() {
             <Input />
           </Form.Item>
           <div className="btn-group d-flex flex-column mt-3">
-            <Button className={"btn-submit"} htmlType="submit" >
+            <Button className={"btn-submit"} onClick={submitForm} >
               Đăng ký
             </Button>
             <Divider plain>Hoặc</Divider>
