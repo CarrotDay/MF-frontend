@@ -9,3 +9,5 @@ export const getProductWithMeta = (meta) => axios.get(`${SERVER}api/product/${me
 export const createProduct = (body = {}) => axios.post(`${SERVER}api/product/create`, body);
 
 export const delProductWithMeta = (meta) => axios.delete(`${SERVER}api/product/${meta}`);
+
+export const updateProduct = (meta, body = {}) => axios.post(`${SERVER}api/product/update/${meta}`, body);

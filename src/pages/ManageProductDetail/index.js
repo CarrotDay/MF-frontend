@@ -1,18 +1,14 @@
 import React, { useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Button, Form, Input, Radio, Select } from 'antd';
 
 import { MyInput, MyTextarea, MyCheckbox } from '~/components';
-import { getProductWithMeta, createProduct } from '~/api/product.api';
+import { getProductWithMeta, createProduct, updateProduct } from '~/api/product.api';
 import { uploadFile } from '~/api/uploadFile.api';
 import { getCatalogWithBodys } from '~/api/catalog.api';
-import { updateProductImage } from '~/api/productImage.api';
 
 let file;
-// const initForm = {
-//   type: true,
-// };
 
 const initForm = {
   amount: 8,
@@ -28,6 +24,7 @@ const initForm = {
 function ManageProductDetail() {
   const [ form ] = Form.useForm();
   const { meta } = useParams();
+  const navigate = useNavigate();
   const thumbnailRef = useRef();
   const thumbnailReviewRef = useRef();
 
@@ -69,28 +66,40 @@ function ManageProductDetail() {
   }
 
   const submitHandle = async () => {
-    let image;
-    let product;
-    if (file) {
-      let data = new FormData();
-      data.append('file', file);
-  
-      image = (await uploadFile('ProductImage', data))?.data?.id;
-      console.log(image);
-    }
+    try {
+      let image;
+      if (file) {
+        let data = new FormData();
+        data.append('file', file);
     
-
-    if (!meta) {
-      const data = form.getFieldsValue();
-      const name = data.name;
-
-      product = await createProduct({
-        ...data,
-        meta: `${data.name.replace(/ /g, '-')}-${Math.floor(Math.random() * 100000)}`,
-        image
-      });
-
-      console.log(product);
+        image = (await uploadFile('ProductImage', data))?.data?.id;
+        console.log(image);
+      } 
+  
+      if (!meta) {
+        const data = form.getFieldsValue();
+  
+        await createProduct({
+          ...data,
+          meta: `${data.name.replace(/ /g, '-')}-${Math.floor(Math.random() * 100000)}`,
+          image
+        });
+  
+        navigate('/manage/product');
+      }
+      else {
+        const data = form.getFieldsValue();
+  
+        await updateProduct(meta, {
+          ...data,
+          image
+        });
+  
+        alert('Đã sửa sản phẩm');
+      }
+    }
+    catch (err) {
+      console.log(err);
     }
   }
 
