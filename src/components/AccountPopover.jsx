@@ -14,7 +14,7 @@ const MENU_OPTIONS_FOR_CUSTOMER = [
     id: 5,
     label: 'Đơn hàng của bạn',
     icon: 'fa fa-table',
-    url: ''
+    url: '/transaction'
   },
   {
     id: 2,

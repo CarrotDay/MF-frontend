@@ -5,18 +5,21 @@ export const columns = [
     title: 'Customer',
     dataIndex: 'customer',
     key: 'customer',
+    align: 'center',
     sorter: (a, b) => a.customer > b.customer ? 1 : -1,
   },
   {
     title: 'Employee',
     dataIndex: 'employee',
     key: 'employee',
+    align: 'center',
     sorter: (a, b) => a.employee > b.employee ? 1 : -1
   },
   {
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
+    align: 'center',
     filters: [
       {
         text: 'Chưa thanh toán',
@@ -69,20 +72,23 @@ export const columns = [
       }
     ],
     onFilter: (v, e) => e.rate === v,
+    align: 'center',
     sorter: (a, b) => a.rate - b.rate,
   },
   {
     title: 'Create At',
     dataIndex: 'createAt',
     key: 'createAt',
+    align: 'center',
     sorter: (a, b) => a.createAt > b.createAt ? 1 : -1,
     render: value => value.substring(0, 10)
   },
   {
-    title: '',
+    title: 'Action',
     key: 'id',
     dataIndex: 'id',
     fixed: 'right',
+    align: 'center',
     width: 160,
     render: value => <TableControl 
       detailLink={`/manage/transaction/${value}`} 

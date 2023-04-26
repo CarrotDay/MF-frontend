@@ -29,7 +29,7 @@ export default function Cart() {
   const [district, setDistrict] = useState({id: null, name: ''});
   const [optionsWard, setOptionsWard] = useState([]);
   const [ward, setWard] = useState({id: null, name: ''});
-
+  const [road, setRoad] = useState();
 
   function getAddressComponents(address) {
     const parts = address.split(',').map(part => part.trim());
@@ -37,13 +37,14 @@ export default function Cart() {
     const provinceName = parts.pop();
     const districtName = parts.pop();
     const wardName = parts.pop();
+    const roadName = parts.join(', ');
 
-    return { wardName, districtName, provinceName };
+    return { roadName, wardName, districtName, provinceName };
   }
 
   useEffect(() => {
-    const {wardName, districtName, provinceName} = getAddressComponents(address);
-
+    const {roadName, wardName, districtName, provinceName} = getAddressComponents(address);
+    setRoad(roadName);
     setWard({...ward  , 'name': wardName});
     setDistrict({...district  , 'name': districtName});
     setProvince({...province  , 'name': provinceName});
@@ -220,7 +221,7 @@ export default function Cart() {
                     },
                   ]}
                 >
-                  <Input />
+                  <Input value={road} />
                 </Form.Item>
               </Form>
             </div>

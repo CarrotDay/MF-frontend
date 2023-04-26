@@ -7,7 +7,7 @@ import filter from "lodash/filter";
 
 const Contact = () => {
   const [contacts, setContacts] = useState([]);
-  const { isLoadingContacts } = useQuery({
+  useQuery({
     queryKey: ['contacts'],
     queryFn: getContactApi,
     onSuccess: data => setContacts(data.map(e => ({
@@ -20,7 +20,6 @@ const Contact = () => {
   const twitter = filter(contacts,{'name': 'Twitter'})[0]?.link;
   const facebook = filter(contacts,{'name': 'Facebook'})[0]?.link;
   const instagram = filter(contacts,{'name': 'Instagram'})[0]?.link;
-
   return (
     <section className={"container"}>
       <div className="row  my-3">

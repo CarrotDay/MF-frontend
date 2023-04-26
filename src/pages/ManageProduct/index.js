@@ -15,12 +15,14 @@ const columns = [
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
+    align: 'center',
     sorter: (a, b) => a.name > b.name ? 1 : -1,
   },
   {
     title: 'Thumbnail',
     dataIndex: 'thumbnail',
     key: 'thumbnail',
+    align: 'center',
     sorter: (a, b) => a.thumbnail > b.thumbnail ? 1 : -1,
     render: value => <img width="100px" height="100px" src={value} alt="thumbnail" />
   },
@@ -28,24 +30,21 @@ const columns = [
     title: 'Price',
     dataIndex: 'price',
     key: 'price',
+    align: 'center',
     sorter: (a, b) => a.price - b.price,
   },
   {
     title: 'Amount',
     dataIndex: 'amount',
     key: 'amount',
+    align: 'center',
     sorter: (a, b) => a.amount - b.amount,
-  },
-  {
-    title: 'Sale',
-    dataIndex: 'sale',
-    key: 'sale',
-    sorter: (a, b) => a.sale - b.sale,
   },
   {
     title: 'Type',
     dataIndex: 'type',
     key: 'type',
+    align: 'center',
     filters: [
       {
         text: 'Anime',
@@ -64,11 +63,12 @@ const columns = [
     title: 'Create At',
     dataIndex: 'createAt',
     key: 'createAt',
+    align: 'center',
     sorter: (a, b) => a.createAt > b.createAt ? 1 : -1,
     render: value => value.substring(0, 10)
   },
   {
-    title: '',
+    title: 'Action',
     key: 'meta',
     dataIndex: 'meta',
     fixed: 'right',

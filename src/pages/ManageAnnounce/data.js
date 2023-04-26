@@ -4,6 +4,7 @@ export const columns = [
   {
     title: 'Title',
     dataIndex: 'title',
+    align: 'center',
     key: 'title',
     sorter: (a, b) => a.title > b.title ? 1 : -1,
   },
@@ -11,6 +12,7 @@ export const columns = [
     title: 'Image',
     dataIndex: 'image',
     key: 'image',
+    align: 'center',
     sorter: (a, b) => a.image > b.image ? 1 : -1,
     render: value => <img width="100px" height="100px" src={value} alt="image" />
   },
@@ -18,6 +20,7 @@ export const columns = [
     title: 'Active',
     dataIndex: 'active',
     key: 'active',
+    align: 'center',
     filters: [
       {
         text: 'False',
@@ -35,14 +38,16 @@ export const columns = [
   {
     title: 'Create At',
     dataIndex: 'createAt',
+    align: 'center',
     key: 'createAt',
     sorter: (a, b) => a.createAt > b.createAt ? 1 : -1,
     render: value => value.substring(0, 10)
   },
   {
-    title: '',
+    title: 'Action',
     key: 'meta',
     dataIndex: 'meta',
+    align: 'center',
     fixed: 'right',
     width: 160,
     render: value => <TableControl 

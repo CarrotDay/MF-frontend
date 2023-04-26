@@ -22,6 +22,7 @@ import ForgotPassword from "~/pages/ForgotPassword";
 import Otp from "~/pages/ForgotPassword/Otp";
 import AccountInfo from "~/pages/AcountInfo";
 import Contact from "~/pages/Contact";
+import Transaction from "~/pages/Transaction";
 
 export const routesWithoutLayout = [
   {
@@ -82,6 +83,10 @@ export const routesCustomer = [
     path: "/account-information",
     Component: AccountInfo,
   },
+  {
+    path: "/transaction",
+    Component: Transaction
+  }
 ];
 
 export const routesEmployee = [

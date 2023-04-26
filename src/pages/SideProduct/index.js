@@ -32,7 +32,7 @@ const SideProduct = () => {
   return (
     <div>
       <Slide />
-      <div className="container center">
+      <div className="container">
         <div className="row">
           <div className="col-12 col-md-8">
             <ProductGrid

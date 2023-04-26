@@ -13,28 +13,28 @@ function Slide() {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="./Uploads/slide/1.png"
+          src="/Uploads/slide/1.png"
           alt="First slide"
         />
       </Carousel.Item>
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="./Uploads/slide/2.png"
+          src="/Uploads/slide/2.png"
           alt="Second slide"
         />
       </Carousel.Item>
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="./Uploads/slide/3.png"
+          src="/Uploads/slide/3.png"
           alt="Third slide"
         />
       </Carousel.Item>
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="./Uploads/slide/4.png"
+          src="/Uploads/slide/4.png"
           alt="Third slide"
         />
       </Carousel.Item>

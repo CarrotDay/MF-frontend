@@ -28,6 +28,7 @@ export const addHeader = async (body) => {
 
 export const getContactApi = async () => {
   const { data } = await axios.get(SERVER + 'api/contact/list', {});
+
   return data['$values'];
 };
 
