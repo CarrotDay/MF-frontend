@@ -12,7 +12,7 @@ const ProductGrid = ({isHome, type, data, category}) => {
     if (isHome) {
       title = type?"Manga":"Figure";
     } else {
-        title = category?category:"Tất cả"
+      title = category?(category.charAt(0).toUpperCase() + category.slice(1)):"Tất cả"
     }
     return title;
   }

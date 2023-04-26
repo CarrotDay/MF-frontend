@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
 import ProductDetail from "~/components/ProductDetail";
@@ -10,13 +10,11 @@ const Product = () => {
 
   const [product, setProduct] = useState(null);
 
-  console.log(product);
-
   useQuery({
     queryKey: ['product', meta],
     queryFn: () => getProductWithMeta(meta),
     onSuccess: data => {
-      console.log(data.data);
+      console.log(data);
       setProduct(data.data);
     }
   });

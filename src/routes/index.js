@@ -22,112 +22,6 @@ import ForgotPassword from "~/pages/ForgotPassword";
 import Otp from "~/pages/ForgotPassword/Otp";
 import AccountInfo from "~/pages/AcountInfo";
 
-export const routesWithLayout = [
-  {
-    path: "",
-    Component: Home,
-  },
-  {
-    path: "side-product",
-    Component: SideProduct,
-  },
-  {
-    path: "product/:meta",
-    Component: Product,
-  },
-  {
-    path: "cart",
-    Component: CartView,
-  },
-  {
-    path: "announce-list",
-    Component: Announce,
-  },
-  {
-    path: "announce",
-    Component: AnnounceDetail,
-  },
-  {
-    path: "product",
-    Component: Product,
-  },
-  {
-    path: "cart",
-    Component: CartView,
-  },
-  {
-    path: "account-information",
-    Component: AccountInfo,
-  },
-];
-
-export const routesAdmin = [
-  {
-    path: 'dashboard',
-    Component: Dashboard
-  },
-  {
-    path: 'product',
-    Component: ManageProduct
-  },
-  {
-    path: "product/:meta",
-    Component: Product,
-  },
-  {
-    path: 'product/update/:meta',
-    Component: ManageProductDetail
-  },
-  {
-    path: 'product/create',
-    Component: ManageProductDetail
-  },
-  {
-    path: 'employee',
-    Component: ManageEmployee
-  },
-  {
-    path: 'employee/create',
-    Component: ManageEmployeeDetail
-  },
-  {
-    path: 'customer/create',
-    Component: ManageCustomer
-  },
-  {
-    path: 'customer',
-    Component: ManageCustomer
-  },
-  {
-    path: 'customer/:meta',
-    Component: ManageCustomer
-  },
-  {
-    path: 'transaction',
-    Component: ManageTransaction
-  },
-  {
-    path: 'transaction/create',
-    Component: ManageTransactionDetail
-  },
-  {
-    path: 'announce',
-    Component: ManageAnnounce
-  },
-  {
-    path: 'announce/create',
-    Component: ManageAnnounceDetail
-  },
-  {
-    path: 'site',
-    Component: ManageSite
-  },
-  {
-    path: 'test',
-    Component: Test
-  }
-];
-
 export const routesWithoutLayout = [
   {
     path: "sign-in",
@@ -145,6 +39,112 @@ export const routesWithoutLayout = [
     path: "otp",
     Component: Otp,
   },
+];
+
+export const routesWithLayout = [
+  {
+    path: "/",
+    Component: Home,
+  },
+  {
+    path: "/side-product/:meta",
+    Component: SideProduct,
+  },
+  {
+    path: "/product/:meta",
+    Component: Product,
+  },
+  {
+    path: "/announce-list",
+    Component: Announce,
+  },
+  {
+    path: "/announce",
+    Component: AnnounceDetail,
+  },
+  {
+    path: "/product",
+    Component: Product,
+  },
+];
+
+export const routesCustomer = [
+  {
+    path: "/cart",
+    Component: CartView,
+  },
+  {
+    path: "/account-information",
+    Component: AccountInfo,
+  },
+];
+
+export const routesEmployee = [
+  ...routesWithLayout,
+  {
+    path: '/manage/dashboard',
+    Component: Dashboard
+  },
+  {
+    path: 'manage/product',
+    Component: ManageProduct
+  },
+  {
+    path: "/manage/product/:meta",
+    Component: Product,
+  },
+  {
+    path: '/manage/product/update/:meta',
+    Component: ManageProductDetail
+  },
+  {
+    path: '/manage/product/create',
+    Component: ManageProductDetail
+  },
+  {
+    path: '/manage/transaction',
+    Component: ManageTransaction
+  },
+  {
+    path: '/manage/transaction/create',
+    Component: ManageTransactionDetail
+  },
+  {
+    path: '/manage/customer',
+    Component: ManageCustomer
+  },
+  {
+    path: '/manage/customer/:meta',
+    Component: ManageCustomer
+  },
+];
+
+export const routesAdmin = [
+  ...routesEmployee,
+  {
+    path: '/manage/employee',
+    Component: ManageEmployee
+  },
+  {
+    path: '/manage/employee/create',
+    Component: ManageEmployeeDetail
+  },
+  {
+    path: '/manage/customer/create',
+    Component: ManageCustomer
+  },
+  {
+    path: '/manage/announce',
+    Component: ManageAnnounce
+  },
+  {
+    path: '/manage/announce/create',
+    Component: ManageAnnounceDetail
+  },
+  {
+    path: '/manage/site',
+    Component: ManageSite
+  }
 ];
 
 export default { routesWithLayout, routesWithoutLayout};

@@ -1,1 +1,2 @@
-export { default as LoginRoute } from './LoginRoute';
+export { default as SignInRoute } from './SignInRoute';
+export { default as RoleRoute } from './RoleRoute';

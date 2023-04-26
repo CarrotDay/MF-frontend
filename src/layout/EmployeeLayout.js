@@ -13,11 +13,6 @@ const items = [
     icon: <DashboardOutlined />,
   },
   {
-    name: '/manage/dashboard',
-    label: <Link to="/manage/site" style={{ textDecoration: 'none' }}>Site</Link>,
-    icon: <ContactsOutlined />,
-  },
-  {
     name: '/manage/product',
     label: <Link to="/manage/product" style={{ textDecoration: 'none' }}>Product</Link>,
     icon: <AlignRightOutlined />,
@@ -28,20 +23,10 @@ const items = [
     icon: <UserOutlined />,
   },
   {
-    name: '/manage/employee',
-    label: <Link to="/manage/employee" style={{ textDecoration: 'none' }}>Employee</Link>,
-    icon: <UsergroupAddOutlined />,
-  },
-  {
     name: '/manage/transaction',
     label: <Link to="/manage/transaction" style={{ textDecoration: 'none' }}>Transaction</Link>,
     icon: <DollarOutlined />,
   },
-  {
-    name: '/manage/announce',
-    label: <Link to="/manage/announce" style={{ textDecoration: 'none' }}>Announce</Link>,
-    icon: <NotificationOutlined />,
-  }
 ].map((e, index) => ({
   ...e,
   key: index
