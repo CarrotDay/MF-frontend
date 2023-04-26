@@ -19,20 +19,20 @@ export const columns = [
     key: 'status',
     filters: [
       {
-        text: 'Chờ xử lý',
-        value: 'Chờ xử lý'
+        text: 'Chưa thanh toán',
+        value: 'Chưa thanh toán'
       },
       {
-        text: 'Đã xác nhận',
-        value: 'Đã xác nhận'
+        text: 'Đã thanh toán',
+        value: 'Đã thanh toán'
       },
       {
         text: 'Đang vận chuyển',
         value: 'Đang vận chuyển'
       },
       {
-        text: 'Đã thanh toán',
-        value: 'Đã thanh toán'
+        text: 'Đã xác nhận',
+        value: 'Đã xác nhận'
       },
       {
         text: 'Hủy',

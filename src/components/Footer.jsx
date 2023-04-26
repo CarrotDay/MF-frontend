@@ -1,6 +1,23 @@
-import React from 'react'
+import React, {useState} from 'react'
+import {useQuery} from "@tanstack/react-query";
+import {getContactApi} from "~/api/site.api";
+import filter from "lodash/filter";
 
 const Footer = () => {
+  const [contacts, setContacts] = useState([]);
+  const { isLoadingContacts } = useQuery({
+    queryKey: ['contacts'],
+    queryFn: getContactApi,
+    onSuccess: data => setContacts(data.map(e => ({
+      key: e.id,
+      name: e.name,
+      link: e.link,
+      active: e.active
+    })))
+  });
+  const twitter = filter(contacts,{'name': 'Twitter'})[0]?.link;
+  const facebook = filter(contacts,{'name': 'Facebook'})[0]?.link;
+  const instagram = filter(contacts,{'name': 'Instagram'})[0]?.link;
   return (
     <section className="footer">
       <div className="footer-04 p-5">
@@ -37,21 +54,21 @@ const Footer = () => {
               <h2 className="footer-heading">Follow us</h2>
               <ul className="footer-social p-0">
                 <li className="ftco-animate">
-                  <a href="#" data-toggle="tooltip" data-placement="top" title="Twitter">
+                  <a href={twitter} data-toggle="tooltip" data-placement="top" title="Twitter">
                     <span>
                         <i className="fa fa-twitter" aria-hidden="true"></i>
                     </span>
                   </a>
                 </li>
                 <li className="ftco-animate">
-                  <a href="#" data-toggle="tooltip" data-placement="top" title="Facebook">
+                  <a href={facebook} data-toggle="tooltip" data-placement="top" title="Facebook">
                     <span>
                       <i className="fa fa-facebook-square" aria-hidden="true"></i>
                     </span>
                   </a>
                 </li>
                 <li className="ftco-animate">
-                  <a href="#" data-toggle="tooltip" data-placement="top"itle="Instagram">
+                  <a href={instagram} data-toggle="tooltip" data-placement="top" title="Instagram">
                     <span>
                       <i className="fa fa-instagram" aria-hidden="true"></i>
                     </span>

@@ -9707,11 +9707,11 @@ button.switch-month:hover {
 .product .row .list .item .card:focus * {
   color: rgb(255, 145, 77) !important;
 }
-.product .row .list .item .card .item-content .title-manga {
+.product .row .list .item .card .item-content .title-manga, .product .row .list .item .card .item-content .title-figure {
   text-decoration: none;
   color: #000;
 }
-.product .row .list .item .card .item-content .title-manga:hover {
+.product .row .list .item .card .item-content .title-manga:hover, .product .row .list .item .card .item-content .title-figure:hover {
   color: rgb(255, 145, 77);
 }
 .product .row .list .item .card .item-content .price {
@@ -9801,16 +9801,48 @@ table, th, td {
   max-width: 100%;
 }
 
-.form {
+.form-ant {
   border-radius: 10px;
 }
-.form-body .logo {
+.form-body-ant .ant-form-item {
+  text-align: left;
+  margin-bottom: 20px;
+}
+.form-body-ant .ant-form-item .ant-form-item-label {
+  padding: 0;
+}
+.form-body-ant .ant-form-item .ant-picker {
+  width: 100%;
+}
+.form-body-ant .ant-form-item .ant-form-item-explain-error {
+  text-align: left;
+  font-size: 12px;
+}
+.form-body-ant .ant-form-item .ant-form-item-feedback-icon {
+  display: flex;
+  justify-content: center;
+}
+.form-body-ant .logo {
   overflow: inherit;
 }
-.form-body .logo img {
+.form-body-ant .logo img {
   object-fit: contain;
   height: auto;
   max-width: 100px;
+}
+.form-body-ant .btn-submit {
+  font-size: 18px;
+  height: 35px;
+  color: #fff;
+  width: 100%;
+  background-color: rgb(255, 145, 77);
+  border: 1px solid rgb(255, 145, 77);
+}
+.form-body-ant .btn-submit:hover {
+  background-color: transparent;
+  color: rgb(255, 145, 77);
+  border-width: 1px;
+  border-color: rgb(255, 145, 77);
 }
 
 .thumbnail-announce {
@@ -9849,6 +9881,42 @@ table, th, td {
 .contain-otp .square input {
   width: 50px;
   height: 50px;
+}
+
+.contact-icon {
+  display: flex;
+  justify-content: center;
+  height: 60px;
+  width: 60px;
+  background-color: rgb(255, 145, 77);
+  margin-right: 10px;
+}
+.contact-icon i {
+  padding-top: 15px;
+  color: #fff;
+  font-size: 30px;
+}
+
+a .contact-icon:hover {
+  background-color: #000;
+}
+a .contact-icon:hover i {
+  color: #fff;
+}
+
+.contact-content a {
+  font-style: italic;
+}
+.contact-content a span {
+  color: blue;
+}
+.contact-content a:hover {
+  text-decoration: underline !important;
+}
+
+input[type=password]::-ms-reveal,
+input[type=password]::-ms-clear {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */

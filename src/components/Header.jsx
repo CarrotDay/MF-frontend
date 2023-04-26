@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from "react-router-dom";
-import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
+import {Container, Nav, Navbar} from "react-bootstrap";
 import AccountPopover from "~/components/AccountPopover";
 import jwtDecode from 'jwt-decode';
 
@@ -15,15 +15,8 @@ const Header = () => {
     {path: '', text: 'THÔNG BÁO', isActive: false},
   ]);
 
-
-
   const token = window.localStorage.getItem('token');
   const data = token ? jwtDecode(window.localStorage.getItem('token')) : '';
-
-  // const dataUser = {
-  //   username: 'Thuy',
-  //   email: '52000720@student.tdtu.edu.vn'
-  // };
 
   const dataUser = {
     username: 'Thuy Nguyen',
@@ -60,11 +53,14 @@ const Header = () => {
             <AccountPopover isLogin={Boolean(data)} data={data} />
             <div className="action-cart">
               {Boolean(data) ?
-                <Link to="/cart">
+                (data.role==2)?
+                  <Link to="/cart">
                   <span>
                       <i className="fa fa-shopping-cart"></i>
                   </span>
-                </Link>:
+                  </Link>
+                  :''
+                :
                 <Link to="/sign-in">
                   <span>
                       <i className="fa fa-shopping-cart"></i>
@@ -91,19 +87,21 @@ const Header = () => {
               {/* <AccountPopover isLogin={isLogin} data={dataUser} /> */}
             </div>
             <div className="action-cart">
-              {isLogin?
-                <Link to="/cart">
+              {Boolean(data) ?
+                (data.role==2)?
+                  <Link to="/cart">
                   <span>
                       <i className="fa fa-shopping-cart"></i>
                   </span>
-                </Link>:
+                  </Link>
+                  :''
+                :
                 <Link to="/sign-in">
                   <span>
                       <i className="fa fa-shopping-cart"></i>
                   </span>
                 </Link>
               }
-
             </div>
           </div>
           <Navbar.Collapse id="responsive-navbar-nav">
@@ -118,7 +116,7 @@ const Header = () => {
                 <Nav.Link href="/side-product/figure">FIGURE</Nav.Link>
               </Nav.Item>
               <Nav.Item as="li">
-                <Nav.Link href="#contact">LIÊN HỆ</Nav.Link>
+                <Nav.Link href="/contacts">LIÊN HỆ</Nav.Link>
               </Nav.Item>
               <Nav.Item as="li">
                 <Nav.Link href="/announce-list">THÔNG BÁO</Nav.Link>

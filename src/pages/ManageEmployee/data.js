@@ -20,12 +20,6 @@ export const columns = [
     sorter: (a, b) => a.address > b.address ? 1 : -1,
   },
   {
-    title: 'Amount',
-    dataIndex: 'amount',
-    key: 'amount',
-    sorter: (a, b) => a.amount - b.amount,
-  },
-  {
     title: 'Email',
     dataIndex: 'email',
     key: 'email',

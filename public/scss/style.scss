@@ -795,7 +795,7 @@ button.switch-month:hover {
 						color: $primary !important;
 					}
 					.item-content {
-						.title-manga {
+						.title-manga, .title-figure {
 							text-decoration: none;
 							color: $black;
 							&:hover {
@@ -902,20 +902,52 @@ table, th, td {
 		max-width: 100%;
 	}
 }
-.form {
+.form-ant {
 	.title {
 		//color:$primary;
 	}
 	border-radius: 10px;
 }
 
-.form-body {
+.form-body-ant {
+	.ant-form-item {
+		text-align: left;
+		margin-bottom: 20px;
+		.ant-form-item-label {
+			padding: 0;
+		}
+		.ant-picker {
+			width: 100%;
+		}
+		.ant-form-item-explain-error {
+			text-align: left;
+			font-size: 12px;
+		}
+		.ant-form-item-feedback-icon {
+			display: flex;
+			justify-content: center;
+		}
+	}
 	.logo {
 		overflow: inherit;
 		img {
 			object-fit: contain;
 			height: auto;
 			max-width: 100px;
+		}
+	}
+	.btn-submit {
+		font-size: 18px;
+		height: 35px;
+		color: $white;
+		width: 100%;
+		background-color: $primary;
+		border: 1px solid $primary;
+		&:hover {
+			background-color: transparent;
+			color: $primary;
+			border-width: 1px;
+			border-color: $primary;
 		}
 	}
 }
@@ -961,5 +993,49 @@ table, th, td {
 		}
 	}
 }
+
+.contact-icon {
+	display: flex;
+	justify-content: center;
+	height: 60px;
+	width: 60px;
+	background-color: $primary;
+	margin-right: 10px;
+	i {
+		padding-top: 15px;
+		color: $white;
+		font-size: 30px;
+	}
+}
+
+a {
+	.contact-icon {
+		&:hover {
+			background-color: $black;
+			i {
+				color: $white;
+			}
+		}
+	}
+}
+
+.contact-content {
+	a {
+		font-style: italic;
+		span {
+			color: blue;
+		}
+		&:hover {
+			text-decoration: underline !important;
+		}
+	}
+}
+
+input[type=password]::-ms-reveal,
+input[type=password]::-ms-clear
+{
+	display: none;
+}
+
 
 

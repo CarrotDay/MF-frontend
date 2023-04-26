@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import {Card} from "react-bootstrap";
+import Money from "~/components/Money";
 const MangaItem = ({meta, srcImg, name, price}) => {
   return (
     <Link to={'/product/' + meta}
@@ -11,7 +12,9 @@ const MangaItem = ({meta, srcImg, name, price}) => {
         <Card.Img variant="top" src={srcImg} className={"img-manga"}/>
         <Card.Body className={"item-content"}>
           <Card.Title className={"title-manga"}>{name}</Card.Title>
-          <Card.Text className={"price"}>{price}</Card.Text>
+          <Card.Text className={"price"}>
+            <Money money={price} />
+          </Card.Text>
         </Card.Body>
       </Card>
     </Link>

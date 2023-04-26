@@ -6,6 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { IconButton } from '@mui/material';
+import Money from "~/components/Money";
 
 import { getProducts } from '~/api/product.api';
 
@@ -107,7 +108,8 @@ function ManageProduct() {
     onSuccess: data => setProducts(data.data['$values'].map(e => ({
       ...e,
       key: e.id,
-      thumbnail: e.srcImg
+      thumbnail: e.srcImg,
+      price: <Money money={e.price} />
     })))
   });
 

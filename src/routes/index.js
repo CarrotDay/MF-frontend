@@ -21,6 +21,7 @@ import AnnounceDetail from "~/pages/AnnounceDetail";
 import ForgotPassword from "~/pages/ForgotPassword";
 import Otp from "~/pages/ForgotPassword/Otp";
 import AccountInfo from "~/pages/AcountInfo";
+import Contact from "~/pages/Contact";
 
 export const routesWithoutLayout = [
   {
@@ -65,6 +66,10 @@ export const routesWithLayout = [
   {
     path: "/product",
     Component: Product,
+  },
+  {
+    path: "contacts",
+    Component: Contact,
   },
 ];
 
