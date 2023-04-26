@@ -2,86 +2,33 @@ import React, { useState } from "react";
 import Slide from "~/components/Slide";
 import Category from "~/components/Category";
 import ProductGrid from "~/components/ProductGrid";
+import { useParams } from "react-router-dom";
+import { getProducts } from '~/api/product.api';
+import { useQuery } from "@tanstack/react-query";
 
 const SideProduct = () => {
   const [type, setType] = useState(false);
-  const data = [
-    {
-      meta: "",
-      srcImg: "/Uploads/figure/1.png",
-      price: 20000,
+  const [data, setData] = useState([]);
+  const { meta } = useParams();
+
+  useQuery({
+    queryKey: ['products'],
+    queryFn: () => {
+      if (meta == 'manga') {
+        return getProducts({ type: false });
+      }
+      else if (meta == 'figure') {
+        return getProducts({ type: true });
+      }
+      else {
+        return getProducts({ catalogMeta: meta });
+      }
     },
-    {
-      meta: "",
-      srcImg: "/Uploads/figure/2.png",
-      price: 20000,
-    },
-    {
-      meta: "",
-      srcImg: "/Uploads/figure/1.png",
-      price: 20000,
-    },
-    {
-      meta: "",
-      srcImg: "/Uploads/figure/1.png",
-      price: 20000,
-    },
-    {
-      meta: "",
-      srcImg: "/Uploads/figure/2.png",
-      price: 20000,
-    },
-    {
-      meta: "",
-      srcImg: "/Uploads/figure/1.png",
-      price: 20000,
-    },
-    {
-      meta: "",
-      srcImg: "/Uploads/figure/1.png",
-      price: 20000,
-    },
-    {
-      meta: "",
-      srcImg: "/Uploads/figure/1.png",
-      price: 20000,
-    },
-    {
-      meta: "",
-      srcImg: "/Uploads/figure/1.png",
-      price: 20000,
-    },
-    {
-      meta: "",
-      srcImg: "/Uploads/figure/1.png",
-      price: 20000,
-    },
-    {
-      meta: "",
-      srcImg: "/Uploads/figure/1.png",
-      price: 20000,
-    },
-    {
-      meta: "",
-      srcImg: "/Uploads/figure/1.png",
-      price: 20000,
-    },
-    {
-      meta: "",
-      srcImg: "/Uploads/figure/1.png",
-      price: 20000,
-    },
-    {
-      meta: "",
-      srcImg: "/Uploads/figure/1.png",
-      price: 20000,
-    },
-    {
-      meta: "",
-      srcImg: "/Uploads/figure/1.png",
-      price: 20000,
-    },
-  ];
+    onSuccess: data => {
+      setData(data.data['$values']);
+    }
+  });
+
   return (
     <div>
       <Slide />
@@ -92,7 +39,7 @@ const SideProduct = () => {
               isHome={false}
               type={!type}
               data={data}
-              category={""}
+              category={meta}
             />
           </div>
           <div className="col-12 col-md-4 p-0">

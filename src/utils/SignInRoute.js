@@ -1,6 +1,6 @@
 import { Outlet, Navigate } from 'react-router-dom';
 
-function LoginRoute() {
+function SignInRoute() {
   const token = window.localStorage.getItem('token');
 
   return (
@@ -10,4 +10,4 @@ function LoginRoute() {
   );
 }
 
-export default LoginRoute;
+export default SignInRoute;

@@ -13,11 +13,6 @@ const items = [
     icon: <DashboardOutlined />,
   },
   {
-    name: '/manage/dashboard',
-    label: <Link to="/manage/site" style={{ textDecoration: 'none' }}>Site</Link>,
-    icon: <ContactsOutlined />,
-  },
-  {
     name: '/manage/product',
     label: <Link to="/manage/product" style={{ textDecoration: 'none' }}>Product</Link>,
     icon: <AlignRightOutlined />,
@@ -28,20 +23,10 @@ const items = [
     icon: <UserOutlined />,
   },
   {
-    name: '/manage/employee',
-    label: <Link to="/manage/employee" style={{ textDecoration: 'none' }}>Employee</Link>,
-    icon: <UsergroupAddOutlined />,
-  },
-  {
     name: '/manage/transaction',
     label: <Link to="/manage/transaction" style={{ textDecoration: 'none' }}>Transaction</Link>,
     icon: <DollarOutlined />,
   },
-  {
-    name: '/manage/announce',
-    label: <Link to="/manage/announce" style={{ textDecoration: 'none' }}>Announce</Link>,
-    icon: <NotificationOutlined />,
-  }
 ].map((e, index) => ({
   ...e,
   key: index
@@ -58,7 +43,6 @@ function AdminLayout() {
       }}
     >
       <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-<<<<<<< HEAD
         <div
           style={{
             height: 32,
@@ -67,21 +51,6 @@ function AdminLayout() {
           }}
         />
         <Menu theme="dark" defaultSelectedKeys={[String(items.findIndex(e => location.pathname.includes(e.name)))]} mode="inline" items={items} />
-=======
-        <div className="logo">
-          <Link to={'/'} title={'Về trang chủ'}>
-            <img src={'/Uploads/img/logo/2.png'}
-                 style={{
-                   height: '50px',
-                   width: '50px',
-                   boxSizing: 'border-box',
-                   margin: '10px 5px 0px 0px'
-                 }}
-            />
-          </Link>
-        </div>>
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
->>>>>>> b633d338ac47f179c5aff15fb0e971b92b0f9198
       </Sider>
       <Layout className="site-layout">
         <Header>
@@ -89,6 +58,14 @@ function AdminLayout() {
         </Header>
 
         <Outlet />
+
+        {/*<Footer*/}
+        {/*  style={{*/}
+        {/*    textAlign: 'center',*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  Footer*/}
+        {/*</Footer>*/}
       </Layout>
     </Layout>
   );

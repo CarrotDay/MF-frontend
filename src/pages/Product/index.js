@@ -19,6 +19,7 @@ const Product = () => {
     queryKey: ['product', meta],
     queryFn: () => getProductWithMeta(meta),
     onSuccess: data => {
+      console.log(data);
       setProduct(data.data);
     }
   });

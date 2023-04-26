@@ -110,10 +110,10 @@ const Header = () => {
                 <Nav.Link href="/">TRANG CHỦ</Nav.Link>
               </Nav.Item>
               <Nav.Item as="li">
-                <Nav.Link href="/side-product">MANGA</Nav.Link>
+                <Nav.Link href="/side-product/manga">MANGA</Nav.Link>
               </Nav.Item>
               <Nav.Item as="li">
-                <Nav.Link href="/side-product">FIGURE</Nav.Link>
+                <Nav.Link href="/side-product/figure">FIGURE</Nav.Link>
               </Nav.Item>
               <Nav.Item as="li">
                 <Nav.Link href="/contacts">LIÊN HỆ</Nav.Link>

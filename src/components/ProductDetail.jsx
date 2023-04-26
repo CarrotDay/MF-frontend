@@ -15,7 +15,7 @@ const ProductDetail = ({ product, catalog }) => {
           <div className="container col-12">
             <div className="row product-detail py-3 text-left"  style={{backgroundColor:"#fff"}}>
               <div className="img-product-container col-12 col-md-4">
-                <img src={"/Uploads/manga/1.png"} className={"img-product card-img-top"}/>
+                <img src={product?.srcImg} className={"img-product card-img-top"}/>
               </div>
               <div className="product-info col-12 col-md-8">
                 <div className="title-product">
