@@ -22,8 +22,6 @@ const Home = () => {
     onSuccess: data => setFigure(data.data['$values'])
   }).isLoading;
 
-  console.log(figure);
-
   return (
     <div>
       <Slide />

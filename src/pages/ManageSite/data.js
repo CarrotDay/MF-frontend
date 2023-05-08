@@ -9,6 +9,18 @@ export const catalogData = {
       title: 'Name'
     },
     {
+      key: 'meta',
+      title: 'Age'
+    },
+    {
+      key: 'active',
+      title: 'Active'
+    },
+    {
+      key: 'order',
+      title: 'Order'
+    },
+    {
       key: 'createAt',
       title: 'Create At'
     }
