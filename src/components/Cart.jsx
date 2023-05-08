@@ -5,6 +5,7 @@ import Money from "~/components/Money";
 import {Form, Input, Select} from "antd";
 import axios from "axios";
 import _ from "lodash";
+import { useQuery } from "@tanstack/react-query";
 
 const layout = {
   labelCol: { span: 24 },
@@ -17,11 +18,17 @@ const validateMessages = {
 
 const { Option } = Select;
 
+const axiosOpt = {
+  headers: {
+    'Content-Type': 'application/json',
+    'Token': '0c09627a-c105-11ed-ab31-3eeb4194879e'
+  }
+};
 
 export default function Cart() {
-  const [form] = Form.useForm();
+  const [ form ] = Form.useForm();
 
-  const [address, setAddress] = useState('A23, Nguyễn Hữu Thọ, Phước Kiển, Nhà Bè, Hồ Chí Minh');
+  const [address, setAddress] = useState('A23, Xã Phú Xuân, Huyện Nhà Bè, Hồ Chí Minh');
 
   const [optionsPro, setOptionsPro] = useState([]);
   const [province, setProvince] = useState({id: null, name: ''});
@@ -30,6 +37,57 @@ export default function Cart() {
   const [optionsWard, setOptionsWard] = useState([]);
   const [ward, setWard] = useState({id: null, name: ''});
   const [road, setRoad] = useState();
+
+  useQuery({
+    queryKey: ['province'],
+    queryFn: async () => {
+      return axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', axiosOpt);
+    },
+    onSuccess: data => {
+      setOptionsPro(data?.data?.data?.map(e => ({
+        value: e.ProvinceID,
+        label: e.ProvinceName,
+      })));
+    }
+  });
+
+  useQuery({
+    queryKey: ['district', form.getFieldValue('province')],
+    queryFn: async () => {
+      return axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district', {
+        ...axiosOpt,
+        params: {
+          "province_id": form.getFieldValue('province')
+        }
+      });
+    },
+    onSuccess: data => {
+      setOptionsDistrict(data?.data?.data?.map(e => ({
+        value: e.DistrictID,
+        label: e.DistrictName,
+      })));
+    },
+    enabled: form.getFieldValue('province') !== undefined
+  });
+
+  useQuery({
+    queryKey: ['ward', form.getFieldValue('district')],
+    queryFn: async () => {
+      return axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward', {
+        ...axiosOpt,
+        params: {
+          "district_id": form.getFieldValue('district')
+        }
+      });
+    },
+    onSuccess: data => {
+      setOptionsWard(data?.data?.data?.map(e => ({
+        value: e.WardCode,
+        label: e.WardName,
+      })));
+    },
+    enabled: form.getFieldValue('district') !== undefined
+  });
 
   function getAddressComponents(address) {
     const parts = address.split(',').map(part => part.trim());
@@ -43,91 +101,54 @@ export default function Cart() {
   }
 
   useEffect(() => {
-    const {roadName, wardName, districtName, provinceName} = getAddressComponents(address);
-    setRoad(roadName);
-    setWard({...ward  , 'name': wardName});
-    setDistrict({...district  , 'name': districtName});
-    setProvince({...province  , 'name': provinceName});
-  }, [address]);
+    (async () => {
+      const {
+        roadName, 
+        wardName, 
+        districtName, 
+        provinceName
+      } = getAddressComponents(address);
 
+      const _province = (await axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', axiosOpt))?.data?.data?.map(e => ({
+        value: e.ProvinceID,
+        label: e.ProvinceName,
+      }));
+      const _provinceId = _province?.find(e => e.label === provinceName).value;
 
-  useEffect(() => {
-    axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', {
-      headers: {
-        'Content-Type': 'application/json',
-        'Token': '0c09627a-c105-11ed-ab31-3eeb4194879e'
-      }
-    })
-      .then(response => {
-        const provinces = response.data.data;
-        const opt = [];
-        provinces.forEach((province) => {
-          opt.push({
-            value: province.ProvinceID,
-            label: province.ProvinceName,
-          })
-        });
-        setOptionsPro(opt);
-      })
-      .catch(error => {
-        // Xử lý lỗi
-      });
-  }, []);
-
-  useEffect(() => {
-    if (province.id) {
-      axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district', {
-        headers: {
-          'Content-Type': 'application/json',
-          'Token': '0c09627a-c105-11ed-ab31-3eeb4194879e'
-        },
+      const _district = (await axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district', {
+        ...axiosOpt,
         params: {
-          "province_id": province.id
+          "province_id": _provinceId
         }
-      })
-        .then(response => {
-          const districts = response.data.data.reverse();
-          const opt = [];
-          districts.forEach((district) => {
-            opt.push({
-              value: district.DistrictID,
-              label: district.DistrictName,
-            })
-          });
-          setOptionsDistrict(opt);
-        })
-        .catch(error => {
-          // Xử lý lỗi
-        });
-    }
-  }, [province]);
+      }))?.data?.data?.map(e => ({
+        value: e.DistrictID,
+        label: e.DistrictName,
+      }));
+      const _districtId = _district?.find(e => e.label === districtName).value;
 
-  useEffect(() => {
-    if (district.id) {
-      axios.post('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id',{
-        "district_id": district.id
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Token': '0c09627a-c105-11ed-ab31-3eeb4194879e'
-        },
-      })
-        .then(response => {
-          const wards = response.data.data;
-          const opt = [];
-          wards.forEach((ward) => {
-            opt.push({
-              value: ward.WardCode,
-              label: ward.WardName,
-            })
-          });
-          setOptionsWard(opt);
-        })
-        .catch(error => {
-          // Xử lý lỗi
-        });
-    }
-  }, [district]);
+      const _ward = (await axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward', {
+        ...axiosOpt,
+        params: {
+          "district_id": _districtId
+        }
+      }))?.data?.data?.map(e => ({
+        value: e.WardCode,
+        label: e.WardName,
+      }));
+      const _wardId = _ward?.find(e => e.label === wardName).value;
+
+      setOptionsPro(_province);
+      setOptionsDistrict(_district);
+      setOptionsWard(_ward);
+
+      form.setFieldsValue({
+        province: _provinceId,
+        district: _districtId,
+        ward: _wardId,
+        road: roadName
+      });
+    })();
+  }, [address]);
 
   const handleSelectPro = (value) => {
     setProvince({ ...province, id: value});
@@ -175,7 +196,7 @@ export default function Cart() {
                   name="province"
                   label="Tỉnh/Thành"
                   rules={[{ required: true }]}>
-                  <Select placeholder='Chọn tỉnh/thành' onSelect={handleSelectPro}>
+                  <Select placeholder='Chọn tỉnh/thành'>
                     {optionsPro?_.map(optionsPro, (o) => {
                       return (<Option value={o.value}>{o.label}</Option>);
                     }):null}
@@ -185,7 +206,7 @@ export default function Cart() {
                   name="district"
                   label="Quận/Huyện"
                   rules={[{ required: true }]}>
-                  <Select placeholder='Chọn quận/huyện' onSelect={handleSelectDistrict}>
+                  <Select placeholder='Chọn quận/huyện'>
                     {optionsDistrict?_.map(optionsDistrict, (o) => {
                       return (<Option value={o.value}>{o.label}</Option>);
                     }):null}
@@ -195,9 +216,9 @@ export default function Cart() {
                   name="ward"
                   label="Phường/Xã/Thị trấn"
                   rules={[{ required: true }]}>
-                  <Select placeholder='Chọn phường/xã/thị trấn' onSelect={handleSelectWard}>
+                  <Select placeholder='Chọn phường/xã/thị trấn'>
                     {optionsWard?_.map(optionsWard, (o) => {
-                      return (<Option value={o.value}>{o.label}</Option>);
+                      return (<Option value={o.value} key={o.value}>{o.label}</Option>);
                     }):null}
                   </Select>
                 </Form.Item>

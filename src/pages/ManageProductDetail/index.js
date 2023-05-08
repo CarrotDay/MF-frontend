@@ -11,17 +11,11 @@ import { getCatalogWithBodys } from '~/api/catalog.api';
 let file;
 
 const initForm = {
-  amount: 8,
-  catalog: 3,
-  description: "day la mot tran dau khoc liet",
-  discount: 0,
-  meta: "bleach-vs-naruto-65575",
-  name: "bleach vs naruto",
-  price: 23000,
-  type: false
+  type: JSON.parse(process.env.REACT_APP_ANIME)
 };
 
 function ManageProductDetail() {
+  console.log(initForm);
   const [ form ] = Form.useForm();
   const { meta } = useParams();
   const navigate = useNavigate();
@@ -36,6 +30,7 @@ function ManageProductDetail() {
     queryKey: ['catalogs', type],
     queryFn: () => getCatalogWithBodys({ type }),
     onSuccess: data => {
+      console.log(data?.data);
       setCatalogs(data.data['$values'].map(e => ({ value: e.id, label: e.name })));
     }
   });
