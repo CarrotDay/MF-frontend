@@ -105,7 +105,7 @@ function ManageProduct() {
   const { isLoading } = useQuery({
     queryKey: ['products'],
     queryFn: getProducts,
-    onSuccess: data => setProducts(data.data['$values'].map(e => ({
+    onSuccess: data => setProducts(data.data.map(e => ({
       ...e,
       key: e.id,
       thumbnail: e.srcImg,

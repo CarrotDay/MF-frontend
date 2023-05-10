@@ -15,7 +15,7 @@ function ManageEmployee() {
     queryKey: ['employees'],
     queryFn: getEmployees,
     onSuccess: data => {
-      setEmployees(data.data['$values']);
+      setEmployees(data.data);
     }
   });
 

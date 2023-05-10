@@ -14,7 +14,7 @@ export default function ManageCatalog() {
     queryKey: ['catalogs'],
     queryFn: () => axios.get(`${process.env.REACT_APP_SERVER}api/catalog`),
     onSuccess: data => {
-      setCatalogs(data?.data?.['$values']);
+      setCatalogs(data?.data);
     }
   })
 

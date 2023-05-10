@@ -14,10 +14,10 @@ const SideProduct = () => {
   useQuery({
     queryKey: ['products'],
     queryFn: () => {
-      if (meta == 'manga') {
+      if (meta === 'manga') {
         return getProducts({ type: false });
       }
-      else if (meta == 'figure') {
+      else if (meta === 'figure') {
         return getProducts({ type: true });
       }
       else {
@@ -25,7 +25,7 @@ const SideProduct = () => {
       }
     },
     onSuccess: data => {
-      setData(data.data['$values']);
+      setData(data.data);
     }
   });
 

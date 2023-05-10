@@ -64,7 +64,7 @@ function ManageTransactionDetail() {
     queryKey: ['employees'],
     queryFn: getEmployees,
     onSuccess: data => {
-      const employees = data.data['$values'];
+      const employees = data.data;
       const currentEmployee = find(employees, {'username': get(decode, 'username')});
       setEmployees(employees);
       setNameEmp(get(currentEmployee, 'name'));

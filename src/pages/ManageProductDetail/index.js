@@ -31,7 +31,7 @@ function ManageProductDetail() {
     queryFn: () => getCatalogWithBodys({ type }),
     onSuccess: data => {
       console.log(data?.data);
-      setCatalogs(data.data['$values'].map(e => ({ value: e.id, label: e.name })));
+      setCatalogs(data.data.map(e => ({ value: e.id, label: e.name })));
     }
   });
 

@@ -15,7 +15,7 @@ function ManageAnnounce() {
   const { isLoading } = useQuery({
     queryKey: ['announces'],
     queryFn: getAnnounces,
-    onSuccess: data => setAnnounces(data.data['$values'].map(e => ({
+    onSuccess: data => setAnnounces(data.data.map(e => ({
       ...e,
       key: e.id,
       thumbnail: e.srcImg

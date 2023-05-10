@@ -90,7 +90,7 @@ const TransactionDetail = () => {
     queryKey: ['transactions'],
     queryFn: getTransactions,
     onSuccess: data => {
-      const customerTransaction = filter(data.data['$values'], (e) => {
+      const customerTransaction = filter(data.data, (e) => {
         return e.customer == id;
       });
       setTransactions(customerTransaction.map(e => ({

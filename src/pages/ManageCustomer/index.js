@@ -11,7 +11,7 @@ function ManageCustomer() {
   const { isLoading } = useQuery({
     queryKey: ['customers'],
     queryFn: getCustomers,
-    onSuccess: data => setCustomers(data.data['$values'].map(e => ({
+    onSuccess: data => setCustomers(data.data.map(e => ({
       ...e,
       key: e.id
     })))

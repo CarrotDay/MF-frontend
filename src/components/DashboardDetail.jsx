@@ -17,7 +17,7 @@ const DashboardDetail = () => {
   const { isLoadingCustomer } = useQuery({
     queryKey: ['customers'],
     queryFn: getCustomers,
-    onSuccess: data => setCustomers(data.data['$values'].map(e => ({
+    onSuccess: data => setCustomers(data.data.map(e => ({
       ...e,
       key: e.id
     })))
@@ -26,7 +26,7 @@ const DashboardDetail = () => {
   const { isLoadingTransactions } = useQuery({
     queryKey: ['transactions'],
     queryFn: getTransactions,
-    onSuccess: data => setTransactions(data.data['$values'].map(e => ({
+    onSuccess: data => setTransactions(data.data.map(e => ({
       ...e,
       key: e.id,
       customer: e.customerName,
@@ -38,7 +38,7 @@ const DashboardDetail = () => {
   const { isLoadingProducts } = useQuery({
     queryKey: ['products'],
     queryFn: getProducts,
-    onSuccess: data => setProducts(data.data['$values'].map(e => ({
+    onSuccess: data => setProducts(data.data.map(e => ({
       ...e,
       key: e.id,
       thumbnail: e.srcImg

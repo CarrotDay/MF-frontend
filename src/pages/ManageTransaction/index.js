@@ -15,8 +15,8 @@ function ManageTransaction() {
     queryKey: ['transactions'],
     queryFn: getTransactions,
     onSuccess: data => {
-      console.log(data.data['$values']);
-      setTransactions(data.data['$values'].map(e => ({
+      console.log(data.data);
+      setTransactions(data.data.map(e => ({
         ...e,
         key: e.id,
         customer: e.customerName,
