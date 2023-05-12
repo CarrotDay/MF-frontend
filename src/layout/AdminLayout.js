@@ -79,7 +79,7 @@ function AdminLayout() {
       </Sider>
       <Layout className="site-layout">
         <Header>
-          Header
+          
         </Header>
 
         <Outlet />

@@ -43,18 +43,23 @@ function AdminLayout() {
       }}
     >
       <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-        <div
-          style={{
-            height: 32,
-            margin: 16,
-            background: 'rgba(255, 255, 255, 0.2)',
-          }}
-        />
+        <div className="logo">
+          <Link to={'/'} title={'Về trang chủ'}>
+            <img src={'/Uploads/img/logo/2.png'}
+                 style={{
+                   height: '50px',
+                   width: '50px',
+                   boxSizing: 'border-box',
+                   margin: '10px 5px 0px 0px'
+                 }}
+            />
+          </Link>
+        </div>
         <Menu theme="dark" defaultSelectedKeys={[String(items.findIndex(e => location.pathname.includes(e.name)))]} mode="inline" items={items} />
       </Sider>
       <Layout className="site-layout">
         <Header>
-          Header
+          
         </Header>
 
         <Outlet />
