@@ -191,13 +191,13 @@ export default function Cart() {
         optionsDistrict?.find(e => e.value === addressForm.district)?.label,
         optionsPro?.find(e => e.value === addressForm.province)?.label
       ].join(', ');
-      console.log(products);
 
-      await createTransaction({
-        customer: account.id,
+      const data = await createTransaction({
+        customer: account?.id,
         address: address,
         products: products
       });
+      console.log(data);
 
       alert('Đặt hàng thành công')
     }

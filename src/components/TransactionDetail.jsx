@@ -82,25 +82,29 @@ export const columns = [
     }
   }
 ];
+
+const account = jwtDecode(window.localStorage.getItem('token') || '');
+
 const TransactionDetail = () => {
   const [transactions, setTransactions] = useState([]);
   const token = window.localStorage.getItem("token");
   const id = token?jwtDecode(token).id:null;
   const { isLoading } = useQuery({
     queryKey: ['transactions'],
-    queryFn: getTransactions,
+    queryFn: () => getTransactions({ customer: account.id }),
     onSuccess: data => {
       const customerTransaction = filter(data.data, (e) => {
         return e.customer == id;
       });
+      
       setTransactions(customerTransaction.map(e => ({
         ...e,
         key: e.id,
         customer: e.customerName,
         employee: e.employeeName,
-        status: e.statusName,
+        status: e.statusNavigation.content,
         action: e.status
-      })))
+      })));
     }
   });
   return (
