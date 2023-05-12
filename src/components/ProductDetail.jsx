@@ -1,16 +1,18 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import Money from "~/components/Money";
 import {createEmployee} from "~/api/employee.api";
 import {createCart} from "~/api/cart.api";
+
+const token = window.localStorage.getItem("token");
+const role = token?jwtDecode(token).role:null;
+
 const ProductDetail = ({ product, catalog }) => {
-  const token = window.localStorage.getItem("token");
-  const role = token?jwtDecode(token).role:null;
-  console.log(product)
+  const navigate = useNavigate();
+  
   const addCart = async () => {
     try {
-
       const body = {
         customer: jwtDecode(token).id,
         product: product.id
@@ -18,6 +20,7 @@ const ProductDetail = ({ product, catalog }) => {
 
       const res = await createCart(body);
       alert('Thêm sản phẩm thành công!');
+      navigate('/');
     }
     catch (err) {
       alert('Thêm sản phẩm thất bại!');

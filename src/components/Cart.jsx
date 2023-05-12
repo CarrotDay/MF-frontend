@@ -5,10 +5,12 @@ import Money from "~/components/Money";
 import {Form, Input, Select} from "antd";
 import axios from "axios";
 import _ from "lodash";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCarts } from '~/api/cart.api';
 import jwtDecode from "jwt-decode";
 import { createTransaction } from '~/api/transaction.api';
+import { removeCart } from '~/api/cart.api';
+import { useNavigate } from "react-router-dom";
 
 const layout = {
   labelCol: { span: 24 },
@@ -32,6 +34,8 @@ const account = jwtDecode(window.localStorage.getItem('token') || '');
 
 export default function Cart() {
   const [ form ] = Form.useForm();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const [optionsPro, setOptionsPro] = useState([]);
   const [optionsDistrict, setOptionsDistrict] = useState([]);
@@ -43,7 +47,7 @@ export default function Cart() {
     queryKey: ['carts'],
     queryFn: async () => getCarts({ customer: account?.id }),
     onSuccess: data => {
-      setProducts(data?.data?.map(e => ({ ...e.productNavigation, number: 1 })));
+      setProducts(data?.data?.map(e => ({ ...e.productNavigation, number: 1, cartId: e.id })));
     }
   });
 
@@ -182,6 +186,17 @@ export default function Cart() {
     }))
   }
 
+  const removeCartHandle = async (id) => {
+    try {
+      await removeCart(id);
+
+      queryClient.invalidateQueries(['carts']);
+    }
+    catch (err) {
+      console.log('Bỏ sản phẩm ra khỏi giỏ thất bại');
+    }
+  }
+
   const submitHandle = async () => {
     try {
       const addressForm = form.getFieldsValue();
@@ -197,9 +212,9 @@ export default function Cart() {
         address: address,
         products: products
       });
-      console.log(data);
 
       alert('Đặt hàng thành công')
+      navigate('/transaction');
     }
     catch (err) {
       console.log('Bug');
@@ -216,11 +231,9 @@ export default function Cart() {
           <div className="list-product container" style={{backgroundColor: "#fff"}}>
             {products?.map(e => (
               <ProductCart 
-                link={`https://localhost:7114/Uploads/Products/${e.imageNavigation?.link}`}
-                name={e.name}
-                description={e.description}
-                number={e.number}
+                product={e}
                 changeNumberHandle={(number) => changeNumberHandle(e.id, number)}
+                removeCartHandle={() => removeCartHandle(e.cartId)}
                 key={e.id} 
               />
             ))}

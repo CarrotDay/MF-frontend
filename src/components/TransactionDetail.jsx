@@ -6,10 +6,11 @@ import SearchIcon from "@mui/icons-material/Search";
 import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from '@mui/icons-material/Check';
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import {useQuery} from "@tanstack/react-query";
-import {getTransactions} from "~/api/transaction.api";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
+import { getTransactions, updateTransaction } from "~/api/transaction.api";
 import jwtDecode from "jwt-decode";
 import filter from "lodash/filter";
+
 export const columns = [
   {
     title: 'Ngày đặt hàng',
@@ -48,51 +49,22 @@ export const columns = [
     ],
     onFilter: (v, e) => e.status === v,
     sorter: (a, b) => a.status > b.status ? 1 : -1,
-  },
-  {
-    title: 'Hàng động',
-    key: 'action',
-    dataIndex: 'action',
-    fixed: 'right',
-    align: 'center',
-    width: 160,
-    render: (action) => {
-      return (
-        <>
-          <Link to={`/`}>
-            <IconButton color="primary">
-              <SearchIcon />
-            </IconButton>
-          </Link>
-          {(action==3)?
-            <IconButton color="success" title={'Xác nhận đơn hàng'}>
-              <CheckIcon />
-            </IconButton>
-            :''
-          }
-          {
-            (action==1)?
-            <IconButton color="error" title={'Huỷ đơn hàng'}>
-              <DeleteOutlineIcon />
-            </IconButton>
-            :''
-          }
-        </>
-      )
-    }
   }
 ];
 
-const account = jwtDecode(window.localStorage.getItem('token') || '');
+const token = window.localStorage.getItem("token");
+const account = jwtDecode(token || '');
+const id = token?jwtDecode(token).id:null;
 
 const TransactionDetail = () => {
+  const queryClient = useQueryClient();
+
   const [transactions, setTransactions] = useState([]);
-  const token = window.localStorage.getItem("token");
-  const id = token?jwtDecode(token).id:null;
   const { isLoading } = useQuery({
     queryKey: ['transactions'],
     queryFn: () => getTransactions({ customer: account.id }),
     onSuccess: data => {
+      console.log(data.data);
       const customerTransaction = filter(data.data, (e) => {
         return e.customer == id;
       });
@@ -107,6 +79,18 @@ const TransactionDetail = () => {
       })));
     }
   });
+
+  const updateTransactionHandle = async (id) => {
+    try {
+      await updateTransaction(id, { status: 5 });
+      alert('Hủy đơn hàng thành công');
+      queryClient.invalidateQueries(['transactions']);
+    }
+    catch (err) {
+      console.log('Hủy đơn hàng thất bại');
+    }
+  }
+
   return (
     <section className={"container"}>
       <div className="row  my-3">
@@ -115,7 +99,40 @@ const TransactionDetail = () => {
             <h1 className={"font-weight-bold"}>Đơn hàng của bạn</h1>
           </div>
           <Space direction="vertical" className="transaction-infor container pt-3 pb-5 px-5" style={{backgroundColor: "#fff"}}>
-            <Table columns={columns} dataSource={transactions}
+            <Table 
+              columns={[...columns,
+                {
+                  title: 'Hàng động',
+                  key: 'action',
+                  fixed: 'right',
+                  align: 'center',
+                  width: 160,
+                  render: (v) => {
+                    return (
+                      <>
+                        <Link to={`/`}>
+                          <IconButton color="primary">
+                            <SearchIcon />
+                          </IconButton>
+                        </Link>
+                        {(v.action==3)?
+                          <IconButton color="success" title={'Xác nhận đơn hàng'}>
+                            <CheckIcon />
+                          </IconButton>
+                          :''
+                        }
+                        {
+                          (v.action==1)?
+                          <IconButton onClick={() => updateTransactionHandle(v.id)} color="error" title={'Huỷ đơn hàng'}>
+                            <DeleteOutlineIcon />
+                          </IconButton>
+                          :''
+                        }
+                      </>
+                    )
+                  }
+                }]} 
+              dataSource={transactions}
             />
           </Space>
         </div>
