@@ -1,0 +1,332 @@
+import React, {useEffect, useState} from 'react';
+import {Button, ConfigProvider, DatePicker, Form, Input, Select, Space} from "antd";
+import {EditOutlined} from "@ant-design/icons";
+import jwtDecode from "jwt-decode";
+import _ from "lodash";
+import {useNavigate} from "react-router-dom";
+import axios from "axios";
+import {useQuery} from "@tanstack/react-query";
+import {getCustomer, updateCustomer} from "~/api/customer.api";
+import moment from "moment/moment";
+import {getProducts} from "~/api/product.api";
+import Money from "~/components/Money";
+import {signUpApi} from "~/api/site.api";
+
+const validateMessages = {
+  required: '${label} là bắt buộc!',
+  types: {
+    email: '${label} không hợp lệ!',
+  },
+};
+
+const { Option } = Select;
+
+const init = {
+
+}
+const layout = {
+  labelCol: { span: 24 },
+  wrapperCol: { span: 24 },
+};
+
+const initForm = {
+  type: JSON.parse(process.env.REACT_APP_ANIME)
+};
+
+const token = window.localStorage.getItem("token");
+const {id} = token ? jwtDecode(token) : null;
+
+const UpdateAccountInfo = () => {
+  const [form] = Form.useForm();
+  const navigate = useNavigate();
+
+  const [customer, setCustomer] = useState({});
+
+  function getAddressComponents(address) {
+    const parts = address.split(',').map(part => part.trim());
+
+    const provinceName = parts.pop();
+    const districtName = parts.pop();
+    const wardName = parts.pop();
+    const roadName = parts.join(', ');
+
+    return { roadName, wardName, districtName, provinceName };
+  }
+
+  useQuery({
+    queryKey: ['customers', id],
+    queryFn: () => getCustomer(id),
+    onSuccess: data => {
+      const customer = data.data;
+      const {
+        roadName,
+        wardName,
+        districtName,
+        provinceName
+      } = getAddressComponents(customer?.address);
+      customer.road = roadName;
+      customer.ward = wardName;
+      customer.district = districtName;
+      customer.province = provinceName;
+      customer.birthday = moment(customer.birthday);
+      form.setFieldsValue(customer);
+      setCustomer(customer);
+    }
+  });
+
+  const [optionsPro, setOptionsPro] = useState([]);
+  const [province, setProvince] = useState();
+  const [optionsDistrict, setOptionsDistrict] = useState([]);
+  const [district, setDistrict] = useState();
+  const [optionsWard, setOptionsWard] = useState([]);
+  const [ward, setWard] = useState();
+
+  useEffect(() => {
+      axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Token': '0c09627a-c105-11ed-ab31-3eeb4194879e'
+        }
+      })
+        .then(response => {
+          const provinces = response.data.data;
+          const opt = [];
+          provinces.forEach((province) => {
+            opt.push({
+              value: province.ProvinceID,
+              label: province.ProvinceName,
+            })
+          });
+          setOptionsPro(opt);
+        })
+        .catch(error => {
+          // Xử lý lỗi
+        });
+    }
+    , []);
+
+  useEffect(() => {
+    if (province) {
+      axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Token': '0c09627a-c105-11ed-ab31-3eeb4194879e'
+        },
+        params: {
+          "province_id": province
+        }
+      })
+        .then(response => {
+          const districts = response.data.data.reverse();
+          const opt = [];
+          districts.forEach((district) => {
+            opt.push({
+              value: district.DistrictID,
+              label: district.DistrictName,
+            })
+          });
+          setOptionsDistrict(opt);
+        })
+        .catch(error => {
+          // Xử lý lỗi
+        });
+    }
+  }, [province]);
+
+  useEffect(() => {
+    if (district) {
+      axios.post('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id',{
+        "district_id": district
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Token': '0c09627a-c105-11ed-ab31-3eeb4194879e'
+        },
+      })
+        .then(response => {
+          const wards = response.data.data;
+          const opt = [];
+          wards.forEach((ward) => {
+            opt.push({
+              value: ward.WardCode,
+              label: ward.WardName,
+            })
+          });
+          setOptionsWard(opt);
+        })
+        .catch(error => {
+          // Xử lý lỗi
+        });
+    }
+  }, [district]);
+  const onFinish = (values) => {
+    console.log('values',values);
+  };
+
+  const handleSelectPro = (value) => {
+    setProvince(value);
+    return value;
+  }
+
+  const handleSelectDistrict = (value) => {
+    setDistrict(value);
+    return value;
+  }
+
+  const handleSelectWard = (value) => {
+    setWard(value);
+    return value;
+  }
+
+  const submitForm = async () => {
+    try {
+      const formData = form.getFieldsValue();
+      const body = {
+        ...formData,
+        username: formData.username,
+        birthday: new Date(formData?.birthday?.['$d']),
+        address: [
+          formData.road,
+          optionsWard.find(e => e.value == formData.ward)?.label,
+          optionsDistrict.find(e => e.value == formData.district)?.label,
+          optionsPro.find(e => e.value == formData.province)?.label
+        ].join(', ')
+      };
+
+      console.log(body);
+
+      const res = await updateCustomer(id, body);
+      alert('Cập nhật thành công!');
+      navigate('/account-information');
+    }
+    catch (err) {
+      alert('Cập nhật thất bại!');
+      console.log(err);
+    }
+  }
+
+  return (
+    <section className={"container"}>
+      <div className="row  my-3">
+        <div className="account-detail col-12 text-left mb-3">
+          <div className="title-list px-3">
+            <h1 className={"font-weight-bold"}>Thông tin tài khoản</h1>
+          </div>
+          <Space direction="vertical" className="account-ìnor container pt-3 pb-5 px-5" style={{backgroundColor: "#fff"}}>
+            <Form
+              {...layout}
+              form={form}
+              name="control-hooks"
+              onFinish={submitForm}
+              className={"form-body-ant"}
+              initialValues={initForm}
+            >
+              <Form.Item
+                name="name"
+                label="Họ và Tên"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                name="username"
+                label="Tên tài khoản"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                name="phone"
+                label="Số điện thoại"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item name={'email'} label="Email" rules={[{ type: 'email', required: true }]}>
+                <Input />
+              </Form.Item>
+              <Form.Item name="birthday" label="Ngày sinh" rules={[{ required: true }]} >
+                <DatePicker />
+              </Form.Item>
+
+              <Form.Item
+                name="province"
+                label="Tỉnh/Thành"
+                rules={[{ required: true }]}>
+                <Select placeholder='Chọn tỉnh/thành' onSelect={handleSelectPro}>
+                  {optionsPro?_.map(optionsPro, (o) => {
+                    return (<Option value={o.value}>{o.label}</Option>);
+                  }):null}
+                </Select>
+              </Form.Item>
+              <Form.Item
+                name="district"
+                label="Quận/Huyện"
+                rules={[{ required: true }]}>
+                <Select placeholder='Chọn quận/huyện' onSelect={handleSelectDistrict}>
+                  {optionsDistrict?_.map(optionsDistrict, (o) => {
+                    return (<Option value={o.value}>{o.label}</Option>);
+                  }):null}
+                </Select>
+              </Form.Item>
+              <Form.Item
+                name="ward"
+                label="Phường/Xã/Thị trấn"
+                rules={[{ required: true }]}>
+                <Select placeholder='Chọn phường/xã/thị trấn' onSelect={handleSelectWard}>
+                  {optionsWard?_.map(optionsWard, (o) => {
+                    return (<Option value={o.value}>{o.label}</Option>);
+                  }):null}
+                </Select>
+              </Form.Item>
+              <Form.Item
+                name="road"
+                label="Số nhà/Đường"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+
+              <ConfigProvider
+                theme={{
+                  token: {
+                    colorBgBase: '#03C988',
+                  },
+                }}
+              >
+                <Button size={'large'} style={{color: 'white', border: 0}} onClick={submitForm}>Xác nhận</Button>
+              </ConfigProvider>
+              <ConfigProvider
+                theme={{
+                  token: {
+                    colorBgBase: '#ED2B2A',
+                  },
+                }}
+              >
+                <Button size={'large'} style={{marginLeft: 10, color: 'white', border: 0}} onClick={() => navigate('/account-information')}>Huỷ</Button>
+              </ConfigProvider>
+            </Form>
+          </Space>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default UpdateAccountInfo;

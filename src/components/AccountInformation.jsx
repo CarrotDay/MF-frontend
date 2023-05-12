@@ -1,11 +1,45 @@
-import React from 'react';
-import {Link} from "react-router-dom";
-import TextArea from "antd/es/input/TextArea";
-import {Label} from "@mui/icons-material";
-import {Button, ConfigProvider, Input, Space} from "antd";
+import React, {useEffect, useState} from 'react';
+import {Button, ConfigProvider, DatePicker, Divider, Form, Input, Select, Space} from "antd";
 import {EditOutlined} from "@ant-design/icons";
+import jwtDecode from "jwt-decode";
+import find from "lodash/find";
+import get from "lodash/get";
+import {getCustomer} from "~/api/customer.api";
+import {useQuery} from "@tanstack/react-query";
+import moment from "moment";
+import {useNavigate} from "react-router-dom";
+
+const layout = {
+  labelCol: { span: 24 },
+  wrapperCol: { span: 24 },
+};
+
+const initForm = {
+  type: JSON.parse(process.env.REACT_APP_ANIME)
+};
+
+const token = window.localStorage.getItem("token");
+const {id} = token ? jwtDecode(token) : null;
 
 const AccountInformation = () => {
+  const [form] = Form.useForm();
+  const [customer, setCustomer] = useState({});
+  const navigate = useNavigate();
+
+  useQuery({
+    queryKey: ['customers', id],
+    queryFn: () => getCustomer(id),
+    onSuccess: data => {
+      const customer = data.data;
+      customer.birthday = moment(customer.birthday);
+      form.setFieldsValue(customer);
+      setCustomer(customer);
+    }
+  });
+
+  const onFinish = (values) => {
+    console.log('values',values);
+  };
   return (
     <section className={"container"}>
       <div className="row  my-3">
@@ -21,32 +55,49 @@ const AccountInformation = () => {
                 },
               }}
             >
-              <Button type="primary" colorBgContainer={'green-6'} size={'large'} icon={<EditOutlined /> }>Chỉnh sửa thông tin</Button>
+              <Button type="primary" colorBgContainer={'green-6'} size={'large'} icon={<EditOutlined /> } onClick={() => navigate('/update-account-information')}>Chỉnh sửa thông tin</Button>
             </ConfigProvider>
-            <div className="form-group text-left">
-              <label htmlFor="name" className={"font-weight-bold"}>Họ & Tên</label>
-              <Input type="text" className={"form-control"} id={"name"} maxLength={20} disabled />
-            </div>
-            <div className="form-group text-left">
-              <label htmlFor="account" className={"font-weight-bold"}>Tên tài khoản</label>
-              <Input type="text" className={"form-control"} id={"account"} disabled />
-            </div>
-            <div className="form-group text-left">
-              <label htmlFor="phone" className={"font-weight-bold"}>Số điện thoại</label>
-              <Input type="text" className={"form-control"} id={"phone"} disabled />
-            </div>
-            <div className="form-group text-left">
-              <label htmlFor="address" className={"font-weight-bold"}>Địa chỉ</label>
-              <Input type="text" className={"form-control"} id={"address"} disabled />
-            </div>
-            <div className="form-group text-left">
-              <label htmlFor="email" className={"font-weight-bold"}>Email</label>
-              <Input type="text" className={"form-control"} id={"email"} disabled />
-            </div>
-            <div className="form-group text-left">
-              <label htmlFor="birthday" className={"font-weight-bold"}>Ngày sinh</label>
-              <Input type="date" className={"form-control"} id={"birthday"} disabled />
-            </div>
+            <Form
+              {...layout}
+              form={form}
+              name="control-hooks"
+              onFinish={onFinish}
+              className={"form-body-ant"}
+              initialValues={initForm}
+            >
+              <Form.Item
+                name="name"
+                label="Họ và Tên"
+              >
+                <Input readOnly/>
+              </Form.Item>
+              <Form.Item
+                name="username"
+                label="Tên tài khoản"
+              >
+                <Input readOnly/>
+              </Form.Item>
+              <Form.Item
+                name="phone"
+                label="Số điện thoại"
+              >
+                <Input readOnly/>
+              </Form.Item>
+              <Form.Item name={'email'} label="Email">
+                <Input readOnly/>
+              </Form.Item>
+              <Form.Item name="birthday" label="Ngày sinh" >
+                <DatePicker format={'DD/MM/YYYY'} disabled />
+              </Form.Item>
+
+              <Form.Item
+                name="address"
+                label="Địa chỉ"
+              >
+                <Input readOnly />
+              </Form.Item>
+            </Form>
+
           </Space>
         </div>
       </div>

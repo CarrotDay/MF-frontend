@@ -57,7 +57,7 @@ export default function ManageCatalog() {
             title: 'Type',
             dataIndex: 'type',
             key: 'type',
-            render: v => v ? 'Figure' : 'Anime',
+            render: v => v ? 'Figure' : 'Manga',
             sorter: (a, b) => a.name > b.name ? 1 : -1,
           },
           {
@@ -96,7 +96,7 @@ export default function ManageCatalog() {
             <Select 
               options={[
                 { value: true, label: 'Figure' },
-                { value: false, label: 'Anime' }
+                { value: false, label: 'Manga' }
               ]}
             />
           </Form.Item>

@@ -222,7 +222,7 @@ export default function Cart() {
   }
 
   return (
-    <section className="cart container center">
+    <section className="cart container">
       <div className="row my-3">
         <div className="content-list col-12 col-lg-8 text-left ">
           <div className="title-list px-3">
