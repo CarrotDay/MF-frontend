@@ -30,14 +30,14 @@ const Footer = () => {
                 </a>
               </h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
+
               </p>
             </div>
             <div className="col-md-6 col-lg-3 mb-md-0 mb-4">
               <h2 className="footer-heading">Sản phẩm</h2>
               <ul className="list-unstyled">
-                <li><a href="#" className="py-1 d-block">Manga</a></li>
-                <li><a href="#" className="py-1 d-block">Figure</a></li>
+                <li><a href="/side-product/manga" className="py-1 d-block">Manga</a></li>
+                <li><a href="/side-product/figure" className="py-1 d-block">Figure</a></li>
               </ul>
             </div>
             <div className="col-md-6 col-lg-3 mb-md-0 mb-4">

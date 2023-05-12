@@ -18,7 +18,7 @@ const ProductDetail = ({ product, catalog }) => {
         product: product.id
       };
 
-      const res = await createCart(body);
+      await createCart(body);
       alert('Thêm sản phẩm thành công!');
       navigate('/');
     }

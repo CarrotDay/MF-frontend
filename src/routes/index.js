@@ -24,6 +24,7 @@ import Otp from "~/pages/ForgotPassword/Otp";
 import AccountInfo from "~/pages/AcountInfo";
 import Contact from "~/pages/Contact";
 import Transaction from "~/pages/Transaction";
+import UpdateAccountInfo from "~/pages/UpdateAccount/UpdateAccountInfo";
 
 export const routesWithoutLayout = [
   {
@@ -84,6 +85,11 @@ export const routesCustomer = [
     path: "/account-information",
     Component: AccountInfo,
   },
+  {
+    path: "/update-account-information",
+    Component: UpdateAccountInfo,
+  },
+
   {
     path: "/transaction",
     Component: Transaction

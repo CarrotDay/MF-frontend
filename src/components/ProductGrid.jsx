@@ -24,7 +24,7 @@ const ProductGrid = ({isHome, type, data, category}) => {
             {getTitle()}
           </h1>
           {isHome?
-              <Link to={"/"} className={"more d-flex justify-content-center align-items-center"}>
+              <Link to={type?'/side-product/manga':'/side-product/figure'} className={"more d-flex justify-content-center align-items-center"}>
                   <span className="font-weight-bold">Xem thêm
                   <i className="fa fa-long-arrow-right ml-3" aria-hidden="true"></i>
                 </span>

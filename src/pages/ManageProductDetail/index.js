@@ -79,7 +79,7 @@ function ManageProductDetail() {
           meta: `${data.name.replace(/ /g, '-')}-${Math.floor(Math.random() * 100000)}`,
           image
         });
-  
+
         navigate('/manage/product');
       }
       else {

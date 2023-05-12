@@ -47,7 +47,7 @@ const columns = [
     align: 'center',
     filters: [
       {
-        text: 'Anime',
+        text: 'Manga',
         value: false
       },
       {
@@ -57,7 +57,7 @@ const columns = [
     ],
     onFilter: (v, e) => e.type === v,
     sorter: (a, b) => a.type > b.type ? 1 : -1,
-    render: value => value ? 'Figure' : 'Anime'
+    render: value => value ? 'Figure' : 'Manga'
   },
   {
     title: 'Create At',
