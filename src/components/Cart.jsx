@@ -7,6 +7,8 @@ import axios from "axios";
 import _ from "lodash";
 import { useQuery } from "@tanstack/react-query";
 import { getCarts } from '~/api/cart.api';
+import jwtDecode from "jwt-decode";
+import { createTransaction } from '~/api/transaction.api';
 
 const layout = {
   labelCol: { span: 24 },
@@ -26,10 +28,11 @@ const axiosOpt = {
   }
 };
 
+const account = jwtDecode(window.localStorage.getItem('token') || '');
+
 export default function Cart() {
   const [ form ] = Form.useForm();
 
-  const [address, setAddress] = useState('A23, Xã Phú Xuân, Huyện Nhà Bè, Hồ Chí Minh');
   const [optionsPro, setOptionsPro] = useState([]);
   const [optionsDistrict, setOptionsDistrict] = useState([]);
   const [optionsWard, setOptionsWard] = useState([]);
@@ -38,7 +41,7 @@ export default function Cart() {
 
   useQuery({
     queryKey: ['carts'],
-    queryFn: async () => getCarts({ customer: 1 }),
+    queryFn: async () => getCarts({ customer: account?.id }),
     onSuccess: data => {
       setProducts(data?.data?.map(e => ({ ...e.productNavigation, number: 1 })));
     }
@@ -58,7 +61,7 @@ export default function Cart() {
   });
 
   useQuery({
-    queryKey: ['district', form?.getFieldValue('province')],
+    queryKey: ['district', updateForm !== null && form?.getFieldValue('province')],
     queryFn: async () => {
       return axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district', {
         ...axiosOpt,
@@ -77,7 +80,7 @@ export default function Cart() {
   });
 
   useQuery({
-    queryKey: ['ward', form?.getFieldValue('district')],
+    queryKey: ['ward', updateForm !== null && form?.getFieldValue('district')],
     queryFn: async () => {
       return axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward', {
         ...axiosOpt,
@@ -113,7 +116,7 @@ export default function Cart() {
         wardName, 
         districtName, 
         provinceName
-      } = getAddressComponents(address);
+      } = getAddressComponents(account?.address);
 
       const _province = (await axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', axiosOpt))?.data?.data?.map(e => ({
         value: e.ProvinceID,
@@ -152,7 +155,7 @@ export default function Cart() {
         road: roadName
       });
     })();
-  }, [address]);
+  }, []);
 
   const updateFormHandle = () => {
     setUpdateForm(!updateForm);
@@ -177,6 +180,30 @@ export default function Cart() {
         number: number
       }
     }))
+  }
+
+  const submitHandle = async () => {
+    try {
+      const addressForm = form.getFieldsValue();
+      const address = [
+        addressForm?.road,
+        optionsWard?.find(e => e.value === addressForm.ward)?.label,
+        optionsDistrict?.find(e => e.value === addressForm.district)?.label,
+        optionsPro?.find(e => e.value === addressForm.province)?.label
+      ].join(', ');
+      console.log(products);
+
+      await createTransaction({
+        customer: account.id,
+        address: address,
+        products: products
+      });
+
+      alert('Đặt hàng thành công')
+    }
+    catch (err) {
+      console.log('Bug');
+    }
   }
 
   return (
@@ -221,7 +248,7 @@ export default function Cart() {
                     onChange={updateFormHandle}
                   >
                     {optionsPro?_.map(optionsPro, (o) => {
-                      return (<Option value={o.value}>{o.label}</Option>);
+                      return (<Option value={o.value} key={o.value}>{o.label}</Option>);
                     }):null}
                   </Select>
                 </Form.Item>
@@ -235,7 +262,7 @@ export default function Cart() {
                     onChange={updateFormHandle}
                   >
                     {optionsDistrict?_.map(optionsDistrict, (o) => {
-                      return (<Option value={o.value}>{o.label}</Option>);
+                      return (<Option value={o.value} key={o.value}>{o.label}</Option>);
                     }):null}
                   </Select>
                 </Form.Item>
@@ -284,45 +311,54 @@ export default function Cart() {
             </div>
             <div className="money"style={{backgroundColor: "#fff"}}>
               <table className={"table"}>
-                <tr>
-                  <th className={"text-left"}>Tên</th>
-                  <th>Số lượng</th>
-                  <th className={"text-right"}>Giá tiền</th>
-                </tr>
-                {products?.map(e => (
+                <tbody>
                   <tr>
-                    <td className={"text-left"}>{e.name}</td>
-                    <td>{e.number}</td>
-                    <td className={"text-right"}><Money money={e.price}/></td>
+                    <th className={"text-left"}>Tên</th>
+                    <th>Số lượng</th>
+                    <th className={"text-right"}>Giá tiền</th>
                   </tr>
-                ))}
+                  {products?.map(e => (
+                    <tr key={e.id}>
+                      <td className={"text-left"}>{e.name}</td>
+                      <td>{e.number}</td>
+                      <td className={"text-right"}><Money money={e.price}/></td>
+                    </tr>
+                  ))}
+                </tbody>
               </table>
               <table className={"table"}>
-                <tr>
-                  <th className={"text-left"}>Phí vận chuyển:</th>
-                  {/*chèn phí vận chuyển vào*/}
-                  <td className={"text-right"}><Money money={30000}/></td>
-                </tr>
-                <tr>
-                  <th className={"text-left"}>Tổng tiền:</th>
-                  <td className={"text-right"}><Money money={products?.reduce((pre, curr) => {
-                    return pre + curr.price * curr.number;
-                  }, 0)}/></td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <th className={"text-left"}>Phí vận chuyển:</th>
+                    {/*chèn phí vận chuyển vào*/}
+                    <td className={"text-right"}><Money money={30000}/></td>
+                  </tr>
+                  <tr>
+                    <th className={"text-left"}>Tổng tiền:</th>
+                    <td className={"text-right"}><Money money={products?.reduce((pre, curr) => {
+                      return pre + curr.price * curr.number;
+                    }, 0)}/></td>
+                  </tr>
+                </tbody>
               </table>
             </div>
             <div className="">
-              <Button sx={{
-                width: "100%",
-                backgroundColor: "rgb(255,145,77)",
-                border: "1px solid rgb(255,145,77)",
-                ":hover": {
-                  backgroundColor: "transparent",
-                  color: "rgb(255,145,77)",
-                  border: 1,
-                  borderColor: "rgb(255,145,77)"
-                }
-              }} className={"btn-check-out"}  variant="contained" >
+              <Button 
+                sx={{
+                  width: "100%",
+                  backgroundColor: "rgb(255,145,77)",
+                  border: "1px solid rgb(255,145,77)",
+                  ":hover": {
+                    backgroundColor: "transparent",
+                    color: "rgb(255,145,77)",
+                    border: 1,
+                    borderColor: "rgb(255,145,77)"
+                  }
+                }} 
+                className={"btn-check-out"}  
+                variant="contained" 
+                onClick={submitHandle}
+              >
                 Đặt hàng
               </Button>
             </div>

@@ -86,8 +86,8 @@ const AccountPopover = ({isLogin,data}) => {
           <Divider sx={{ borderStyle: 'dashed' }} />
 
           <Stack sx={{ p: 1 }}>
-            {MENU_OPTIONS_FOR_CUSTOMER.map((option) => (
-              <Link to={option.url} style={{textDecoration: 'none', color: 'black'}} >
+            {MENU_OPTIONS_FOR_CUSTOMER.map((option, i) => (
+              <Link to={option.url} style={{textDecoration: 'none', color: 'black'}} key={i}>
                 <MenuItem key={option.id} onClick={() => handleClose(option.id)}>
                   {option.label}
                 </MenuItem>
@@ -101,8 +101,8 @@ const AccountPopover = ({isLogin,data}) => {
       // nhan vien
       return (
         <Stack sx={{ p: 1 }}>
-          {MENU_OPTIONS_FOR_ADMIN_EMPLOYEE.map((option) => (
-            <Link to={option.url} style={{textDecoration: 'none', color: 'black'}} >
+          {MENU_OPTIONS_FOR_ADMIN_EMPLOYEE.map((option, i) => (
+            <Link to={option.url} style={{textDecoration: 'none', color: 'black'}} key={i}>
               <MenuItem key={option.id} onClick={() => handleClose(option.id)}>
                 {option.label}
               </MenuItem>
@@ -113,8 +113,8 @@ const AccountPopover = ({isLogin,data}) => {
     } else {
       return (
         <Stack sx={{ p: 1 }}>
-          {MENU_OPTIONS_FOR_ANONYMOUS.map((option) => (
-            <Link to={option.url} style={{textDecoration: 'none', color: 'black'}} >
+          {MENU_OPTIONS_FOR_ANONYMOUS.map((option, i) => (
+            <Link to={option.url} style={{textDecoration: 'none', color: 'black'}} key={i}>
               <MenuItem key={option.id} onClick={() => handleClose(option.id)}>
                 {option.label}
               </MenuItem>
