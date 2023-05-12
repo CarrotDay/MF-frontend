@@ -16,12 +16,26 @@ const layout = {
   wrapperCol: { span: 24 },
 };
 
+const dataGetFee = {
+  from_district_id: 1449, // để cố định
+  service_id: 53320, // loại dịch vụ cố định: Chuẩn
+  service_type_id: null, // để cố định
+  to_district_id: 1452, // lấy district id người nhận
+  to_ward_code: '21012', // lấy ward id người nhận
+  height: 50, // để cố định
+  length: 20,// để cố định
+  weight: 500,// để cố định
+  width: 20,// để cố định
+  insurance_value: 10000, // số tiền tổng sản phẩm
+  coupon: null
+};
+
+const token = window.localStorage.getItem("token");
+const decode = token?jwtDecode(token):null;
 
 function ManageTransactionDetail() {
   const [form] = Form.useForm();
   const { meta } = useParams();
-  const token = window.localStorage.getItem("token");
-  const decode = token?jwtDecode(token):null;
 
   const [employees, setEmployees] = useState([]); // lấy tất cả nhân viên
   // const [nameEmp, setNameEmp] = useState(get(find(employees, {'username': get(decode, 'username')}), 'name'));
@@ -44,30 +58,14 @@ function ManageTransactionDetail() {
     }
   };
 
-// data get fee
-  const dataGetFee = {
-    from_district_id: 1449, // để cố định
-    service_id: 53320, // loại dịch vụ cố định: Chuẩn
-    service_type_id: null, // để cố định
-    to_district_id: 1452, // lấy district id người nhận
-    to_ward_code: '21012', // lấy ward id người nhận
-    height: 50, // để cố định
-    length: 20,// để cố định
-    weight: 500,// để cố định
-    width: 20,// để cố định
-    insurance_value: 10000, // số tiền tổng sản phẩm
-    coupon: null
-  };
-
-
   useQuery({
     queryKey: ['employees'],
     queryFn: getEmployees,
     onSuccess: data => {
       const employees = data.data;
-      const currentEmployee = find(employees, {'username': get(decode, 'username')});
-      setEmployees(employees);
-      setNameEmp(get(currentEmployee, 'name'));
+      // const currentEmployee = find(employees, {'username': get(decode, 'username')});
+      // setEmployees(employees);
+      // setNameEmp(get(currentEmployee, 'name'));
     }
   });
 

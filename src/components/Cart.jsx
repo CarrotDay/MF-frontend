@@ -99,7 +99,7 @@ export default function Cart() {
         label: e.WardName,
       })));
     },
-    enabled: updateForm !== null
+    enabled: Boolean(updateForm !== null && form?.getFieldValue('district'))
   });
 
   function getAddressComponents(address) {
@@ -161,7 +161,24 @@ export default function Cart() {
     })();
   }, []);
 
-  const updateFormHandle = () => {
+  const updateFormHandle = (str) => {
+    if (str === "province") {
+      const data = {
+        province: form.getFieldValue('province')
+      };
+      console.log(data);
+      form.resetFields();
+      form.setFieldsValue(data);
+    }
+    else if (str === 'district') {
+      const data = {
+        province: form.getFieldValue('province'), 
+        district: form.getFieldValue('district'), 
+      };
+      console.log(data);
+      form.resetFields();
+      form.setFieldsValue(data);
+    }
     setUpdateForm(!updateForm);
   }
 
@@ -258,7 +275,7 @@ export default function Cart() {
                   rules={[{ required: true }]}>
                   <Select 
                     placeholder='Chọn tỉnh/thành'
-                    onChange={updateFormHandle}
+                    onChange={() => updateFormHandle("province")}
                   >
                     {optionsPro?_.map(optionsPro, (o) => {
                       return (<Option value={o.value} key={o.value}>{o.label}</Option>);
@@ -272,7 +289,7 @@ export default function Cart() {
                 >
                   <Select 
                     placeholder='Chọn quận/huyện'
-                    onChange={updateFormHandle}
+                    onChange={() => updateFormHandle("district")}
                   >
                     {optionsDistrict?_.map(optionsDistrict, (o) => {
                       return (<Option value={o.value} key={o.value}>{o.label}</Option>);
