@@ -19,7 +19,7 @@ const initForm = {
 };
 
 const token = window.localStorage.getItem("token");
-const {id} = token ? jwtDecode(token) : null;
+const account = token ? jwtDecode(token) : null;
 
 const AccountInformation = () => {
   const [form] = Form.useForm();
@@ -27,8 +27,8 @@ const AccountInformation = () => {
   const navigate = useNavigate();
 
   useQuery({
-    queryKey: ['customers', id],
-    queryFn: () => getCustomer(id),
+    queryKey: ['customers', account?.id],
+    queryFn: () => getCustomer(account?.id),
     onSuccess: data => {
       const customer = data.data;
       customer.birthday = moment(customer.birthday);

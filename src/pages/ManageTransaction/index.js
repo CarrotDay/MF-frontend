@@ -15,14 +15,14 @@ function ManageTransaction() {
     queryKey: ['transactions'],
     queryFn: getTransactions,
     onSuccess: data => {
-      console.log(data.data);
-      setTransactions(data.data.map(e => ({
+      console.log(data?.data);
+      setTransactions(data?.data?.map(e => ({
         ...e,
         key: e.id,
-        customer: e.customerName,
-        employee: e.employeeName,
-        status: e.statusName
-      })))
+        customer: e.customerNavigation?.name,
+        employee: e.employeeNavigation?.name,
+        status: e.statusNavigation?.content
+      })));
     }
   });
 

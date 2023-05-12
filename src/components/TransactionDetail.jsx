@@ -53,9 +53,7 @@ export const columns = [
 ];
 
 const token = window.localStorage.getItem("token");
-const account = jwtDecode(token || '');
-const id = token?jwtDecode(token).id:null;
-
+const account = token ? jwtDecode(token) : null;
 const TransactionDetail = () => {
   const queryClient = useQueryClient();
 
@@ -66,7 +64,7 @@ const TransactionDetail = () => {
     onSuccess: data => {
       console.log(data.data);
       const customerTransaction = filter(data.data, (e) => {
-        return e.customer == id;
+        return e.customer == account.id;
       });
       
       setTransactions(customerTransaction.map(e => ({

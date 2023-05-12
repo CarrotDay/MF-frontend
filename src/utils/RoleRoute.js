@@ -25,7 +25,7 @@ const routesMapping = {
 function RoleRoute() {
   const location = useLocation()
   const token = window.localStorage.getItem('token');
-  const account = token ? jwtDecode(window.localStorage.getItem('token')) : '';
+  const account = token ? jwtDecode(token) : '';
 
   return (
       <Routes>
@@ -35,8 +35,8 @@ function RoleRoute() {
           {routesWithLayout.map(({ path, Component }, index) => <Route path={path} element={<Component />} key={index} />)}
         </Route>
 
-        <Route element={layoutMapping(Number(account.role), location.pathname)}>
-          {routesMapping[Number(account.role)]?.map(({ path, Component }, index) => <Route path={path} element={<Component />} key={index} />)}
+        <Route element={layoutMapping(Number(account?.role), location.pathname)}>
+          {routesMapping[Number(account?.role)]?.map(({ path, Component }, index) => <Route path={path} element={<Component />} key={index} />)}
         </Route>
 
         <Route path="*" element={<Navigate to="/" />} />

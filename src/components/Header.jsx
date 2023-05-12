@@ -16,7 +16,7 @@ const Header = () => {
   ]);
 
   const token = window.localStorage.getItem('token');
-  const data = token ? jwtDecode(window.localStorage.getItem('token')) : '';
+  const data = token ? jwtDecode(token) : '';
 
   const dataUser = {
     username: 'Thuy Nguyen',

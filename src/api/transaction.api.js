@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const SERVER = process.env.REACT_APP_SERVER;
 
-export const getTransactions = (body) => axios.post(`${SERVER}api/transaction`, body);
+export const getTransactions = (body = {}) => axios.post(`${SERVER}api/transaction`, body);
 
 export const getTransactionsByMeta = (meta) => axios.get(`${SERVER}api/transaction/${meta}`);
 

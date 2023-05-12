@@ -30,7 +30,8 @@ const axiosOpt = {
   }
 };
 
-const account = jwtDecode(window.localStorage.getItem('token') || '');
+const token = window.localStorage.getItem('token');
+const account = token ? jwtDecode(token) : '';
 
 export default function Cart() {
   const [ form ] = Form.useForm();
@@ -166,7 +167,6 @@ export default function Cart() {
       const data = {
         province: form.getFieldValue('province')
       };
-      console.log(data);
       form.resetFields();
       form.setFieldsValue(data);
     }
@@ -175,7 +175,6 @@ export default function Cart() {
         province: form.getFieldValue('province'), 
         district: form.getFieldValue('district'), 
       };
-      console.log(data);
       form.resetFields();
       form.setFieldsValue(data);
     }

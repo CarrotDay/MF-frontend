@@ -21,20 +21,13 @@ const validateMessages = {
 
 const { Option } = Select;
 
-const init = {
-
-}
 const layout = {
   labelCol: { span: 24 },
   wrapperCol: { span: 24 },
 };
 
-const initForm = {
-  type: JSON.parse(process.env.REACT_APP_ANIME)
-};
-
 const token = window.localStorage.getItem("token");
-const {id} = token ? jwtDecode(token) : null;
+const account = token ? jwtDecode(token) : null;
 
 const UpdateAccountInfo = () => {
   const [form] = Form.useForm();
@@ -54,9 +47,10 @@ const UpdateAccountInfo = () => {
   }
 
   useQuery({
-    queryKey: ['customers', id],
-    queryFn: () => getCustomer(id),
+    queryKey: ['customers', account?.id],
+    queryFn: () => getCustomer(account?.id),
     onSuccess: data => {
+      // console.log(new Date(data.data.birthday))
       const customer = data.data;
       const {
         roadName,
@@ -70,7 +64,7 @@ const UpdateAccountInfo = () => {
       customer.province = provinceName;
       customer.birthday = moment(customer.birthday);
       form.setFieldsValue(customer);
-      setCustomer(customer);
+      // setCustomer(customer);
     }
   });
 
@@ -159,6 +153,7 @@ const UpdateAccountInfo = () => {
         });
     }
   }, [district]);
+
   const onFinish = (values) => {
     console.log('values',values);
   };
@@ -195,7 +190,7 @@ const UpdateAccountInfo = () => {
 
       console.log(body);
 
-      const res = await updateCustomer(id, body);
+      const res = await updateCustomer(account?.id, body);
       alert('Cập nhật thành công!');
       navigate('/account-information');
     }
@@ -219,7 +214,6 @@ const UpdateAccountInfo = () => {
               name="control-hooks"
               onFinish={submitForm}
               className={"form-body-ant"}
-              initialValues={initForm}
             >
               <Form.Item
                 name="name"
@@ -258,14 +252,14 @@ const UpdateAccountInfo = () => {
                 <Input />
               </Form.Item>
               <Form.Item name="birthday" label="Ngày sinh" rules={[{ required: true }]} >
-                <DatePicker />
+                <DatePicker format="YYYY/MM/DD" />
               </Form.Item>
 
               <Form.Item
                 name="province"
                 label="Tỉnh/Thành"
                 rules={[{ required: true }]}>
-                <Select placeholder='Chọn tỉnh/thành' onSelect={handleSelectPro}>
+                <Select placeholder='Chọn tỉnh/thành'>
                   {optionsPro?_.map(optionsPro, (o) => {
                     return (<Option value={o.value}>{o.label}</Option>);
                   }):null}
@@ -275,7 +269,7 @@ const UpdateAccountInfo = () => {
                 name="district"
                 label="Quận/Huyện"
                 rules={[{ required: true }]}>
-                <Select placeholder='Chọn quận/huyện' onSelect={handleSelectDistrict}>
+                <Select placeholder='Chọn quận/huyện'>
                   {optionsDistrict?_.map(optionsDistrict, (o) => {
                     return (<Option value={o.value}>{o.label}</Option>);
                   }):null}
@@ -285,7 +279,7 @@ const UpdateAccountInfo = () => {
                 name="ward"
                 label="Phường/Xã/Thị trấn"
                 rules={[{ required: true }]}>
-                <Select placeholder='Chọn phường/xã/thị trấn' onSelect={handleSelectWard}>
+                <Select placeholder='Chọn phường/xã/thị trấn'>
                   {optionsWard?_.map(optionsWard, (o) => {
                     return (<Option value={o.value}>{o.label}</Option>);
                   }):null}
