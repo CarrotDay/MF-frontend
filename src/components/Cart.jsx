@@ -6,6 +6,7 @@ import {Form, Input, Select} from "antd";
 import axios from "axios";
 import _ from "lodash";
 import { useQuery } from "@tanstack/react-query";
+import { getCarts } from '~/api/cart.api';
 
 const layout = {
   labelCol: { span: 24 },
@@ -29,14 +30,19 @@ export default function Cart() {
   const [ form ] = Form.useForm();
 
   const [address, setAddress] = useState('A23, Xã Phú Xuân, Huyện Nhà Bè, Hồ Chí Minh');
-
   const [optionsPro, setOptionsPro] = useState([]);
-  const [province, setProvince] = useState({id: null, name: ''});
   const [optionsDistrict, setOptionsDistrict] = useState([]);
-  const [district, setDistrict] = useState({id: null, name: ''});
   const [optionsWard, setOptionsWard] = useState([]);
-  const [ward, setWard] = useState({id: null, name: ''});
-  const [road, setRoad] = useState();
+  const [updateForm, setUpdateForm] = useState(null);
+  const [products, setProducts] = useState([]);
+
+  useQuery({
+    queryKey: ['carts'],
+    queryFn: async () => getCarts({ customer: 1 }),
+    onSuccess: data => {
+      setProducts(data?.data?.map(e => ({ ...e.productNavigation, number: 1 })));
+    }
+  });
 
   useQuery({
     queryKey: ['province'],
@@ -52,12 +58,12 @@ export default function Cart() {
   });
 
   useQuery({
-    queryKey: ['district', form.getFieldValue('province')],
+    queryKey: ['district', form?.getFieldValue('province')],
     queryFn: async () => {
       return axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district', {
         ...axiosOpt,
         params: {
-          "province_id": form.getFieldValue('province')
+          "province_id": form?.getFieldValue('province')
         }
       });
     },
@@ -67,16 +73,16 @@ export default function Cart() {
         label: e.DistrictName,
       })));
     },
-    enabled: form.getFieldValue('province') !== undefined
+    enabled: updateForm !== null
   });
 
   useQuery({
-    queryKey: ['ward', form.getFieldValue('district')],
+    queryKey: ['ward', form?.getFieldValue('district')],
     queryFn: async () => {
       return axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward', {
         ...axiosOpt,
         params: {
-          "district_id": form.getFieldValue('district')
+          "district_id": form?.getFieldValue('district')
         }
       });
     },
@@ -86,7 +92,7 @@ export default function Cart() {
         label: e.WardName,
       })));
     },
-    enabled: form.getFieldValue('district') !== undefined
+    enabled: updateForm !== null
   });
 
   function getAddressComponents(address) {
@@ -137,9 +143,7 @@ export default function Cart() {
       }));
       const _wardId = _ward?.find(e => e.label === wardName).value;
 
-      setOptionsPro(_province);
-      setOptionsDistrict(_district);
-      setOptionsWard(_ward);
+      setUpdateForm(true);
 
       form.setFieldsValue({
         province: _provinceId,
@@ -150,19 +154,29 @@ export default function Cart() {
     })();
   }, [address]);
 
-  const handleSelectPro = (value) => {
-    setProvince({ ...province, id: value});
-    return value;
+  const updateFormHandle = () => {
+    setUpdateForm(!updateForm);
   }
 
-  const handleSelectDistrict = (value) => {
-    setDistrict({ ...district, id: value });
-    return value;
-  }
+  const changeNumberHandle = (id, number) => {
+    if (number < 1) {
+      return;
+    }
 
-  const handleSelectWard = (value) => {
-    setWard({ ...ward, id: value});
-    return value;
+    setProducts(products.map(e => {
+      if (e.id !== id) {
+        return e;
+      }
+
+      if (e.amount < number) {
+        return e;
+      }
+
+      return {
+        ...e,
+        number: number
+      }
+    }))
   }
 
   return (
@@ -173,10 +187,16 @@ export default function Cart() {
             <h1 className="font-weight-bold">Giỏ hàng</h1>
           </div>
           <div className="list-product container" style={{backgroundColor: "#fff"}}>
-            <ProductCart />
-            <ProductCart />
-            <ProductCart />
-            <ProductCart />
+            {products?.map(e => (
+              <ProductCart 
+                link={`https://localhost:7114/Uploads/Products/${e.imageNavigation?.link}`}
+                name={e.name}
+                description={e.description}
+                number={e.number}
+                changeNumberHandle={(number) => changeNumberHandle(e.id, number)}
+                key={e.id} 
+              />
+            ))}
           </div>
         </div>
         <div className="check-out col-12 col-lg-4 text-left d-flex flex-column">
@@ -196,7 +216,10 @@ export default function Cart() {
                   name="province"
                   label="Tỉnh/Thành"
                   rules={[{ required: true }]}>
-                  <Select placeholder='Chọn tỉnh/thành'>
+                  <Select 
+                    placeholder='Chọn tỉnh/thành'
+                    onChange={updateFormHandle}
+                  >
                     {optionsPro?_.map(optionsPro, (o) => {
                       return (<Option value={o.value}>{o.label}</Option>);
                     }):null}
@@ -205,8 +228,12 @@ export default function Cart() {
                 <Form.Item
                   name="district"
                   label="Quận/Huyện"
-                  rules={[{ required: true }]}>
-                  <Select placeholder='Chọn quận/huyện'>
+                  rules={[{ required: true }]}
+                >
+                  <Select 
+                    placeholder='Chọn quận/huyện'
+                    onChange={updateFormHandle}
+                  >
                     {optionsDistrict?_.map(optionsDistrict, (o) => {
                       return (<Option value={o.value}>{o.label}</Option>);
                     }):null}
@@ -231,7 +258,7 @@ export default function Cart() {
                     },
                   ]}
                 >
-                  <Input value={road} />
+                  <Input />
                 </Form.Item>
               </Form>
             </div>
@@ -262,11 +289,13 @@ export default function Cart() {
                   <th>Số lượng</th>
                   <th className={"text-right"}>Giá tiền</th>
                 </tr>
-                <tr>
-                  <td className={"text-left"}>Boku girl</td>
-                  <td>4</td>
-                  <td className={"text-right"}><Money money={20000}/></td>
-                </tr>
+                {products?.map(e => (
+                  <tr>
+                    <td className={"text-left"}>{e.name}</td>
+                    <td>{e.number}</td>
+                    <td className={"text-right"}><Money money={e.price}/></td>
+                  </tr>
+                ))}
               </table>
               <table className={"table"}>
                 <tr>
@@ -276,7 +305,9 @@ export default function Cart() {
                 </tr>
                 <tr>
                   <th className={"text-left"}>Tổng tiền:</th>
-                  <td className={"text-right"}><Money money={110000}/></td>
+                  <td className={"text-right"}><Money money={products?.reduce((pre, curr) => {
+                    return pre + curr.price * curr.number;
+                  }, 0)}/></td>
                 </tr>
               </table>
             </div>

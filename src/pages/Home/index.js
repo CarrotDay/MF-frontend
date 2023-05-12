@@ -13,7 +13,10 @@ const Home = () => {
   const isLoadingManga = useQuery({
     queryKey: ['manga'],
     queryFn: () => getProducts({ Type: false, Take: 12 }),
-    onSuccess: data => setManga(data.data)
+    onSuccess: data => {
+      console.log(data);
+      setManga(data.data)
+    }
   }).isLoading;
   
   const isLoadingFigure = useQuery({
