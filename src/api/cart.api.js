@@ -1,9 +1,21 @@
 import axios from 'axios';
 
-const SERVER = process.env.REACT_APP_SERVER;
+import './axios.config';
 
-export const getCarts = (body = {}) => axios.post(`${SERVER}api/cart`, body);
+export const getCarts = (body = {}) => axios.post(`/api/cart`, body, { 
+  headers: {
+    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+  } 
+});
 
-export const createCart = (body = {}) => axios.post(`${SERVER}api/cart/create`, body);
+export const createCart = (body = {}) => axios.post(`/api/cart/create`, body, { 
+  headers: {
+    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+  } 
+});
 
-export const removeCart = (id) => axios.delete(`${SERVER}api/cart/remove/${id}`);
+export const removeCart = (id) => axios.delete(`/api/cart/remove/${id}`, { 
+  headers: {
+    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+  } 
+});

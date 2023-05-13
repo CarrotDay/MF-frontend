@@ -1,11 +1,27 @@
 import axios from 'axios';
 
-const SERVER = process.env.REACT_APP_SERVER;
+import './axios.config';
 
-export const getTransactions = (body = {}) => axios.post(`${SERVER}api/transaction`, body);
+export const getTransactions = (body = {}) => axios.post(`/api/transaction`, body, { 
+  headers: {
+    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+  } 
+});
 
-export const getTransactionsByMeta = (meta) => axios.get(`${SERVER}api/transaction/${meta}`);
+export const getTransactionsByMeta = (meta) => axios.get(`/api/transaction/${meta}`, { 
+  headers: {
+    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+  } 
+});
 
-export const createTransaction = (body = {}) => axios.post(`${SERVER}api/transaction/create`, body);
+export const createTransaction = (body = {}) => axios.post(`/api/transaction/create`, body, { 
+  headers: {
+    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+  } 
+});
 
-export const updateTransaction = (id, body = {}) => axios.put(`${SERVER}api/transaction/update/${id}`, body);
+export const updateTransaction = (id, body = {}) => axios.put(`/api/transaction/update/${id}`, body, { 
+  headers: {
+    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+  } 
+});

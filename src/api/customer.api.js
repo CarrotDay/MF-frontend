@@ -1,9 +1,21 @@
 import axios from 'axios';
 
-const SERVER = process.env.REACT_APP_SERVER;
+import './axios.config';
 
-export const getCustomers = () => axios.post(`${SERVER}api/customer` + '', {});
+export const getCustomers = () => axios.post(`/api/customer` + '', {}, { 
+  headers: {
+    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+  } 
+});
 
-export const getCustomer = (id) => axios.get(SERVER + 'api/customer/' + id);
+export const getCustomer = (id) => axios.get('api/customer/' + id, { 
+  headers: {
+    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+  } 
+});
 
-export const updateCustomer = (id, body = {}) => axios.post(`${SERVER}api/customer/update/${id}`, body);
+export const updateCustomer = (id, body = {}) => axios.post(`/api/customer/update/${id}`, body, { 
+  headers: {
+    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+  } 
+});

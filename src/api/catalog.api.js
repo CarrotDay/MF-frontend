@@ -1,5 +1,9 @@
 import axios from 'axios';
 
-const SERVER = process.env.REACT_APP_SERVER;
+import './axios.config';
 
-export const getCatalogWithBodys = (body = {}) => axios.post(`${SERVER}api/site/catalog/list`, body);
+export const getCatalogWithBodys = (body = {}) => axios.post(`/api/site/catalog/list`, body, { 
+  headers: {
+    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+  } 
+});

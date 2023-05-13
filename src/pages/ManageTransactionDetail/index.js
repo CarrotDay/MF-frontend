@@ -33,7 +33,6 @@ const dataGetFee = {
 
 const token = window.localStorage.getItem("token");
 const account = token?jwtDecode(token):null;
-console.log(account);
 
 function ManageTransactionDetail() {
   const [form] = Form.useForm();
@@ -49,6 +48,7 @@ function ManageTransactionDetail() {
     queryKey: ['transaction', meta],
     queryFn: () => getTransactionsByMeta(meta),
     onSuccess: data => {
+      console.log(data)
       form.setFieldsValue({
         nameEmp: data?.data?.employeeNavigation?.name || '',
         nameCustomer: data?.data?.customerNavigation?.name,
@@ -97,7 +97,12 @@ function ManageTransactionDetail() {
             >Cập nhật đơn hàng</Button>
           )}
 
-          <Button type="primary" style={{ margin: '4px' }} danger>Hủy đơn hàng</Button>
+          <Button 
+            onClick={() => updateTransactionHandle(5)}
+            type="primary" 
+            style={{ margin: '4px' }} 
+            danger
+          >Hủy đơn hàng</Button>
         </div>
       )}
       <div className="row form-ant" style={{backgroundColor: "#fff"}}>

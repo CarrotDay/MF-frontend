@@ -1,5 +1,9 @@
 import axios from 'axios';
 
-const SERVER = process.env.REACT_APP_SERVER;
+import './axios.config';
 
-export const updateProductImage = (id, body = {}) => axios.post(`${SERVER}api/productimage/update/${id}`, body);
+export const updateProductImage = (id, body = {}) => axios.post(`/api/productimage/update/${id}`, body, { 
+  headers: {
+    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+  } 
+});
