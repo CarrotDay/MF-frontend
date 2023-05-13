@@ -1,22 +1,23 @@
 import React, {useEffect, useState} from 'react';
 import {Button, ConfigProvider, DatePicker, Form, Input, Select, Space} from "antd";
-import {EditOutlined} from "@ant-design/icons";
 import jwtDecode from "jwt-decode";
 import _ from "lodash";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useQuery} from "@tanstack/react-query";
 import {getCustomer, updateCustomer} from "~/api/customer.api";
-import moment from "moment/moment";
-import {getProducts} from "~/api/product.api";
-import Money from "~/components/Money";
-import {signUpApi} from "~/api/site.api";
+import moment from "moment";
+import dayjs from 'dayjs';
 
 const validateMessages = {
   required: '${label} là bắt buộc!',
   types: {
     email: '${label} không hợp lệ!',
   },
+};
+
+const initForm = {
+  type: JSON.parse(process.env.REACT_APP_ANIME)
 };
 
 const { Option } = Select;
@@ -29,11 +30,18 @@ const layout = {
 const token = window.localStorage.getItem("token");
 const account = token ? jwtDecode(token) : null;
 
+const axiosOpt = {
+  headers: {
+    'Content-Type': 'application/json',
+    'Token': '0c09627a-c105-11ed-ab31-3eeb4194879e'
+  }
+};
+
 const UpdateAccountInfo = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
-  const [customer, setCustomer] = useState({});
+  const [updateForm, setUpdateForm] = useState(null);
 
   function getAddressComponents(address) {
     const parts = address.split(',').map(part => part.trim());
@@ -50,145 +58,161 @@ const UpdateAccountInfo = () => {
     queryKey: ['customers', account?.id],
     queryFn: () => getCustomer(account?.id),
     onSuccess: data => {
-      // console.log(new Date(data.data.birthday))
-      const customer = data.data;
+      const _customer = data.data;
       const {
         roadName,
         wardName,
         districtName,
         provinceName
-      } = getAddressComponents(customer?.address);
-      customer.road = roadName;
-      customer.ward = wardName;
-      customer.district = districtName;
-      customer.province = provinceName;
-      customer.birthday = moment(customer.birthday);
-      form.setFieldsValue(customer);
-      // setCustomer(customer);
+      } = getAddressComponents(_customer?.address);
+      _customer.road = roadName;
+      _customer.ward = wardName;
+      _customer.district = districtName;
+      _customer.province = provinceName;
+      _customer.birthday = dayjs(_customer.birthday);
+      form.setFieldsValue(_customer);
     }
+
   });
 
   const [optionsPro, setOptionsPro] = useState([]);
-  const [province, setProvince] = useState();
   const [optionsDistrict, setOptionsDistrict] = useState([]);
-  const [district, setDistrict] = useState();
   const [optionsWard, setOptionsWard] = useState([]);
-  const [ward, setWard] = useState();
 
-  useEffect(() => {
-      axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', {
-        headers: {
-          'Content-Type': 'application/json',
-          'Token': '0c09627a-c105-11ed-ab31-3eeb4194879e'
-        }
-      })
-        .then(response => {
-          const provinces = response.data.data;
-          const opt = [];
-          provinces.forEach((province) => {
-            opt.push({
-              value: province.ProvinceID,
-              label: province.ProvinceName,
-            })
-          });
-          setOptionsPro(opt);
-        })
-        .catch(error => {
-          // Xử lý lỗi
-        });
+  useQuery({
+    queryKey: ['province'],
+    queryFn: async () => {
+      return axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', axiosOpt);
+    },
+    onSuccess: data => {
+      setOptionsPro(data?.data?.data?.map(e => ({
+        value: e.ProvinceID,
+        label: e.ProvinceName,
+      })));
     }
-    , []);
+  });
 
-  useEffect(() => {
-    if (province) {
-      axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district', {
-        headers: {
-          'Content-Type': 'application/json',
-          'Token': '0c09627a-c105-11ed-ab31-3eeb4194879e'
-        },
+  useQuery({
+    queryKey: ['district', updateForm !== null && form?.getFieldValue('province')],
+    queryFn: async () => {
+      return axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district', {
+        ...axiosOpt,
         params: {
-          "province_id": province
+          "province_id": form?.getFieldValue('province')
         }
-      })
-        .then(response => {
-          const districts = response.data.data.reverse();
-          const opt = [];
-          districts.forEach((district) => {
-            opt.push({
-              value: district.DistrictID,
-              label: district.DistrictName,
-            })
-          });
-          setOptionsDistrict(opt);
-        })
-        .catch(error => {
-          // Xử lý lỗi
-        });
-    }
-  }, [province]);
+      });
+    },
+    onSuccess: data => {
+      setOptionsDistrict(data?.data?.data?.map(e => ({
+        value: e.DistrictID,
+        label: e.DistrictName,
+      })).reverse());
+    },
+    enabled: updateForm !== null
+  });
+
+  useQuery({
+    queryKey: ['ward', updateForm !== null && form?.getFieldValue('district')],
+    queryFn: async () => {
+      return axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward', {
+        ...axiosOpt,
+        params: {
+          "district_id": form?.getFieldValue('district')
+        }
+      });
+    },
+    onSuccess: data => {
+      setOptionsWard(data?.data?.data?.map(e => ({
+        value: e.WardCode,
+        label: e.WardName,
+      })).reverse());
+    },
+    enabled: Boolean(updateForm !== null && form?.getFieldValue('district'))
+  });
 
   useEffect(() => {
-    if (district) {
-      axios.post('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id',{
-        "district_id": district
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Token': '0c09627a-c105-11ed-ab31-3eeb4194879e'
-        },
-      })
-        .then(response => {
-          const wards = response.data.data;
-          const opt = [];
-          wards.forEach((ward) => {
-            opt.push({
-              value: ward.WardCode,
-              label: ward.WardName,
-            })
-          });
-          setOptionsWard(opt);
-        })
-        .catch(error => {
-          // Xử lý lỗi
-        });
+    (async () => {
+      const {
+        roadName,
+        wardName,
+        districtName,
+        provinceName
+      } = getAddressComponents(account?.address);
+      const _province = (await axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', axiosOpt))?.data?.data?.map(e => ({
+        value: e.ProvinceID,
+        label: e.ProvinceName,
+      }));
+      const _provinceId = _province?.find(e => e.label === provinceName).value;
+
+      const _district = (await axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district', {
+        ...axiosOpt,
+        params: {
+          "province_id": _provinceId
+        }
+      }))?.data?.data?.map(e => ({
+        value: e.DistrictID,
+        label: e.DistrictName,
+      }));
+      const _districtId = _district?.find(e => e.label === districtName).value;
+
+      const _ward = (await axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward', {
+        ...axiosOpt,
+        params: {
+          "district_id": _districtId
+        }
+      }))?.data?.data?.map(e => ({
+        value: e.WardCode,
+        label: e.WardName,
+      }));
+      const _wardId = _ward?.find(e => e.label === wardName).value;
+
+      setUpdateForm(true);
+      form.setFieldsValue({
+        province: _provinceId,
+        district: _districtId,
+        ward: _wardId,
+        road: roadName
+      });
+    })();
+  }, []);
+
+  const updateFormHandle = (str) => {
+    if (str === "province") {
+      const data = {
+        ...form.getFieldsValue(),
+        district: null,
+        ward: null,
+        road: null
+      };
+      form.setFieldsValue(data);
     }
-  }, [district]);
-
-  const onFinish = (values) => {
-    console.log('values',values);
-  };
-
-  const handleSelectPro = (value) => {
-    setProvince(value);
-    return value;
-  }
-
-  const handleSelectDistrict = (value) => {
-    setDistrict(value);
-    return value;
-  }
-
-  const handleSelectWard = (value) => {
-    setWard(value);
-    return value;
+    else if (str === 'district') {
+      const data = {
+        ...form.getFieldsValue(),
+        ward: null,
+        road: null
+      };
+      form.setFieldsValue(data);
+    }
+    setUpdateForm(!updateForm);
   }
 
   const submitForm = async () => {
     try {
       const formData = form.getFieldsValue();
+      const addressForm = form.getFieldsValue();
+      const address = [
+        addressForm?.road,
+        optionsWard?.find(e => e.value === addressForm.ward)?.label,
+        optionsDistrict?.find(e => e.value === addressForm.district)?.label,
+        optionsPro?.find(e => e.value === addressForm.province)?.label
+      ].join(', ');
       const body = {
         ...formData,
         username: formData.username,
-        birthday: new Date(formData?.birthday?.['$d']),
-        address: [
-          formData.road,
-          optionsWard.find(e => e.value == formData.ward)?.label,
-          optionsDistrict.find(e => e.value == formData.district)?.label,
-          optionsPro.find(e => e.value == formData.province)?.label
-        ].join(', ')
+        birthday: formData.birthday.format('YYYY/MM/DD'),
+        address: address,
       };
-
-      console.log(body);
 
       const res = await updateCustomer(account?.id, body);
       alert('Cập nhật thành công!');
@@ -214,6 +238,8 @@ const UpdateAccountInfo = () => {
               name="control-hooks"
               onFinish={submitForm}
               className={"form-body-ant"}
+              initialValues={initForm}
+              validateMessages={validateMessages}
             >
               <Form.Item
                 name="name"
@@ -251,15 +277,15 @@ const UpdateAccountInfo = () => {
               <Form.Item name={'email'} label="Email" rules={[{ type: 'email', required: true }]}>
                 <Input />
               </Form.Item>
-              <Form.Item name="birthday" label="Ngày sinh" rules={[{ required: true }]} >
-                <DatePicker format="YYYY/MM/DD" />
+              <Form.Item name="birthday" label="Ngày sinh" rules={[{ required: true }]}>
+                <DatePicker />
               </Form.Item>
 
               <Form.Item
                 name="province"
                 label="Tỉnh/Thành"
                 rules={[{ required: true }]}>
-                <Select placeholder='Chọn tỉnh/thành'>
+                <Select placeholder='Chọn tỉnh/thành' onChange={() => updateFormHandle("province")}>
                   {optionsPro?_.map(optionsPro, (o) => {
                     return (<Option value={o.value}>{o.label}</Option>);
                   }):null}
@@ -269,7 +295,7 @@ const UpdateAccountInfo = () => {
                 name="district"
                 label="Quận/Huyện"
                 rules={[{ required: true }]}>
-                <Select placeholder='Chọn quận/huyện'>
+                <Select placeholder='Chọn quận/huyện' onChange={() => updateFormHandle("district")}>
                   {optionsDistrict?_.map(optionsDistrict, (o) => {
                     return (<Option value={o.value}>{o.label}</Option>);
                   }):null}
@@ -279,7 +305,7 @@ const UpdateAccountInfo = () => {
                 name="ward"
                 label="Phường/Xã/Thị trấn"
                 rules={[{ required: true }]}>
-                <Select placeholder='Chọn phường/xã/thị trấn'>
+                <Select placeholder='Chọn phường/xã/thị trấn' >
                   {optionsWard?_.map(optionsWard, (o) => {
                     return (<Option value={o.value}>{o.label}</Option>);
                   }):null}

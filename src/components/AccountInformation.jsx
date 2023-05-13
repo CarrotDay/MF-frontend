@@ -23,17 +23,24 @@ const account = token ? jwtDecode(token) : null;
 
 const AccountInformation = () => {
   const [form] = Form.useForm();
-  const [customer, setCustomer] = useState({});
+  const [users, setUsers] = useState({});
   const navigate = useNavigate();
 
   useQuery({
-    queryKey: ['customers', account?.id],
-    queryFn: () => getCustomer(account?.id),
+    queryKey: ['users', account?.id],
+    queryFn: () => () => {
+      if (jwtDecode(token).role === 1) {
+        return getCustomer(account?.id);
+      }
+      if (jwtDecode(token).role === 2) {
+        return getCustomer(account?.id);
+      }
+    },
     onSuccess: data => {
-      const customer = data.data;
-      customer.birthday = moment(customer.birthday);
-      form.setFieldsValue(customer);
-      setCustomer(customer);
+      const users = data.data;
+      users.birthday = moment(users.birthday);
+      form.setFieldsValue(users);
+      setUsers(users);
     }
   });
 
@@ -51,7 +58,7 @@ const AccountInformation = () => {
             <ConfigProvider
               theme={{
                 token: {
-                  colorPrimary: '#00b96b',
+                  colorBgBase: '#03C988',
                 },
               }}
             >

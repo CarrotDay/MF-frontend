@@ -6,4 +6,4 @@ export const getCustomers = () => axios.post(`${SERVER}api/customer` + '', {});
 
 export const getCustomer = (id) => axios.get(SERVER + 'api/customer/' + id);
 
-export const updateCustomer = (id, body = {}) => axios.post(`${SERVER}api/customer/update/${id}`, body);
+export const updateCustomer = (id, body = {}) => axios.put(`${SERVER}api/customer/update/${id}`, body);

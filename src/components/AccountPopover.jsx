@@ -24,7 +24,28 @@ const MENU_OPTIONS_FOR_CUSTOMER = [
   },
 ];
 
-const MENU_OPTIONS_FOR_ADMIN_EMPLOYEE = [
+const MENU_OPTIONS_FOR_EMPLOYEE = [
+  {
+    id: 4,
+    label: 'Tài khoản của bạn',
+    icon: 'fa-user-circle-o',
+    url: '/account-information'
+  },
+  {
+    id: 3,
+    label: 'Quản lý',
+    icon: 'fa fa-tasks',
+    url: '/manage/dashboard'
+  },
+  {
+    id: 2,
+    label: 'Đăng xuất',
+    icon: 'fa fa-sign-out',
+    url: '/sign-in'
+  },
+];
+
+const MENU_OPTIONS_FOR_ADMIN = [
   {
     id: 3,
     label: 'Quản lý',
@@ -97,11 +118,11 @@ const AccountPopover = ({isLogin,data}) => {
         </>
       );
     }
-    else if (role == 1 || role == 0) {
-      // nhan vien
+    else if (role == 0) {
+      // quan ly
       return (
         <Stack sx={{ p: 1 }}>
-          {MENU_OPTIONS_FOR_ADMIN_EMPLOYEE.map((option, i) => (
+          {MENU_OPTIONS_FOR_ADMIN.map((option, i) => (
             <Link to={option.url} style={{textDecoration: 'none', color: 'black'}} key={i}>
               <MenuItem key={option.id} onClick={() => handleClose(option.id)}>
                 {option.label}
@@ -110,7 +131,30 @@ const AccountPopover = ({isLogin,data}) => {
           ))}
         </Stack>
       );
-    } else {
+    } else if (role == 1) {
+      // nhan vien
+      return (
+        <Stack sx={{ p: 1 }}>
+          <Box sx={{ my: 1.5, px: 2.5 }}>
+          <Typography variant="subtitle2" noWrap>
+            {data.username}
+          </Typography>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+            {data.phone}
+          </Typography>
+        </Box>
+          <Divider sx={{ borderStyle: 'dashed' }} />
+          {MENU_OPTIONS_FOR_EMPLOYEE.map((option, i) => (
+            <Link to={option.url} style={{textDecoration: 'none', color: 'black'}} key={i}>
+              <MenuItem key={option.id} onClick={() => handleClose(option.id)}>
+                {option.label}
+              </MenuItem>
+            </Link>
+          ))}
+        </Stack>
+      );
+    }
+    else {
       return (
         <Stack sx={{ p: 1 }}>
           {MENU_OPTIONS_FOR_ANONYMOUS.map((option, i) => (

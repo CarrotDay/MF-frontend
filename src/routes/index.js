@@ -74,13 +74,6 @@ export const routesWithLayout = [
     path: "contacts",
     Component: Contact,
   },
-];
-
-export const routesCustomer = [
-  {
-    path: "/cart",
-    Component: CartView,
-  },
   {
     path: "/account-information",
     Component: AccountInfo,
@@ -89,7 +82,13 @@ export const routesCustomer = [
     path: "/update-account-information",
     Component: UpdateAccountInfo,
   },
+];
 
+export const routesCustomer = [
+  {
+    path: "/cart",
+    Component: CartView,
+  },
   {
     path: "/transaction",
     Component: Transaction
