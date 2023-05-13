@@ -1,35 +1,43 @@
 import axios from 'axios';
 
-const SERVER = process.env.REACT_APP_SERVER;
+import './axios.config';
 
 export const getCatalogAPI = async () => {
-  const { data } = await axios.post(SERVER + 'api/site/catalog/list', {});
+  const { data } = await axios.post('/api/site/catalog/list', {});
 
   return data;
 };
 
 export const getProductWithBody = async (body) => {
-  const { data } = await axios.post(SERVER + 'api/product', body);
+  const { data } = await axios.post('/api/product', body);
 
   return data;
 };
 
 export const getHeaderWithBody = async (body) => {
-  const { data } = await axios.post(SERVER + 'api/site/header', body);
+  const { data } = await axios.post('/api/site/header', body);
 
   return data;  
 };
 
 export const addHeader = async (body) => {
-  const { data } = await axios.post(SERVER + 'api/site/header/create', body);
+  const { data } = await axios.post('/api/site/header/create', body);
 
   return data;  
 };
 
 export const getContactApi = async () => {
-  const { data } = await axios.get(SERVER + 'api/contact/list', {});
+  const { data } = await axios.get('/api/contact/list', {}, { 
+    headers: {
+      "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+    } 
+  });
 
   return data;
 };
 
-export const signUpApi = (body = {}) => axios.post(`${SERVER}api/site/customer/sign-up`, body)
+export const signUpApi = (body = {}) => axios.post(`/api/site/customer/sign-up`, body, { 
+  headers: {
+    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+  } 
+})

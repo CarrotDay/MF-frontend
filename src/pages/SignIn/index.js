@@ -25,8 +25,6 @@ function SignIn() {
       window.localStorage.setItem('token', data);
 
       const role = jwtDecode(data).role;
-
-      console.log(role);
   
       if (role === 0 || role === 1) {
         navigate('/manage/dashboard');

@@ -1,5 +1,5 @@
 import axios from 'axios';
 
-const SERVER = process.env.REACT_APP_SERVER;
+import './axios.config';
 
-export const signInAPI = body => axios.post(`${SERVER}api/account/sign-in` + '', body);
+export const signInAPI = body => axios.post(`/api/account/sign-in` + '', body);

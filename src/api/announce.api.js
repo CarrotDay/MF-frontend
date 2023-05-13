@@ -1,5 +1,9 @@
 import axios from 'axios';
 
-const SERVER = process.env.REACT_APP_SERVER;
+import './axios.config';
 
-export const getAnnounces = () => axios.get(`${SERVER}api/announcement/list`);
+export const getAnnounces = () => axios.get(`/api/announcement/list`, { 
+  headers: {
+    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+  } 
+});

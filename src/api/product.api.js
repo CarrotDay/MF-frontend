@@ -1,13 +1,33 @@
 import axios from 'axios';
 
-const SERVER = process.env.REACT_APP_SERVER;
+import './axios.config';
 
-export const getProducts = (body = {}) => axios.post(`${SERVER}api/product`, body);
+export const getProducts = (body = {}) => axios.post(`/api/product`, body, { 
+  headers: {
+    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+  } 
+});
 
-export const getProductWithMeta = (meta) => axios.get(`${SERVER}api/product/${meta}`);
+export const getProductWithMeta = (meta) => axios.get(`/api/product/${meta}`, { 
+  headers: {
+    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+  } 
+});
 
-export const createProduct = (body = {}) => axios.post(`${SERVER}api/product/create`, body);
+export const createProduct = (body = {}) => axios.post(`/api/product/create`, body, { 
+  headers: {
+    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+  } 
+});
 
-export const delProductWithMeta = (meta) => axios.delete(`${SERVER}api/product/${meta}`);
+export const delProductWithMeta = (meta) => axios.delete(`/api/product/${meta}`, { 
+  headers: {
+    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+  } 
+});
 
-export const updateProduct = (meta, body = {}) => axios.post(`${SERVER}api/product/update/${meta}`, body);
+export const updateProduct = (meta, body = {}) => axios.post(`/api/product/update/${meta}`, body, { 
+  headers: {
+    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+  } 
+});

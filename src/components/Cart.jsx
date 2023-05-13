@@ -33,6 +33,28 @@ const axiosOpt = {
 const token = window.localStorage.getItem("token");
 const account = token ? jwtDecode(token) : null;
 
+const dataGetFee = {
+  from_district_id: 1449, // để cố định
+  service_id: 53320, // loại dịch vụ cố định: Chuẩn
+  service_type_id: null, // để cố định
+  to_district_id: 1452, // lấy district id người nhận
+  to_ward_code: '21012', // lấy ward id người nhận
+  height: 50, // để cố định
+  length: 20,// để cố định
+  weight: 500,// để cố định
+  width: 20,// để cố định
+  insurance_value: 0, // số tiền tổng sản phẩm
+  coupon: null
+};
+
+const configGetFee = {
+  headers: {
+    'Content-Type': 'application/json',
+    'Token': '0c09627a-c105-11ed-ab31-3eeb4194879e',
+    'ShopId': '122111'
+  }
+};
+
 export default function Cart() {
   const [ form ] = Form.useForm();
   const queryClient = useQueryClient();
@@ -222,10 +244,21 @@ export default function Cart() {
         optionsPro?.find(e => e.value === addressForm.province)?.label
       ].join(', ');
 
-      const data = await createTransaction({
+      const fee = (await axios.post(
+        'https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee', 
+        { 
+          ...dataGetFee,
+          to_district_id: addressForm.district,
+          to_ward_code: addressForm.ward,
+        }, 
+        configGetFee
+      ))?.data?.data?.total;
+
+      await createTransaction({
         customer: account?.id,
         address: address,
-        products: products
+        products: products,
+        fee: fee
       });
 
       alert('Đặt hàng thành công')
