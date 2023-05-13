@@ -30,8 +30,8 @@ const axiosOpt = {
   }
 };
 
-const token = window.localStorage.getItem('token');
-const account = token ? jwtDecode(token) : '';
+const token = window.localStorage.getItem("token");
+const account = token ? jwtDecode(token) : null;
 
 const dataGetFee = {
   from_district_id: 1449, // để cố định
@@ -101,7 +101,7 @@ export default function Cart() {
       setOptionsDistrict(data?.data?.data?.map(e => ({
         value: e.DistrictID,
         label: e.DistrictName,
-      })));
+      })).reverse());
     },
     enabled: updateForm !== null
   });
@@ -120,7 +120,7 @@ export default function Cart() {
       setOptionsWard(data?.data?.data?.map(e => ({
         value: e.WardCode,
         label: e.WardName,
-      })));
+      })).reverse());
     },
     enabled: Boolean(updateForm !== null && form?.getFieldValue('district'))
   });
@@ -144,7 +144,7 @@ export default function Cart() {
         districtName, 
         provinceName
       } = getAddressComponents(account?.address);
-
+      console.log('dataa')
       const _province = (await axios.get('https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province', axiosOpt))?.data?.data?.map(e => ({
         value: e.ProvinceID,
         label: e.ProvinceName,
@@ -174,7 +174,6 @@ export default function Cart() {
       const _wardId = _ward?.find(e => e.label === wardName).value;
 
       setUpdateForm(true);
-
       form.setFieldsValue({
         province: _provinceId,
         district: _districtId,
@@ -309,7 +308,7 @@ export default function Cart() {
                     placeholder='Chọn tỉnh/thành'
                     onChange={() => updateFormHandle("province")}
                   >
-                    {optionsPro?_.map(optionsPro, (o) => {
+                    {optionsPro? _.map(optionsPro, (o) => {
                       return (<Option value={o.value} key={o.value}>{o.label}</Option>);
                     }):null}
                   </Select>
