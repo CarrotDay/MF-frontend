@@ -14,7 +14,6 @@ import ManageAnnounce from '~/pages/ManageAnnounce';
 import ManageAnnounceDetail from '~/pages/ManageAnnounceDetail';
 import ManageSite from '~/pages/ManageSite';
 import ManageCatalog from '~/pages/ManageCatalog';
-import Test from '~/pages/Test';
 import Announce from "~/pages/Announce";
 import Product from "~/pages/Product";
 import CartView from "~/pages/Cart";
@@ -89,10 +88,13 @@ export const routesCustomer = [
     path: "/update-account-information",
     Component: UpdateAccountInfo,
   },
-
   {
     path: "/transaction",
     Component: Transaction
+  },
+  {
+    path: "/transaction/:meta",
+    Component: ManageTransactionDetail
   }
 ];
 

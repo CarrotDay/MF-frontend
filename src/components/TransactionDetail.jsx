@@ -54,6 +54,7 @@ export const columns = [
 
 const token = window.localStorage.getItem("token");
 const account = token ? jwtDecode(token) : null;
+
 const TransactionDetail = () => {
   const queryClient = useQueryClient();
 
@@ -62,12 +63,7 @@ const TransactionDetail = () => {
     queryKey: ['transactions'],
     queryFn: () => getTransactions({ customer: account.id }),
     onSuccess: data => {
-      console.log(data.data);
-      const customerTransaction = filter(data.data, (e) => {
-        return e.customer == account.id;
-      });
-      
-      setTransactions(customerTransaction.map(e => ({
+      setTransactions(data?.data?.map(e => ({
         ...e,
         key: e.id,
         customer: e.customerName,
@@ -108,7 +104,7 @@ const TransactionDetail = () => {
                   render: (v) => {
                     return (
                       <>
-                        <Link to={`/`}>
+                        <Link to={`/transaction/${v.id}`}>
                           <IconButton color="primary">
                             <SearchIcon />
                           </IconButton>

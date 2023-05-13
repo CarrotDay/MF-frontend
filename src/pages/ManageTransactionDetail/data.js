@@ -4,7 +4,7 @@ export const columns = [
   {
     title: 'Sản phẩm',
     dataIndex: 'nameProduct',
-    key: 'productId',
+    key: 'nameProduct',
     sorter: (a, b) => a.name > b.name ? 1 : -1,
   },
   {
