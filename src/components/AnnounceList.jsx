@@ -15,7 +15,7 @@ const AnnounceList = () => {
     onSuccess: data => {
       setAnnounces(data?.data?.map(e => ({
         ...e,
-        content: e?.content?.substring(0, 45) + '...',
+        content: e?.content?.substring(0, 60) + '...',
         createAt: moment(e?.createAt).format('YYYY/MM/DD HH:mm')
       })));
     }

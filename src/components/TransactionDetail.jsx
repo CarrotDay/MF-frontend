@@ -10,6 +10,7 @@ import {useQuery, useQueryClient} from "@tanstack/react-query";
 import { getTransactions, updateTransaction } from "~/api/transaction.api";
 import jwtDecode from "jwt-decode";
 import filter from "lodash/filter";
+import moment from 'moment';
 
 export const columns = [
   {
@@ -18,7 +19,7 @@ export const columns = [
     key: 'createAt',
     align: 'center',
     sorter: (a, b) => a.createAt > b.createAt ? 1 : -1,
-    render: value => value.substring(0, 10)
+    render: value => value ? moment(value).format('YYYY/MM/DD HH:mm') : ''
   },
   {
     title: 'Trạng thái',

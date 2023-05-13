@@ -9,20 +9,6 @@ export const columns = [
     sorter: (a, b) => a.name > b.name ? 1 : -1,
   },
   {
-    title: 'Username',
-    dataIndex: 'username',
-    key: 'username',
-    align: 'center',
-    sorter: (a, b) => a.username > b.username ? 1 : -1
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
-    align: 'center',
-    sorter: (a, b) => a.address > b.address ? 1 : -1,
-  },
-  {
     title: 'Email',
     dataIndex: 'email',
     key: 'email',

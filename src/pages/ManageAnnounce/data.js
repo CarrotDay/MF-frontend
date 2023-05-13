@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const columns = [
   {
     title: 'Title',
@@ -39,6 +41,6 @@ export const columns = [
     align: 'center',
     key: 'createAt',
     sorter: (a, b) => a.createAt > b.createAt ? 1 : -1,
-    render: value => value.substring(0, 10)
+    render: v => moment(v).format('YYYY/MM/DD HH:mm')
   }
 ];

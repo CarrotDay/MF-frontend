@@ -47,7 +47,7 @@ const Announce = () => {
               <div dangerouslySetInnerHTML={{__html: announce?.content}} />
             </div>
             <div className="create-at">
-              <em>Đăng ngày: {moment(announce?.createAt).format('YYYY/MM/DD HH:mm')}</em>
+              <em>Đăng ngày: {moment(announce?.createAt)?.format('YYYY/MM/DD HH:mm')}</em>
             </div>
           </div>
         </div>
@@ -65,7 +65,7 @@ const Announce = () => {
                 </Link>
                 <div className="content-announce">
                   <div dangerouslySetInnerHTML={{__html: e?.content}} />
-                  <em>Ngày đăng: {moment(e?.createAt).format('YYYY/MM/DD HH:mm')}</em>
+                  <em>Ngày đăng: {moment(e?.createAt)?.format('YYYY/MM/DD HH:mm')}</em>
                 </div>
               </div>
             ))}

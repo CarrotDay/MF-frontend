@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { TableControl } from '~/components';
 
 export const columns = [
@@ -81,19 +82,6 @@ export const columns = [
     key: 'createAt',
     align: 'center',
     sorter: (a, b) => a.createAt > b.createAt ? 1 : -1,
-    render: value => value.substring(0, 10)
-  },
-  {
-    title: 'Action',
-    key: 'id',
-    dataIndex: 'id',
-    fixed: 'right',
-    align: 'center',
-    width: 160,
-    render: value => <TableControl 
-      detailLink={`/manage/transaction/${value}`} 
-      editLink={`/manage/transaction/update/${value}`}
-      delLink={`/manage/transaction/${value}`}
-    />
+    render: v => moment(v)?.format('YYYY/MM/DD HH:mm')
   }
 ];
