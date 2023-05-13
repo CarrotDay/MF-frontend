@@ -15,7 +15,6 @@ const initForm = {
 };
 
 function ManageProductDetail() {
-  console.log(initForm);
   const [ form ] = Form.useForm();
   const { meta } = useParams();
   const navigate = useNavigate();

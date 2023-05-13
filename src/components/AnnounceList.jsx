@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Calendar from "react-calendar";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useQuery } from '@tanstack/react-query';
+import moment from "moment";
+
+import { getAnnounces } from '~/api/announce.api';
 
 const AnnounceList = () => {
+  const [announces, setAnnounces] = useState(null);
+  
+  useQuery({
+    queryKey: ['announces'],
+    queryFn: getAnnounces,
+    onSuccess: data => {
+      setAnnounces(data?.data?.map(e => ({
+        ...e,
+        content: e?.content?.substring(0, 45) + '...',
+        createAt: moment(e?.createAt).format('YYYY/MM/DD HH:mm')
+      })));
+    }
+  });
+
   return (
     <section className={"announce container"}>
       <div className="content row my-3 center">
@@ -10,42 +28,21 @@ const AnnounceList = () => {
           <div className="title-list col-12 px-3">
             <h1 className="title-announce font-weight-bold">Tin tức</h1>
           </div>
-          <div className="items-announces col-12">
-            <Link to={"/"} className="item-announce row my-2 py-3">
-              <div className="img-announce col-4">
-                <img src="./Uploads/announce/1.png" alt=""/>
-              </div>
-              <div className="content-announce col-8">
-                <h4 className="title-item-announce">[Title, maxLength=20]</h4>
-                <p className="content-announce">[Content, maxLength=60]</p>
-                <p className="create_date_announce">[create_date]</p>
-              </div>
-            </Link>
-          </div>
-          <div className="items-announces col-12">
-            <Link to={"/"} className="item-announce row my-2 py-3">
-              <div className="img-announce col-4">
-                <img src="./Uploads/announce/1.png" alt=""/>
-              </div>
-              <div className="content-announce col-8">
-                <h4 className="title-item-announce">[Title, maxLength=20]</h4>
-                <p className="content-announce">[Content, maxLength=60]</p>
-                <p className="create_date_announce">[create_date]</p>
-              </div>
-            </Link>
-          </div>
-          <div className="items-announces col-12">
-            <Link to={"/"} className="item-announce row my-2 py-3">
-              <div className="img-announce col-4">
-                <img src="./Uploads/announce/1.png" alt=""/>
-              </div>
-              <div className="content-announce col-8">
-                <h4 className="title-item-announce">[Title, maxLength=20]</h4>
-                <p className="content-announce">[Content, maxLength=60]</p>
-                <p className="create_date_announce">[create_date]</p>
-              </div>
-            </Link>
-          </div>
+          {announces?.map(e => (
+            <div className="items-announces col-12" key={e.id}>
+              <Link to={`/announce/${e.meta}`} className="item-announce row my-2 py-3">
+                <div className="img-announce col-4">
+                  <img src={e.image} alt=""/>
+                </div>
+
+                <div className="content-announce col-8">
+                  <h4 className="title-item-announce">{e.title}</h4>
+                  <p className="content-announce">{e.content}</p>
+                  <p className="create_date_announce">{e.createAt}</p>
+                </div>
+              </Link>
+            </div>
+          ))}
         </div>
         <div className="calendar-announce col-lg-4 ml-lg-3 d-md-block d-none p-0">
           <div className="title-list">

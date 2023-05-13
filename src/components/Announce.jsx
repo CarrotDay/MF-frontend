@@ -1,7 +1,34 @@
-import React from 'react';
-import {Link} from "react-router-dom";
+import { useQuery } from '@tanstack/react-query';
+import moment from 'moment';
+import React, { useState } from 'react';
+import { Link, useParams } from "react-router-dom";
+import { getAnnounce, getAnnounces } from '~/api/announce.api';
 
 const Announce = () => {
+  const { id } = useParams();
+  const [announce, setAnnounce] = useState(null);
+  const [announces, setAnnounces] = useState(null);
+
+  useQuery({
+    queryKey: ['announces'],
+    queryFn: getAnnounces,
+    onSuccess: data => {
+      setAnnounces(data?.data?.filter(e => Number(e.id) !== Number(id))?.map(e => ({
+        ...e,
+        content: e?.content?.substring(0, 45) + '...',
+        createAt: moment(e?.createAt).format('YYYY/MM/DD HH:mm')
+      })));
+    }
+  });
+
+  useQuery({
+    queryKey: ['announce', id],
+    queryFn: () => getAnnounce(id),
+    onSuccess: data => {
+      setAnnounce(data?.data)
+    }
+  });
+
   return (
     <section className={"container center"}>
       <div className="row  my-3">
@@ -11,21 +38,16 @@ const Announce = () => {
           </div>
           <div className="announce container pt-3 pb-5" style={{backgroundColor: "#fff"}}>
             <div className="title-announce">
-              <h1 className={"font-weight-bold"}>Giảm giá 20% cho toàn bộ manga</h1>
+              <h1 className={"font-weight-bold"}>{announce?.title}</h1>
             </div>
             <div className="thumbnail-announce">
-              <img src="/Uploads/slide/2.png" alt=""/>
+              <img src={announce?.image} alt=""/>
             </div>
             <div className="content-announce">
-              <p>Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum
-                Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum
-                Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum v
-                Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum
-                Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum
-                Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum </p>
+              <div dangerouslySetInnerHTML={{__html: announce?.content}} />
             </div>
             <div className="create-at">
-              <em>Đăng ngày: 20/02/2002</em>
+              <em>Đăng ngày: {moment(announce?.createAt).format('YYYY/MM/DD HH:mm')}</em>
             </div>
           </div>
         </div>
@@ -34,51 +56,19 @@ const Announce = () => {
             <h1 className={"font-weight-bold"}>Khác</h1>
           </div>
           <div className="announce-list" style={{backgroundColor: "#fff"}}>
-            <div className="announce-item container py-3">
-              <Link to={"/"}>
-                <div className="title-announce-item-list">
-                  <h4 className={"font-weight-bold"}>Thông báo bán figure</h4>
+            {announces?.map(e => (
+              <div className="announce-item container py-3" key={e.id}>
+                <Link to={`/announce/${e?.meta}`}>
+                  <div className="title-announce-item-list">
+                    <h4 className={"font-weight-bold"}>{e?.title}</h4>
+                  </div>
+                </Link>
+                <div className="content-announce">
+                  <div dangerouslySetInnerHTML={{__html: e?.content}} />
+                  <em>Ngày đăng: {moment(e?.createAt).format('YYYY/MM/DD HH:mm')}</em>
                 </div>
-              </Link>
-              <div className="content-announce">
-                <p>Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum </p>
-                <em>Ngày đăng: 30/03/2002</em>
               </div>
-            </div>
-            <div className="announce-item container py-3">
-              <Link to={"/"}>
-                <div className="title-announce-item-list">
-                  <h4 className={"font-weight-bold"}>Thông báo bán figure</h4>
-                </div>
-              </Link>
-              <div className="content-announce">
-                <p>Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum </p>
-                <em>Ngày đăng: 30/03/2002</em>
-              </div>
-            </div>
-            <div className="announce-item container py-3">
-              <Link to={"/"}>
-                <div className="title-announce-item-list">
-                  <h4 className={"font-weight-bold"}>Thông báo bán figure</h4>
-                </div>
-              </Link>
-              <div className="content-announce">
-                <p>Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum </p>
-                <em>Ngày đăng: 30/03/2002</em>
-              </div>
-            </div>
-            <div className="announce-item container py-3">
-              <Link to={"/"}>
-                <div className="title-announce-item-list">
-                  <h4 className={"font-weight-bold"}>Thông báo bán figure</h4>
-                </div>
-              </Link>
-              <div className="content-announce">
-                <p>Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum Lorem ibsum </p>
-                <em>Ngày đăng: 30/03/2002</em>
-              </div>
-            </div>
-
+            ))}
           </div>
         </div>
       </div>

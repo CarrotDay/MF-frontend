@@ -62,7 +62,7 @@ export const routesWithLayout = [
     Component: Announce,
   },
   {
-    path: "/announce",
+    path: "/announce/:id",
     Component: AnnounceDetail,
   },
   {
@@ -158,6 +158,10 @@ export const routesAdmin = [
   },
   {
     path: '/manage/announce/create',
+    Component: ManageAnnounceDetail
+  },
+  {
+    path: '/manage/announce/update/:meta',
     Component: ManageAnnounceDetail
   },
   {

@@ -2,19 +2,38 @@ import React, { useRef, useState } from 'react';
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { Layout, Form, Input, Button } from 'antd';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 
+import { getAnnounce, updateAnnouce, createAnnounce} from '~/api/announce.api';
+import { uploadFile } from '~/api/uploadFile.api';
 import { MyInput } from '~/components';
+import { AttachMoneyOutlined } from '@mui/icons-material';
 
 const { Content } = Layout;
+let file;
 
 function ManageAnnounceDetail() {
+  const [form] = Form.useForm();
+  const { meta } = useParams();
+  const navigate = useNavigate();
   const thumbnailRef = useRef();
   const thumbnailReviewRef = useRef();
 
   const [announce, setAnnounce] = useState(null);
 
-  function changeThumbnailHandle() {
+  useQuery({
+    queryKey: ['announce', meta],
+    queryFn: () => getAnnounce(meta),
+    onSuccess: data => {
+      setAnnounce(data?.data);
+    },
+    enabled: Boolean(meta)
+  });
+
+  async function changeThumbnailHandle() {
     if (thumbnailRef.current.files && thumbnailRef.current.files[0]) {
+      file = thumbnailRef.current.files[0];
       var reader = new FileReader();
       reader.onload = e => {
         thumbnailReviewRef.current.setAttribute('src', e.target.result);
@@ -27,6 +46,40 @@ function ManageAnnounceDetail() {
     thumbnailRef.current.click();
   }
 
+  const submitHandle = async () => {
+    try {
+      let image;
+      if (file) {
+        let data = new FormData();
+        data.append('file', file);
+    
+        image = (await uploadFile('AnnounceImage', data))?.data;
+      } 
+  
+      if (!meta) {
+        await createAnnounce({
+          ...announce,
+          meta: announce?.title?.replace(/ /g, '-'),
+          image
+        });
+  
+        alert('Đã tạo thông báo');
+        navigate('/manage/product');
+      }
+      else {
+        await updateAnnouce(meta, {
+          ...announce,
+          image
+        });
+  
+        alert('Đã sửa thông báo');
+      }
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div>
       <Content style={{ padding: '40px'}}>
@@ -34,7 +87,7 @@ function ManageAnnounceDetail() {
           Thumbnail
 
           <div className="mb-3">
-            <img ref={thumbnailReviewRef} className="img-thumbnail" width="300px" src={announce?.srcImg || 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Solid_white.svg/2048px-Solid_white.svg.png'} alt="thumbnail..." />
+            <img ref={thumbnailReviewRef} className="img-thumbnail" width="300px" src={announce?.image || 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Solid_white.svg/2048px-Solid_white.svg.png'} alt="thumbnail..." />
           </div>
 
           <MyInput ref={thumbnailRef} onChange={changeThumbnailHandle} id="image" type="file" className="form-control-file invisible" />
@@ -51,27 +104,16 @@ function ManageAnnounceDetail() {
         </Form.Item>
         
         <CKEditor
-            editor={ Editor }
-            data="<p>Hello from CKEditor 5!</p>"
-            onReady={editor => {
-              // You can store the "editor" and use when it is needed.
-              console.log( 'Editor is ready to use!', editor );
-            }}
-            onChange={ ( event, editor ) => {
-              const data = editor.getData();
-              console.log( { event, editor, data } );
-            }}
-            onBlur={ ( event, editor ) => {
-              console.log( 'Blur.', editor );
-            }}
-            onFocus={ ( event, editor ) => {
-              console.log( 'Focus.', editor );
-            }}
+          editor={ Editor }
+          data={announce?.content || ''}
+          onChange={ ( event, editor ) => {
+            setAnnounce({ ...announce, content: editor.getData() });
+          }}
         />
       </Content>
 
       <div className="my-3">
-        <Button type="primary">DONE</Button>
+        <Button onClick={submitHandle} type="primary">DONE</Button>
       </div>
     </div>
   );

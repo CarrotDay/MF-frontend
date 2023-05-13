@@ -1,5 +1,3 @@
-import { TableControl } from '~/components';
-
 export const columns = [
   {
     title: 'Title',
@@ -42,18 +40,5 @@ export const columns = [
     key: 'createAt',
     sorter: (a, b) => a.createAt > b.createAt ? 1 : -1,
     render: value => value.substring(0, 10)
-  },
-  {
-    title: 'Action',
-    key: 'meta',
-    dataIndex: 'meta',
-    align: 'center',
-    fixed: 'right',
-    width: 160,
-    render: value => <TableControl 
-      detailLink={`/manage/product/${value}`} 
-      editLink={`/manage/product/update/${value}`}
-      delLink={`/manage/product/${value}`}
-    />
   }
 ];
