@@ -8,6 +8,7 @@ import {getCustomer} from "~/api/customer.api";
 import {useQuery} from "@tanstack/react-query";
 import moment from "moment";
 import {useNavigate} from "react-router-dom";
+import {getEmployee} from "~/api/employee.api";
 
 const layout = {
   labelCol: { span: 24 },
@@ -27,16 +28,17 @@ const AccountInformation = () => {
   const navigate = useNavigate();
 
   useQuery({
-    queryKey: ['users', account?.id],
-    queryFn: () => () => {
-      if (jwtDecode(token).role === 1) {
-        return getCustomer(account?.id);
+    queryKey: ['user', account?.id],
+    queryFn: () => {
+      if (account?.role == 1) {
+         return getEmployee(account?.id);
       }
-      if (jwtDecode(token).role === 2) {
-        return getCustomer(account?.id);
+      if (account?.role == 2) {
+         return getCustomer(account?.id);
       }
     },
     onSuccess: data => {
+      console.log(data, 'account?.role')
       const users = data.data;
       users.birthday = moment(users.birthday);
       form.setFieldsValue(users);
@@ -55,15 +57,26 @@ const AccountInformation = () => {
             <h1 className={"font-weight-bold"}>Thông tin tài khoản</h1>
           </div>
           <Space direction="vertical" className="account-ìnor container pt-3 pb-5 px-5" style={{backgroundColor: "#fff"}}>
-            <ConfigProvider
-              theme={{
-                token: {
-                  colorBgBase: '#03C988',
-                },
-              }}
-            >
-              <Button type="primary" colorBgContainer={'green-6'} size={'large'} icon={<EditOutlined /> } onClick={() => navigate('/update-account-information')}>Chỉnh sửa thông tin</Button>
-            </ConfigProvider>
+            <Space direction="horizontal">
+              <ConfigProvider
+                theme={{
+                  token: {
+                    colorBgBase: '#03C988',
+                  },
+                }}
+              >
+                <Button type="primary" size={'large'} icon={<EditOutlined /> } style={{color: 'white', border: 0}} onClick={() => navigate('/update-account-information')}>Chỉnh sửa thông tin</Button>
+              </ConfigProvider>
+              <ConfigProvider
+                theme={{
+                  token: {
+                    colorBgBase: '#03C988',
+                  },
+                }}
+              >
+                <Button size={'large'} icon={<EditOutlined /> } style={{marginLeft: 10, color: 'white', border: 0}} onClick={() => navigate('/change-password')}>Đổi mật khẩu</Button>
+              </ConfigProvider>
+            </Space>
             <Form
               {...layout}
               form={form}

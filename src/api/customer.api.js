@@ -13,6 +13,16 @@ export const getCustomers = () =>
     }
   );
 
+export const changePasswordCustomer = (id, body = {}) =>
+  axios.post(
+    `/api/customer/change-password/` + id, body,
+    {
+      headers: {
+        Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+      },
+    }
+  );
+
 export const getCustomer = (id) =>
   axios.get("api/customer/" + id, {
     headers: {
@@ -21,7 +31,7 @@ export const getCustomer = (id) =>
   });
 
 export const updateCustomer = (id, body = {}) =>
-  axios.post(`/api/customer/update/${id}`, body, {
+  axios.put(`/api/customer/update/${id}`, body, {
     headers: {
       Authorization: `Bearer ${window.localStorage.getItem("token")}`,
     },

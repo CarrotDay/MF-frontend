@@ -160,6 +160,21 @@ function SignUp() {
     }
   }
 
+  const validatePassword = (password) => {
+    const length = password.length;
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    if (length < 8) {
+      return 'Mật khẩu phải có ít nhất 8 ký tự';
+    }
+
+    if (hasSpecialChar) {
+      return 'Mật khẩu không được chứa ký tự đặc biệt';
+    }
+
+    return true;
+  };
+
   return (
     <section className="container py-5 h-100">
       <div className="row form-ant" style={{backgroundColor: "#fff"}}>
@@ -220,7 +235,20 @@ function SignUp() {
           <Form.Item
             label="Mật khẩu"
             name="password"
-            rules={[{ required: true }]}
+            rules={[
+              { required: true },
+              { validator: (_, value) => {
+                  if (value.length < 8 || !/^[a-zA-Z0-9]*$/.test(value)) {
+                    return Promise.reject(
+                      new Error(
+                        'Mật khẩu phải có ít nhất 8 ký tự và không chứa ký tự đặc biệt!'
+                      )
+                    );
+                  }
+                  return Promise.resolve();
+                },
+              }
+            ]}
             hasFeedback
           >
             <Input.Password />

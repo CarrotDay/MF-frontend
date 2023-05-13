@@ -6,8 +6,8 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useQuery} from "@tanstack/react-query";
 import {getCustomer, updateCustomer} from "~/api/customer.api";
-import moment from "moment";
 import dayjs from 'dayjs';
+import {getEmployee, updateEmployee} from "~/api/employee.api";
 
 const validateMessages = {
   required: '${label} là bắt buộc!',
@@ -55,22 +55,29 @@ const UpdateAccountInfo = () => {
   }
 
   useQuery({
-    queryKey: ['customers', account?.id],
-    queryFn: () => getCustomer(account?.id),
+    queryKey: ['user', account?.id],
+    queryFn: async () => {
+      if (account?.role == 1) {
+        return await getEmployee(account?.id);
+      }
+      if (account?.role == 2) {
+        return await getCustomer(account?.id);
+      }
+    },
     onSuccess: data => {
-      const _customer = data.data;
+      const _user = data.data;
       const {
         roadName,
         wardName,
         districtName,
         provinceName
-      } = getAddressComponents(_customer?.address);
-      _customer.road = roadName;
-      _customer.ward = wardName;
-      _customer.district = districtName;
-      _customer.province = provinceName;
-      _customer.birthday = dayjs(_customer.birthday);
-      form.setFieldsValue(_customer);
+      } = getAddressComponents(_user?.address);
+      _user.road = roadName;
+      _user.ward = wardName;
+      _user.district = districtName;
+      _user.province = provinceName;
+      _user.birthday = dayjs(_user.birthday);
+      form.setFieldsValue(_user);
     }
 
   });
@@ -214,7 +221,12 @@ const UpdateAccountInfo = () => {
         address: address,
       };
 
-      const res = await updateCustomer(account?.id, body);
+      if (account?.role == 1) {
+        await updateEmployee(account?.id, body);
+      }
+      if (account?.role == 2) {
+        await updateCustomer(account?.id, body);
+      }
       alert('Cập nhật thành công!');
       navigate('/account-information');
     }

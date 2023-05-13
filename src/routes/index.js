@@ -24,6 +24,7 @@ import AccountInfo from "~/pages/AcountInfo";
 import Contact from "~/pages/Contact";
 import Transaction from "~/pages/Transaction";
 import UpdateAccountInfo from "~/pages/UpdateAccount/UpdateAccountInfo";
+import ChangePassword from "~/pages/ChangePassword/ChangePassword";
 
 export const routesWithoutLayout = [
   {
@@ -81,6 +82,11 @@ export const routesWithLayout = [
     path: "/update-account-information",
     Component: UpdateAccountInfo,
   },
+
+  {
+    path: "/change-password",
+    Component: ChangePassword,
+  },
 ];
 
 export const routesCustomer = [
@@ -99,7 +105,6 @@ export const routesCustomer = [
 ];
 
 export const routesEmployee = [
-  ...routesWithLayout,
   {
     path: "/manage/dashboard",
     Component: Dashboard,
