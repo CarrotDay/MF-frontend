@@ -1,33 +1,43 @@
 import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+
 import Slide from "~/components/Slide";
 import Category from "~/components/Category";
 import ProductGrid from "~/components/ProductGrid";
 import { useParams } from "react-router-dom";
-import { getProducts } from '~/api/product.api';
-import { useQuery } from "@tanstack/react-query";
+import { getProductWithPagination } from '~/api/product.api';
 
 const SideProduct = () => {
   const [type, setType] = useState(false);
   const [data, setData] = useState([]);
   const { meta } = useParams();
+  const [pagination, setPagination] = useState({ page: 1, pageSize: 30, total: 0 });
 
   useQuery({
-    queryKey: ['products'],
+    queryKey: ['products', pagination?.page],
     queryFn: () => {
       if (meta === 'manga') {
-        return getProducts({ type: false });
+        return getProductWithPagination({ type: false, ...pagination });
       }
       else if (meta === 'figure') {
-        return getProducts({ type: true });
+        return getProductWithPagination({ type: true, ...pagination });
       }
       else {
-        return getProducts({ catalogMeta: meta });
+        return getProductWithPagination({ catalogMeta: meta, ...pagination });
       }
     },
     onSuccess: data => {
-      setData(data?.data?.filter(e => e.active != false));
+      setPagination({ ...pagination, total: data?.data?.total });
+      setData(data?.data?.products?.filter(e => e.active != false).map(e => ({
+        ...e,
+        srcImg: e.imageNavigation.link
+      })));
     }
   });
+
+  const onChange = (page) => {
+    setPagination({ ...pagination, page: page });
+  };
 
   return (
     <div>
@@ -40,6 +50,8 @@ const SideProduct = () => {
               type={!type}
               data={data}
               category={meta}
+              onChange={onChange}
+              pagination={pagination}
             />
           </div>
           <div className="col-12 col-md-4 p-0">

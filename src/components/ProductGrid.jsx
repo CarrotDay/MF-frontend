@@ -1,8 +1,11 @@
 import React, {useState} from 'react';
-import MangaItem from "~/components/MangaItem";
+import { Pagination } from 'antd';
 import {Link} from "react-router-dom";
+
+import MangaItem from "~/components/MangaItem";
 import FigureItem from "~/components/FigureItem";
-const ProductGrid = ({isHome, type, data, category}) => {
+
+const ProductGrid = ({ isHome, type, data, category, onChange, pagination }) => {
   const getData = () => {
     return data;
   };
@@ -86,6 +89,14 @@ const ProductGrid = ({isHome, type, data, category}) => {
             {/*  <MangaItem meta={""} srcImg={"./Uploads/manga/1.png"} name={"Boku girl"} price={10000} />*/}
             {/*</div>*/}
           </div>
+
+          <Pagination
+            showSizeChanger
+            onChange={onChange}
+            defaultCurrent={pagination.page}
+            total={pagination.total}
+            defaultPageSize={pagination.pageSize}
+          />
         </div>
       </div>
     </section>

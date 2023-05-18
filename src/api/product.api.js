@@ -37,3 +37,9 @@ export const deleteProduct = (id) => axios.delete(`/api/product/${id}`, {
     "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
   } 
 });
+
+export const getProductWithPagination = (body = {}) => axios.post(`/api/product/pagination`, body, { 
+  headers: {
+    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+  } 
+});
