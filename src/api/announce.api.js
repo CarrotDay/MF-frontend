@@ -8,11 +8,7 @@ export const getAnnounce = (meta) => axios.get(`/api/announcement/${meta}`, {
   } 
 });
 
-export const getAnnounces = () => axios.get(`/api/announcement/list`, { 
-  headers: {
-    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
-  } 
-});
+export const getAnnounces = () => axios.get(`/api/announcement/list`);
 
 export const removeAnnounce = (meta) => axios.delete(`https://localhost:7114/api/announcement/remove/${meta}`, { 
   headers: {
