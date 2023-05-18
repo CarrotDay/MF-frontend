@@ -7,7 +7,7 @@ import moment from "moment";
 import { getAnnounces } from '~/api/announce.api';
 
 const AnnounceList = () => {
-  const [announces, setAnnounces] = useState(null);
+  const [announces, setAnnounces] = useState([]);
   
   useQuery({
     queryKey: ['announces'],
