@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import { MyInput, MyTable } from '~/components';
-import { getCatalogAPI } from '~/api/site.api';
+import { getCatalogAPI, addHeader } from '~/api/site.api';
 import { uploadFile } from '~/api/uploadFile.api';
 import { getContact, updateContact } from '~/api/contact.api';
 
-import { catalogData, addHeader } from './data';
+import { catalogData } from './data';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
@@ -47,9 +47,14 @@ function ManageSite() {
     
         await uploadFile('Header', data); 
 
-        await axios.post('https://localhost:7114/api/site/header/create', { logo });
+        // await axios.post('https://localhost:7114/api/site/header/create', { logo });
+        await addHeader({ logo });
 
-        await axios.post('https://localhost:7114/api/site/header/description', { description });
+        await axios.post('https://localhost:7114/api/site/header/description', { description }, { 
+          headers: {
+            "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+          } 
+        });
 
         alert("Đã cập nhật");
   
@@ -66,7 +71,11 @@ function ManageSite() {
   }
 
   const changeDescription = async () => {
-    await axios.post('https://localhost:7114/api/site/header/description', { description: headerDesRef.current.value });
+    await axios.post('https://localhost:7114/api/site/header/description', { description: headerDesRef.current.value }, { 
+      headers: {
+        "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+      } 
+    });
 
     alert("Đã cập nhật");
   

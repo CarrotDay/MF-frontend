@@ -21,7 +21,11 @@ export const getHeaderWithBody = async (body) => {
 };
 
 export const addHeader = async (body) => {
-  const { data } = await axios.post('/api/site/header/create', body);
+  const { data } = await axios.post('/api/site/header/create', body, { 
+    headers: {
+      "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+    } 
+  });
 
   return data;  
 };
@@ -40,4 +44,4 @@ export const signUpApi = (body = {}) => axios.post(`/api/site/customer/sign-up`,
   headers: {
     "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
   } 
-})
+});
