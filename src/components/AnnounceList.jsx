@@ -40,7 +40,7 @@ const AnnounceList = () => {
 
                   <div className="content-announce col-8">
                     <h4 className="title-item-announce">{e.title}</h4>
-                    <p className="content-announce">{e.content}</p>
+                    <div className="content-announce" dangerouslySetInnerHTML={{__html: e.content}} />
                     <p className="create_date_announce">{e.createAt}</p>
                   </div>
                 </Link>
