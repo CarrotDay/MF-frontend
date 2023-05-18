@@ -30,8 +30,6 @@ const axiosOpt = {
   }
 };
 
-const token = window.localStorage.getItem("token");
-const account = token ? jwtDecode(token) : null;
 
 const dataGetFee = {
   from_district_id: 1449, // để cố định
@@ -56,6 +54,8 @@ const configGetFee = {
 };
 
 export default function Cart() {
+  const token = window.localStorage.getItem("token");
+  const account = token ? jwtDecode(token) : null;
   const [ form ] = Form.useForm();
   const queryClient = useQueryClient();
   const navigate = useNavigate();

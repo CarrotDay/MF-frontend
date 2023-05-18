@@ -30,7 +30,7 @@ const Announce = () => {
   });
 
   return (
-    <section className={"container center"}>
+    <section className={"container"}>
       <div className="row  my-3">
         <div className="announce-detail col-12 col-lg-8 text-left mb-3">
           <div className="title-list px-3">

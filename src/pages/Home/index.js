@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/react-query';
 
 import Slide from "~/components/Slide";
 import ProductGrid from "~/components/ProductGrid";
-import FigureGrid from '~/components/FigureGrid';
 import { getProducts } from '~/api/product.api';
 
 const Home = () => {

@@ -53,10 +53,10 @@ export const columns = [
   }
 ];
 
-const token = window.localStorage.getItem("token");
-const account = token ? jwtDecode(token) : null;
-
 const TransactionDetail = () => {
+  const token = window.localStorage.getItem("token");
+  const account = token ? jwtDecode(token) : null;
+
   const queryClient = useQueryClient();
 
   const [transactions, setTransactions] = useState([]);

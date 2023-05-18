@@ -118,7 +118,7 @@ function ManageSite() {
           </div>
 
           <div className="px-5 text-left w-100 d-flex flex-column">
-            <label htmlFor="twitter">Description: </label>
+            <label htmlFor="twitter">Description Footer: </label>
             
             <div className="h-100">
               <textarea ref={headerDesRef} style={{ border: 'none', resize: 'none' }} onChange={e => setHeader({ ...header, description: e.target.value })} value={header?.description || ''} className="w-100 h-100"></textarea>

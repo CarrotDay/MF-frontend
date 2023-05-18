@@ -5,10 +5,9 @@ import Money from "~/components/Money";
 import {createEmployee} from "~/api/employee.api";
 import {createCart} from "~/api/cart.api";
 
-const token = window.localStorage.getItem("token");
-const role = token?jwtDecode(token).role:null;
-
 const ProductDetail = ({ product, catalog }) => {
+  const token = window.localStorage.getItem("token");
+  const role = token?jwtDecode(token).role:null;
   const navigate = useNavigate();
   
   const addCart = async () => {

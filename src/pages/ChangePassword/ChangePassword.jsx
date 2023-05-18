@@ -22,10 +22,10 @@ const layout = {
   wrapperCol: { span: 24 },
 };
 
-const token = window.localStorage.getItem("token");
-const account = token ? jwtDecode(token) : null;
 
 const ChangePassword = () => {
+  const token = window.localStorage.getItem("token");
+  const account = token ? jwtDecode(token) : null;
   const [form] = Form.useForm();
   const navigate = useNavigate();
 

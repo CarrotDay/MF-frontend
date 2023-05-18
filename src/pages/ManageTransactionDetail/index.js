@@ -31,10 +31,10 @@ const dataGetFee = {
   coupon: null
 };
 
-const token = window.localStorage.getItem("token");
-const account = token?jwtDecode(token):null;
 
 function ManageTransactionDetail() {
+  const token = window.localStorage.getItem("token");
+  const account = token?jwtDecode(token):null;
   const [form] = Form.useForm();
   const queryClient = useQueryClient();
   const { meta } = useParams();

@@ -51,52 +51,16 @@ const ProductGrid = ({ isHome, type, data, category, onChange, pagination }) => 
                 )
               })
             }
-
-            {/*<div className="item col-6 col-md-4 col-lg-3 mb-3">*/}
-            {/*  <MangaItem meta={""} srcImg={"./Uploads/manga/1.png"} name={"Boku girl"} price={10000} />*/}
-            {/*</div>*/}
-            {/*<div className="item col-6 col-md-4 col-lg-3 mb-3">*/}
-            {/*  <MangaItem meta={""} srcImg={"./Uploads/manga/1.png"} name={"Boku girl"} price={10000} />*/}
-            {/*</div>*/}
-            {/*<div className="item col-6 col-md-4 col-lg-3 mb-3">*/}
-            {/*  <MangaItem meta={""} srcImg={"./Uploads/manga/1.png"} name={"Boku girl"} price={10000} />*/}
-            {/*</div>*/}
-            {/*<div className="item col-6 col-md-4 col-lg-3 mb-3">*/}
-            {/*  <MangaItem meta={""} srcImg={"./Uploads/manga/1.png"} name={"Boku girl"} price={10000} />*/}
-            {/*</div>*/}
-            {/*<div className="item col-6 col-md-4 col-lg-3 mb-3">*/}
-            {/*  <MangaItem meta={""} srcImg={"./Uploads/manga/1.png"} name={"Boku girl"} price={10000} />*/}
-            {/*</div>*/}
-            {/*<div className="item col-6 col-md-4 col-lg-3 mb-3">*/}
-            {/*  <MangaItem meta={""} srcImg={"./Uploads/manga/1.png"} name={"Boku girl"} price={10000} />*/}
-            {/*</div>*/}
-            {/*<div className="item col-6 col-md-4 col-lg-3 mb-3">*/}
-            {/*  <MangaItem meta={""} srcImg={"./Uploads/manga/1.png"} name={"Boku girl"} price={10000} />*/}
-            {/*</div>*/}
-            {/*<div className="item col-6 col-md-4 col-lg-3 mb-3">*/}
-            {/*  <MangaItem meta={""} srcImg={"./Uploads/manga/1.png"} name={"Boku girl"} price={10000} />*/}
-            {/*</div>*/}
-            {/*<div className="item col-6 col-md-4 col-lg-3 mb-3">*/}
-            {/*  <MangaItem meta={""} srcImg={"./Uploads/manga/1.png"} name={"Boku girl Boku girl Boku girl Boku girl Boku girl"} price={10000} />*/}
-            {/*</div>*/}
-            {/*<div className="item col-6 col-md-4 col-lg-3 mb-3">*/}
-            {/*  <MangaItem meta={""} srcImg={"./Uploads/manga/1.png"} name={"Boku girl"} price={10000} />*/}
-            {/*</div>*/}
-            {/*<div className="item col-6 col-md-4 col-lg-3 mb-3">*/}
-            {/*  <MangaItem meta={""} srcImg={"./Uploads/manga/1.png"} name={"Boku girl"} price={10000} />*/}
-            {/*</div>*/}
-            {/*<div className="item col-6 col-md-4 col-lg-3 mb-3">*/}
-            {/*  <MangaItem meta={""} srcImg={"./Uploads/manga/1.png"} name={"Boku girl"} price={10000} />*/}
-            {/*</div>*/}
           </div>
 
-          <Pagination
-            showSizeChanger
-            onChange={onChange}
-            defaultCurrent={pagination.page}
-            total={pagination.total}
-            defaultPageSize={pagination.pageSize}
-          />
+          {isHome?'':
+            <Pagination
+              showSizeChanger
+              onChange={onChange}
+              defaultCurrent={pagination?.page}
+              total={pagination?.total}
+              defaultPageSize={pagination?.pageSize}
+            />}
         </div>
       </div>
     </section>
