@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import jwtDecode from 'jwt-decode';
 import { useNavigate, Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Table, Button } from 'antd';
 import SearchIcon from '@mui/icons-material/Search';
 import EditIcon from '@mui/icons-material/Edit';
@@ -8,7 +9,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { IconButton } from '@mui/material';
 import Money from "~/components/Money";
 
-import { getProducts } from '~/api/product.api';
+import { getProducts, deleteProduct } from '~/api/product.api';
 
 const columns = [
   {
@@ -66,43 +67,19 @@ const columns = [
     align: 'center',
     sorter: (a, b) => a.createAt > b.createAt ? 1 : -1,
     render: value => value.substring(0, 10)
-  },
-  {
-    title: 'Action',
-    key: 'meta',
-    dataIndex: 'meta',
-    fixed: 'right',
-    width: 160,
-    render: value =>{
-      return (
-        <>
-          <Link to={`/manage/product/${value}`}>
-            <IconButton color="primary">
-              <SearchIcon />
-            </IconButton>
-          </Link>
-          <Link to={`/manage/product/update/${value}`}>
-            <IconButton color="success">
-              <EditIcon />
-            </IconButton>
-          </Link>
-          <Link>
-            <IconButton color="error">
-              <DeleteOutlineIcon />
-            </IconButton>
-          </Link>
-        </>
-      )
-    }
   }
 ];
 
 function ManageProduct() {
+  const token = window.localStorage.getItem("token");
+  const account = token ? jwtDecode(token) : null;
+
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const [products, setProducts] = useState([]);
 
-  const { isLoading } = useQuery({
+  useQuery({
     queryKey: ['products'],
     queryFn: getProducts,
     onSuccess: data => setProducts(data.data.map(e => ({
@@ -113,18 +90,54 @@ function ManageProduct() {
     })))
   });
 
+  const deleteProductHandle = async (id) => {
+    try {
+      await deleteProduct(id);
+      alert('Xóa sản phẩm thành công');
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+    }
+    catch (err) {
+      alert('Xóa sản phẩm không thành công');
+    }
+  }
+
   return (
     <div className="w-100 container my-5 text-left">
       <div className="my-3">
         <Button type="primary" onClick={() => navigate('/manage/product/create')}>CREATE</Button>
       </div>
 
-      {!isLoading && (<> 
-        <Table
-          columns={columns}
-          dataSource={products}
-        />
-      </>)}
+      <Table
+        columns={[
+          ...columns,
+          {
+            title: 'Action',
+            key: 'meta',
+            fixed: 'right',
+            width: 160,
+            render: values => (
+              <>
+                <Link to={`/manage/product/${values.meta}`}>
+                  <IconButton color="primary">
+                    <SearchIcon />
+                  </IconButton>
+                </Link>
+                <Link to={`/manage/product/update/${values.meta}`}>
+                  <IconButton color="success">
+                    <EditIcon />
+                  </IconButton>
+                </Link>
+                {Number(account?.id) === 0 && (
+                  <IconButton onClick={() => deleteProductHandle(values.id)} color="error">
+                    <DeleteOutlineIcon />
+                  </IconButton>
+                )}
+              </>
+            )
+          }
+        ]}
+        dataSource={products}
+      />
     </div>
   );
 }

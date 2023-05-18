@@ -64,7 +64,7 @@ function ManageAnnounceDetail() {
         });
   
         alert('Đã tạo thông báo');
-        navigate('/manage/product');
+        navigate('/manage/announce');
       }
       else {
         await updateAnnouce(meta, {

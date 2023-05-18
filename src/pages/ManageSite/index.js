@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { MyInput, MyTable } from '~/components';
 import { getCatalogAPI } from '~/api/site.api';
 import { uploadFile } from '~/api/uploadFile.api';
+import { getContact, updateContact } from '~/api/contact.api';
 
 import { catalogData, addHeader } from './data';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -13,7 +14,27 @@ function ManageSite() {
   const thumbnailRef = useRef();
   const thumbnailReviewRef = useRef();
   const headerDesRef = useRef();
+
   const [header, setHeader] = useState();
+  const [contacts, setContacts] = useState({});
+
+  useQuery({
+    queryKey: ['contacts'],
+    queryFn: getContact,
+    onSuccess: data => {
+      setContacts(data?.data?.reduce((pre, curr) => {
+        return {...pre, [curr?.name]: curr}
+      }, {}));
+    }
+  });
+
+  useQuery({
+    queryKey: ['logo'],
+    queryFn: () => axios.get('https://localhost:7114/api/site/logo'),
+    onSuccess: data => {
+      setHeader(data?.data?.result);
+    }
+  });
 
   async function changeThumbnailHandle() {
     try {
@@ -51,14 +72,32 @@ function ManageSite() {
   
     queryClient.invalidateQueries({ queryKey: ['logo'] });
   }
+  
+  const changeContactHandle = e => {
+    setContacts({
+      ...contacts,
+      [e?.target?.name]: {
+        ...contacts[e?.target?.name],
+        link: e?.target?.value,
+      },
+    });
+  };
 
-  useQuery({
-    queryKey: ['logo'],
-    queryFn: () => axios.get('https://localhost:7114/api/site/logo'),
-    onSuccess: data => {
-      setHeader(data?.data?.result);
+  const contactSubmitHandle = async () => {
+    try {
+      const contactsTmp = Object.values(contacts);
+  
+      for (const e of contactsTmp) {
+        await updateContact(e.id, e);
+      }
+  
+      queryClient.invalidateQueries({ queryKey: ['contacts'] });
+      alert('Chỉnh sửa thành công');
     }
-  });
+    catch (err) {
+      alert('Sửa contact thất bại!');
+    }
+  };
 
   return (
     <div>
@@ -97,21 +136,84 @@ function ManageSite() {
         
         <div className="d-flex py-1">
           <label htmlFor="twitter" style={{ width: '100px'}}>Twitter: </label>
-          <input value="https://twitter.com/ManagaFigure" className="w-100 my-input" type="text" id="twitter" placeholder="Twitter..." />
+          <input 
+            name="Twitter" 
+            value={contacts?.Twitter?.link || ''} 
+            className="w-100 my-input" 
+            type="text" 
+            id="twitter" 
+            placeholder="Twitter..." 
+            onChange={changeContactHandle}
+          />
         </div>
         
         <div className="d-flex py-1">
           <label htmlFor="facebook" style={{ width: '100px'}}>Facebook: </label>
-          <input value="https://www.facebook.com/ManagaFigure" className="w-100 my-input" type="text" id="facebook" placeholder="Facebook..." />
+          <input 
+            name="Facebook" 
+            value={contacts?.Facebook?.link || ''} 
+            className="w-100 my-input" 
+            type="text" 
+            id="facebook" 
+            placeholder="Facebook..." 
+            onChange={changeContactHandle}
+          />
         </div>
         
         <div className="d-flex py-1">
           <label htmlFor="instagram" style={{ width: '100px'}}>Instagram: </label>
-          <input value="https://www.instagram.com/ManagaFigure" className="w-100 my-input" type="text" id="instagram" placeholder="Instagram..." />
+          <input 
+            name="Instagram" 
+            value={contacts?.Instagram?.link || ''} 
+            className="w-100 my-input" 
+            type="text" 
+            id="instagram" 
+            placeholder="Instagram..." 
+            onChange={changeContactHandle}
+          />
+        </div>
+        
+        <div className="d-flex py-1">
+          <label htmlFor="email" style={{ width: '100px'}}>Email: </label>
+          <input 
+            name="Email" 
+            value={contacts?.Email?.link || ''} 
+            className="w-100 my-input" 
+            type="text" 
+            id="email" 
+            placeholder="Address..." 
+            onChange={changeContactHandle}
+          />
+        </div>
+        
+        <div className="d-flex py-1">
+          <label htmlFor="phone" style={{ width: '100px'}}>Số điện thoại: </label>
+          <input 
+            name="Phone" 
+            value={contacts?.Phone?.link || ''} 
+            className="w-100 my-input" 
+            type="text" 
+            id="phone" 
+            placeholder="Phone..." 
+            onChange={changeContactHandle}
+          />
+        </div>
+        
+        <div className="d-flex py-1">
+          <label htmlFor="address" style={{ width: '100px'}}>Địa chỉ: </label>
+          <input 
+            name="Address" 
+            value={contacts?.Address?.link || ''} 
+            className="w-100 my-input" 
+            type="text" 
+            id="address" 
+            placeholder="Address..." 
+            onChange={changeContactHandle}
+          />
         </div>
 
         <div className="py-1">
-          <button className="MyBtn MyBtn-primary">Update</button>
+          <button onClick={contactSubmitHandle} className="MyBtn MyBtn-primary">Update</button>
         </div>
       </div>
     </div>

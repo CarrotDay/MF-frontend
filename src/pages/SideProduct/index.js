@@ -25,7 +25,7 @@ const SideProduct = () => {
       }
     },
     onSuccess: data => {
-      setData(data.data);
+      setData(data?.data?.filter(e => e.active != false));
     }
   });
 

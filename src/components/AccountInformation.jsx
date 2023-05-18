@@ -19,36 +19,34 @@ const initForm = {
   type: JSON.parse(process.env.REACT_APP_ANIME)
 };
 
-const token = window.localStorage.getItem("token");
-const account = token ? jwtDecode(token) : null;
+const getUser = {
+  1: getEmployee, 
+  2: getCustomer,
+}
+
 
 const AccountInformation = () => {
   const [form] = Form.useForm();
-  const [users, setUsers] = useState({});
   const navigate = useNavigate();
+  
+  const token = window.localStorage.getItem("token");
+  const account = token ? jwtDecode(token) : null;
 
   useQuery({
     queryKey: ['user', account?.id],
-    queryFn: () => {
-      if (account?.role == 1) {
-         return getEmployee(account?.id);
-      }
-      if (account?.role == 2) {
-         return getCustomer(account?.id);
-      }
-    },
+    queryFn: () => getUser[account?.role](account?.id),
     onSuccess: data => {
-      console.log(data, 'account?.role')
       const users = data.data;
       users.birthday = moment(users.birthday);
       form.setFieldsValue(users);
-      setUsers(users);
+      console.log(users)
     }
   });
 
   const onFinish = (values) => {
     console.log('values',values);
   };
+
   return (
     <section className={"container"}>
       <div className="row  my-3">

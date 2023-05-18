@@ -31,3 +31,9 @@ export const updateProduct = (meta, body = {}) => axios.post(`/api/product/updat
     "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
   } 
 });
+
+export const deleteProduct = (id) => axios.delete(`/api/product/${id}`, { 
+  headers: {
+    "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
+  } 
+});

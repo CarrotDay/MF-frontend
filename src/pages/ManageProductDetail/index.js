@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { Button, Form, Input, Radio, Select } from 'antd';
+import { Button, Form, Input, Select } from 'antd';
 
-import { MyInput, MyTextarea, MyCheckbox } from '~/components';
+import { MyInput } from '~/components';
 import { getProductWithMeta, createProduct, updateProduct } from '~/api/product.api';
 import { uploadFile } from '~/api/uploadFile.api';
 import { getCatalogWithBodys } from '~/api/catalog.api';
@@ -29,7 +29,6 @@ function ManageProductDetail() {
     queryKey: ['catalogs', type],
     queryFn: () => getCatalogWithBodys({ type }),
     onSuccess: data => {
-      console.log(data?.data);
       setCatalogs(data.data.map(e => ({ value: e.id, label: e.name })));
     }
   });
@@ -40,6 +39,7 @@ function ManageProductDetail() {
     onSuccess: data => {
       form.setFieldsValue(data.data);
       setProduct(data.data);
+      setType(data?.data?.type);
     },
     enabled: Boolean(meta)
   });
@@ -79,6 +79,7 @@ function ManageProductDetail() {
           image
         });
 
+        alert('Đã tạo sản phẩm');
         navigate('/manage/product');
       }
       else {
@@ -90,6 +91,7 @@ function ManageProductDetail() {
         });
   
         alert('Đã sửa sản phẩm');
+        navigate('/manage/product');
       }
     }
     catch (err) {
@@ -133,6 +135,15 @@ function ManageProductDetail() {
         <Form.Item name="catalog" label="Catalog" >
           <Select 
             options={catalogs} 
+          />
+        </Form.Item>
+
+        <Form.Item name="active" label="active">
+          <Select 
+            options={[
+              { value: true, label: 'Hiện' },
+              { value: false, label: 'Ẩn' },
+            ]} 
           />
         </Form.Item>
 

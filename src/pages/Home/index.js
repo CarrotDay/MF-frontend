@@ -10,17 +10,21 @@ const Home = () => {
   const [manga, setManga] = useState([]);
   const [figure, setFigure] = useState([]);
 
-  const isLoadingManga = useQuery({
+  useQuery({
     queryKey: ['manga'],
     queryFn: () => getProducts({ Type: false, Take: 12 }),
-    onSuccess: data => setManga(data.data)
-  }).isLoading;
+    onSuccess: data => {
+      setManga(data?.data?.filter(e => e.active != false));
+    }
+  });
   
-  const isLoadingFigure = useQuery({
+  useQuery({
     queryKey: ['figure'],
     queryFn: () => getProducts({ Type: true, Take: 12 }),
-    onSuccess: data => setFigure(data.data)
-  }).isLoading;
+    onSuccess: data => {
+      setFigure(data?.data?.filter(e => e.active != false));
+    }
+  });
 
   return (
     <div>

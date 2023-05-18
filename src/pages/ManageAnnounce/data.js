@@ -41,6 +41,6 @@ export const columns = [
     align: 'center',
     key: 'createAt',
     sorter: (a, b) => a.createAt > b.createAt ? 1 : -1,
-    render: v => moment(v).format('YYYY/MM/DD HH:mm')
+    render: v => moment(v)?.format('YYYY/MM/DD HH:mm')
   }
 ];

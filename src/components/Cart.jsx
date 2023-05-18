@@ -70,7 +70,7 @@ export default function Cart() {
     queryKey: ['carts'],
     queryFn: async () => getCarts({ customer: account?.id }),
     onSuccess: data => {
-      setProducts(data?.data?.map(e => ({ ...e.productNavigation, number: 1, cartId: e.id })));
+      setProducts(data?.data?.filter(e => e.active != false)?.map(e => ({ ...e.productNavigation, number: 1, cartId: e.id })));
     }
   });
 
